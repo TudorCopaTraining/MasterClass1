@@ -1,1317 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CinePrompt // Filmmaker Random Challenge Generator</title>
-
-  <!-- Google Fonts: Bebas Neue for cinema headers, Inter for crisp legibility -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- Canvas Confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-
-  <!-- Tailwind Configuration for Cinema Palette -->
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            cinema: ['"Bebas Neue"', 'cursive', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace']
-          },
-          colors: {
-            cinema: {
-              gold: '#F5C518',
-              'gold-hover': '#E2B616',
-              amber: '#D97706',
-              dark: '#0B0D13',
-              darker: '#06070A',
-              card: '#131722',
-              cardHover: '#1B2130',
-              border: '#2A3249',
-              accent: '#E50914'
-            }
-          },
-          animation: {
-            'spin-slow': 'spin 12s linear infinite',
-            'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
-            'clapper-snap': 'clapperSnap 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2)'
-          },
-          keyframes: {
-            pulseGlow: {
-              '0%, 100%': { boxShadow: '0 0 20px rgba(245, 197, 24, 0.25)' },
-              '50%': { boxShadow: '0 0 40px rgba(245, 197, 24, 0.55)' }
-            },
-            clapperSnap: {
-              '0%': { transform: 'rotate(-24deg)' },
-              '70%': { transform: 'rotate(4deg)' },
-              '100%': { transform: 'rotate(0deg)' }
-            }
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gen AI Film Challenge: Wheel of Doom</title>
+    <style>
+        :root {
+            --bg-color: #0d0e12;
+            --card-bg: #161822;
+            --accent-color: #ff3e6c;
+            --accent-glow: rgba(255, 62, 108, 0.4);
+            --success-color: #00f5d4;
+            --text-color: #f1f3f9;
+            --text-muted: #8f96a3;
         }
-      }
-    }
-  </script>
 
-  <style>
-    /* Film Strip decorative borders */
-    .film-strip-border {
-      background-image: radial-gradient(#06070a 35%, transparent 36%), radial-gradient(#06070a 35%, transparent 36%);
-      background-position: 0 0, 16px 0;
-      background-size: 32px 14px;
-      background-repeat: repeat-x;
-    }
+        * {
+            box-sizing: border-box;
+        }
 
-    /* Custom scrollbars */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0B0D13;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #2A3249;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #F5C518;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
 
-    /* Slot rolling animation effect */
-    .slot-rolling {
-      filter: blur(1.5px);
-      transform: translateY(-2px);
-      transition: all 0.05s ease;
-    }
+        .container {
+            max-width: 550px;
+            width: 100%;
+            text-align: center;
+            background: var(--card-bg);
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
 
-    /* Cinema spotlight glow */
-    .spotlight-bg {
-      background: radial-gradient(circle at 50% -10%, rgba(245, 197, 24, 0.15), transparent 70%),
-                  radial-gradient(circle at 10% 90%, rgba(229, 9, 20, 0.08), transparent 50%),
-                  #0B0D13;
-    }
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, var(--accent-color), #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    /* Print styles for classroom handouts */
-    @media print {
-      body {
-        background: white !important;
-        color: black !important;
-      }
-      .no-print {
-        display: none !important;
-      }
-      .print-only {
-        display: block !important;
-      }
-      .roster-card {
-        page-break-inside: avoid;
-        border: 1px solid #ddd !important;
-        background: #f9f9f9 !important;
-        color: black !important;
-      }
-    }
-  </style>
+        p {
+            color: var(--text-muted);
+            margin: 0 0 35px 0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .wheel-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto 35px auto;
+        }
+
+        /* Top indicator arrow styling */
+        .ticker {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+            border-top: 28px solid var(--accent-color);
+            z-index: 10;
+            filter: drop-shadow(0 6px 10px var(--accent-glow));
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 10px #222533;
+        }
+
+        .spin-btn {
+            background: linear-gradient(135deg, var(--accent-color), #ff6b6b);
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px var(--accent-glow);
+            transition: transform 0.1s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+
+        .spin-btn:hover {
+            opacity: 0.95;
+            box-shadow: 0 8px 25px rgba(255, 62, 108, 0.6);
+        }
+
+        .spin-btn:active {
+            transform: scale(0.97);
+        }
+
+        .spin-btn:disabled {
+            background: #383c4a;
+            color: #686f7d;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #result-display {
+            margin-top: 30px;
+            font-size: 1.6rem;
+            font-weight: 800;
+            min-height: 38px;
+            color: var(--success-color);
+            text-shadow: 0 0 15px rgba(0, 245, 212, 0.3);
+            letter-spacing: 0.5px;
+        }
+    </style>
 </head>
-<body class="spotlight-bg min-h-screen text-slate-100 font-sans antialiased selection:bg-cinema-gold selection:text-black flex flex-col justify-between">
+<body>
 
-  <header class="border-b border-cinema-border/70 bg-cinema-darker/80 backdrop-blur-md sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3 flex items-center justify-between">
-      <!-- Brand Logo -->
-      <div class="flex items-center gap-3">
-        <div class="relative w-10 h-10 rounded-lg bg-gradient-to-br from-cinema-gold to-cinema-amber flex items-center justify-center shadow-lg shadow-cinema-gold/20 text-black font-cinema text-2xl tracking-wider">
-          <i data-lucide="clapperboard" class="w-6 h-6 stroke-[2.5]"></i>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="font-cinema text-2xl sm:text-3xl tracking-wider text-white">CINE<span class="text-cinema-gold">PROMPT</span></span>
-            <span class="hidden sm:inline-block px-2 py-0.5 text-[10px] font-bold tracking-widest uppercase bg-cinema-gold/15 text-cinema-gold border border-cinema-gold/30 rounded">Filmmaker Edition</span>
-          </div>
-          <p class="text-xs text-slate-400 hidden sm:block -mt-1 font-mono">Random Creative Element Generator for Video & Media Classrooms</p>
-        </div>
-      </div>
-
-      <!-- Navigation Modes -->
-      <nav class="flex items-center gap-1.5 sm:gap-2 bg-cinema-card p-1 rounded-xl border border-cinema-border/70">
-        <button id="navSingleBtn" onclick="switchMode('single')" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center gap-1.5 bg-cinema-gold text-black shadow-md shadow-cinema-gold/20">
-          <i data-lucide="sparkles" class="w-4 h-4"></i>
-          <span>Solo Draw</span>
-        </button>
-        <button id="navClassBtn" onclick="switchMode('roster')" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium text-slate-300 hover:text-white rounded-lg transition-all flex items-center gap-1.5">
-          <i data-lucide="users" class="w-4 h-4"></i>
-          <span>Class Roster</span>
-        </button>
-        <button id="navLibBtn" onclick="switchMode('library')" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium text-slate-300 hover:text-white rounded-lg transition-all flex items-center gap-1.5">
-          <i data-lucide="layers" class="w-4 h-4"></i>
-          <span>Prompt Bank</span>
-          <span id="headerElementCount" class="text-[10px] bg-cinema-border/80 px-1.5 py-0.2 rounded-full font-mono">0</span>
-        </button>
-      </nav>
-
-      <!-- Audio & Quick Actions -->
-      <div class="hidden md:flex items-center gap-3">
-        <button id="soundToggleBtn" onclick="toggleSound()" class="p-2 rounded-lg bg-cinema-card hover:bg-cinema-cardHover border border-cinema-border text-slate-300 hover:text-cinema-gold transition" title="Toggle Sound FX">
-          <i id="soundIcon" data-lucide="volume-2" class="w-4 h-4"></i>
-        </button>
-        <button onclick="openInfoModal()" class="p-2 rounded-lg bg-cinema-card hover:bg-cinema-cardHover border border-cinema-border text-slate-300 hover:text-white transition" title="Activity Instructions">
-          <i data-lucide="help-circle" class="w-4 h-4"></i>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-
-    <!-- ========================================== -->
-    <!-- VIEW 1: SINGLE DRAW (EXCITING WHEEL / CARD) -->
-    <!-- ========================================== -->
-    <section id="singleView" class="block transition-opacity duration-300">
-      
-      <!-- Top banner for challenge context -->
-      <div class="text-center max-w-2xl mx-auto mb-8">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cinema-gold/10 border border-cinema-gold/30 text-cinema-gold text-xs font-mono mb-3">
-          <span class="w-2 h-2 rounded-full bg-cinema-gold animate-ping"></span>
-          SCENE 01 // TAKE 01 : MUST INCLUDE MANDATORY ELEMENT
-        </div>
-        <h1 class="text-3xl sm:text-5xl font-cinema tracking-wide uppercase text-white drop-shadow-sm">
-          Draw Your Film's <span class="text-cinema-gold">Wildcard Element</span>
-        </h1>
-        <p class="text-sm sm:text-base text-slate-300 mt-2">
-          Every filmmaker receives one random constraint. Whatever element you roll, you must weave it naturally (or outrageously) into your screenplay!
-        </p>
-      </div>
-
-      <!-- Clapperboard Generator Display Box -->
-      <div class="max-w-2xl mx-auto">
-        <!-- Interactive Clapper Card -->
-        <div class="relative bg-cinema-card border-2 border-cinema-border rounded-2xl shadow-2xl overflow-hidden p-6 sm:p-8 transition-all hover:border-cinema-gold/40">
-          
-          <!-- Clapper Top Sticks Pattern -->
-          <div class="h-10 -mx-8 -mt-8 mb-6 bg-slate-900 border-b-2 border-cinema-border relative overflow-hidden flex items-center justify-center">
-            <div class="w-full h-full opacity-60 flex transform -skew-x-12">
-              <div class="w-8 h-full bg-cinema-gold"></div>
-              <div class="w-8 h-full bg-black"></div>
-              <div class="w-8 h-full bg-cinema-gold"></div>
-              <div class="w-8 h-full bg-black"></div>
-              <div class="w-8 h-full bg-cinema-gold"></div>
-              <div class="w-8 h-full bg-black"></div>
-              <div class="w-8 h-full bg-cinema-gold"></div>
-              <div class="w-8 h-full bg-black"></div>
-              <div class="w-8 h-full bg-cinema-gold"></div>
-              <div class="w-8 h-full bg-black"></div>
-              <div class="w-8 h-full bg-cinema-gold"></div>
-              <div class="w-8 h-full bg-black"></div>
-              <div class="w-8 h-full bg-cinema-gold"></div>
-              <div class="w-8 h-full bg-black"></div>
-              <div class="w-8 h-full bg-cinema-gold"></div>
-              <div class="w-8 h-full bg-black"></div>
-              <div class="w-8 h-full bg-cinema-gold"></div>
-            </div>
-            <div class="absolute inset-0 flex items-center justify-between px-6 pointer-events-none">
-              <span class="font-mono text-[10px] tracking-widest text-slate-400 font-bold">PROD: FILM CHLG 2026</span>
-              <span id="reelStatusBadge" class="font-mono text-[10px] text-black bg-cinema-gold font-bold px-2 py-0.5 rounded">STANDBY</span>
-            </div>
-          </div>
-
-          <!-- Category Filter Bar for Solo Mode -->
-          <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-cinema-border/50 text-xs">
-            <div class="flex items-center gap-2 text-slate-400">
-              <i data-lucide="filter" class="w-3.5 h-3.5 text-cinema-gold"></i>
-              <span>Element Category:</span>
-            </div>
-            <select id="singleCategorySelect" class="bg-cinema-darker border border-cinema-border text-slate-200 text-xs rounded-lg px-2.5 py-1.5 focus:border-cinema-gold focus:outline-none transition">
-              <option value="ALL">All Categories Combined</option>
-              <!-- Injected via JS -->
-            </select>
-          </div>
-
-          <!-- Slot Reel Window / Display Area -->
-          <div id="drawDisplayArea" class="relative min-h-[220px] bg-cinema-darker/90 rounded-xl border border-cinema-border/80 flex flex-col items-center justify-center p-6 text-center overflow-hidden transition-all duration-300">
-            
-            <!-- Ambient Spotlight behind card text -->
-            <div class="absolute inset-0 bg-gradient-to-t from-cinema-gold/10 via-transparent to-transparent opacity-40 pointer-events-none"></div>
-
-            <!-- Pre-roll Icon / Category badge -->
-            <div id="resultCategoryBadge" class="hidden font-mono text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-cinema-gold/15 text-cinema-gold border border-cinema-gold/40 mb-3 animate-fade-in">
-              Wildcard Character
-            </div>
-
-            <!-- Big Main Result Text -->
-            <div id="resultTextContainer" class="relative z-10">
-              <div id="resultElement" class="text-3xl sm:text-5xl font-bold font-sans text-white tracking-tight drop-shadow-md py-2">
-                Click "Action!"
-              </div>
-              <p id="resultHint" class="text-xs sm:text-sm text-slate-400 font-mono mt-2 max-w-md mx-auto">
-                Ready on set. Spin the reel to assign an unexpected plot element to your story.
-              </p>
-            </div>
-
-            <!-- Reel Rolling animation overlay -->
-            <div id="rollingOverlay" class="hidden absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center z-20">
-              <div class="w-12 h-12 border-4 border-cinema-gold/20 border-t-cinema-gold rounded-full animate-spin mb-3"></div>
-              <p id="tickerFastText" class="text-2xl sm:text-3xl font-cinema tracking-wider text-cinema-gold slot-rolling">
-                CASTING ELEMENT...
-              </p>
-            </div>
-
-          </div>
-
-          <!-- Interactive Action Buttons -->
-          <div class="mt-6 flex flex-col sm:flex-row items-center gap-3">
-            <button id="drawActionBtn" onclick="triggerSingleDraw()" class="w-full sm:flex-1 py-4 px-6 rounded-xl bg-cinema-gold hover:bg-cinema-gold-hover text-black font-cinema text-2xl sm:text-3xl tracking-wider transition-all transform active:scale-95 shadow-xl shadow-cinema-gold/20 flex items-center justify-center gap-3 group cursor-pointer">
-              <i data-lucide="video" class="w-6 h-6 stroke-[2.5] group-hover:rotate-12 transition-transform"></i>
-              <span id="drawBtnLabel">ACTION! ROLL PROMPT</span>
-            </button>
-
-            <!-- Secondary Actions: Copy & Lock -->
-            <div class="flex items-center gap-2 w-full sm:w-auto">
-              <button id="copyResultBtn" onclick="copyCurrentPrompt()" class="flex-1 sm:flex-none p-4 rounded-xl bg-cinema-cardHover hover:bg-cinema-border border border-cinema-border text-slate-200 hover:text-white transition flex items-center justify-center gap-2 text-sm font-medium" title="Copy to clipboard">
-                <i data-lucide="copy" class="w-4 h-4"></i>
-                <span class="sm:hidden">Copy</span>
-              </button>
-              <button onclick="sharePrompt()" class="flex-1 sm:flex-none p-4 rounded-xl bg-cinema-cardHover hover:bg-cinema-border border border-cinema-border text-slate-200 hover:text-white transition flex items-center justify-center gap-2 text-sm font-medium" title="Share prompt">
-                <i data-lucide="share-2" class="w-4 h-4"></i>
-                <span class="sm:hidden">Share</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Idea Inspiration Prompt Helper -->
-          <div id="filmIdeaSection" class="hidden mt-6 pt-5 border-t border-cinema-border/60">
-            <div class="flex items-start gap-3 bg-cinema-darker/60 rounded-xl p-4 border border-cinema-border/50">
-              <div class="p-2 rounded-lg bg-cinema-gold/10 text-cinema-gold mt-0.5">
-                <i data-lucide="lightbulb" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Filmmaking Brainstorm Starter</h4>
-                <p id="filmIdeaText" class="text-xs text-slate-400 mt-1 leading-relaxed">
-                  How does this element enter the scene? Is it the secret protagonist, a ticking clock, an unexpected reveal at the midpoint, or the MacGuffin everyone is racing to find?
-                </p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Recent Solo History Pill Strip -->
-        <div class="mt-6 bg-cinema-darker/50 rounded-xl p-3 border border-cinema-border/40">
-          <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
-            <span class="font-mono flex items-center gap-1.5">
-              <i data-lucide="history" class="w-3.5 h-3.5"></i> Recent Draws This Session:
-            </span>
-            <button onclick="clearSingleHistory()" class="hover:text-cinema-gold text-[11px] underline">Clear</button>
-          </div>
-          <div id="recentRollsList" class="flex flex-wrap gap-1.5 min-h-[26px]">
-            <span class="text-xs text-slate-500 italic">No rolls yet. Hit Action!</span>
-          </div>
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- ========================================== -->
-    <!-- VIEW 2: CLASS ROSTER GENERATOR             -->
-    <!-- ========================================== -->
-    <section id="rosterView" class="hidden transition-opacity duration-300">
-      
-      <div class="flex flex-col lg:flex-row gap-8 items-start">
+    <div class="container">
+        <h1>Wheel of Doom</h1>
+        <p>Spin the wheel to lock in the mandatory creative twist element for your Gen AI film challenge!</p>
         
-        <!-- Left Column: Input Form -->
-        <div class="w-full lg:w-5/12 bg-cinema-card border border-cinema-border rounded-2xl p-6 shadow-xl">
-          <div class="flex items-center gap-2 text-cinema-gold mb-1">
-            <i data-lucide="users" class="w-5 h-5"></i>
-            <h2 class="font-cinema text-2xl tracking-wider text-white">Student Roster Generator</h2>
-          </div>
-          <p class="text-xs text-slate-400 mb-4 leading-relaxed">
-            Assign unique creative elements across your entire classroom or filmmaking workshop in one click. No duplicate prompts will be assigned (unless your class size exceeds the prompt pool).
-          </p>
+        <div class="wheel-wrapper">
+            <div class="ticker"></div>
+            <canvas id="wheel" width="600" height="600"></canvas>
+        </div>
 
-          <!-- Names Textarea -->
-          <div class="space-y-3">
-            <div class="flex items-center justify-between">
-              <label class="text-xs font-semibold uppercase tracking-wider text-slate-300">
-                Learner / Crew Names
-              </label>
-              <button onclick="loadSampleStudents()" class="text-xs text-cinema-gold hover:underline font-mono">
-                + Load 10 Demo Names
-              </button>
-            </div>
+        <button class="spin-btn" id="spin-button" onclick="spinWheel()">Spin Wheel</button>
+        <div id="result-display"></div>
+    </div>
+
+    <script>
+        // Expanded to 20 unique prompt combinations
+        const elements = [
+            "Talking Penguin",
+            "Time Travel",
+            "Haunted Toaster",
+            "AI Assistant",
+            "Secret Underground City",
+            "Lost Treasure Map",
+            "Dragon Accountant",
+            "Robot Teacher",
+            "Alien Invasion",
+            "Mysterious Key",
+            "Invisible Sidekick",
+            "Cyberpunk Detective",
+            "Sentient Smartphone",
+            "Medieval Spaceship",
+            "Infinite Hallway",
+            "Gravity-Defying Boots",
+            "Telepathic Houseplant",
+            "Shape-Shifting Villain",
+            "Underwater Metropolis",
+            "Cursed Pocket Watch"
+        ];
+
+        // High-contrast alternating neon colors optimized for 20 segments
+        const colors = [
+            "#ff0055", "#00bbf9", "#ff9f1c", "#00f5d4", "#9b5de5",
+            "#f15bb5", "#3a86ff", "#ffbe0b", "#ff4d6d", "#00f5d4",
+            "#ff0055", "#00bbf9", "#ff9f1c", "#00f5d4", "#9b5de5",
+            "#f15bb5", "#3a86ff", "#ffbe0b", "#ff4d6d", "#00f5d4"
+        ];
+
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spin-button");
+        const resultDisplay = document.getElementById("result-display");
+
+        const numSegments = elements.length;
+        const segmentAngle = (2 * Math.PI) / numSegments;
+        let currentAngle = 0;
+
+        function drawWheel() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const radius = canvas.width / 2;
             
-            <textarea id="rosterNamesInput" rows="7" placeholder="Enter one learner name per line, e.g.&#10;Maya Lin&#10;Liam Vance&#10;Amara Okafor&#10;Devon Miller&#10;Sophie Chen" class="w-full bg-cinema-darker border border-cinema-border rounded-xl p-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cinema-gold font-mono leading-relaxed resize-y"></textarea>
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.rotate(currentAngle);
+
+            for (let i = 0; i < numSegments; i++) {
+                // Render pizza slice geometry
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.arc(0, 0, radius, i * segmentAngle, (i + 1) * segmentAngle);
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "#161822";
+                ctx.stroke();
+
+                // Render integrated challenge label
+                ctx.save();
+                ctx.fillStyle = "#000000";
+                // Smaller bold font size to comfortably accommodate 20 text items on the canvas
+                ctx.font = "bold 12px sans-serif";
+                
+                // Align exactly within the center point of the slice segment arc
+                ctx.rotate((i + 0.5) * segmentAngle);
+                ctx.textAlign = "right";
+                ctx.textBaseline = "middle";
+                
+                ctx.fillText(elements[i], radius - 20, 0);
+                ctx.restore();
+            }
+
+            // Aesthetic center hub accent
+            ctx.restore();
+            ctx.beginPath();
+            ctx.arc(radius, radius, 15, 0, 2 * Math.PI);
+            ctx.fillStyle = "#ffffff";
+            ctx.fill();
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = "#0d0e12";
+            ctx.stroke();
+        }
+
+        function spinWheel() {
+            spinBtn.disabled = true;
+            resultDisplay.textContent = "";
+
+            // Force multi-rotation spin calculations to make landing targets fully variable
+            const extraRotations = 6 + Math.floor(Math.random() * 5); // 6 to 10 full turns
+            const targetRotation = extraRotations * 2 * Math.PI + Math.random() * 2 * Math.PI;
             
-            <div class="flex items-center justify-between text-xs text-slate-400 font-mono">
-              <span id="studentCountBadge">0 filmmakers entered</span>
-              <span id="availableElementsBadge">Available elements: 0</span>
-            </div>
-          </div>
-
-          <!-- Assignment Options -->
-          <div class="mt-4 pt-4 border-t border-cinema-border space-y-3">
-            <div class="flex items-center justify-between">
-              <label class="text-xs text-slate-300 font-medium">Allow Duplicate Elements?</label>
-              <input type="checkbox" id="rosterAllowDuplicates" class="rounded bg-cinema-darker border-cinema-border text-cinema-gold focus:ring-cinema-gold">
-            </div>
-
-            <div>
-              <label class="text-xs text-slate-300 font-medium block mb-1">Category Restriction</label>
-              <select id="rosterCategorySelect" class="w-full bg-cinema-darker border border-cinema-border text-slate-200 text-xs rounded-lg p-2 focus:border-cinema-gold focus:outline-none">
-                <option value="ALL">All Categories (Mix of characters, objects, twists)</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Trigger Button -->
-          <button onclick="generateRosterAssignments()" class="w-full mt-5 py-3.5 px-4 rounded-xl bg-cinema-gold hover:bg-cinema-gold-hover text-black font-cinema text-2xl tracking-wider shadow-lg shadow-cinema-gold/20 flex items-center justify-center gap-2 transition cursor-pointer">
-            <i data-lucide="clapperboard" class="w-5 h-5"></i>
-            <span>GENERATE CLASS ASSIGNMENTS</span>
-          </button>
-        </div>
-
-        <!-- Right Column: Output Results Table / Cards -->
-        <div class="w-full lg:w-7/12 flex flex-col gap-4">
-          
-          <!-- Roster Toolbar -->
-          <div class="bg-cinema-card border border-cinema-border rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-2">
-              <span class="font-cinema text-xl text-white tracking-wide">Call Sheet // Output</span>
-              <span id="assignedCountBadge" class="text-xs px-2 py-0.5 rounded-full bg-cinema-gold/20 text-cinema-gold font-mono font-bold">0 Assigned</span>
-            </div>
-
-            <!-- Export Buttons -->
-            <div class="flex items-center gap-2">
-              <button onclick="copyRosterClipboard()" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-cinema-darker hover:bg-cinema-cardHover border border-cinema-border text-slate-200 hover:text-white transition flex items-center gap-1.5" title="Copy list to clipboard">
-                <i data-lucide="copy" class="w-3.5 h-3.5 text-cinema-gold"></i>
-                <span>Copy List</span>
-              </button>
-              <button onclick="exportRosterCSV()" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-cinema-darker hover:bg-cinema-cardHover border border-cinema-border text-slate-200 hover:text-white transition flex items-center gap-1.5" title="Download CSV">
-                <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 text-green-400"></i>
-                <span>Export CSV</span>
-              </button>
-              <button onclick="window.print()" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-cinema-darker hover:bg-cinema-cardHover border border-cinema-border text-slate-200 hover:text-white transition flex items-center gap-1.5" title="Print student roster cards">
-                <i data-lucide="printer" class="w-3.5 h-3.5 text-blue-400"></i>
-                <span>Print</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Assigned Items Container -->
-          <div id="rosterCardsContainer" class="space-y-2.5 max-h-[580px] overflow-y-auto pr-1">
-            <!-- Empty Placeholder -->
-            <div class="bg-cinema-card/50 border-2 border-dashed border-cinema-border/70 rounded-2xl p-12 text-center flex flex-col items-center justify-center">
-              <div class="w-12 h-12 rounded-full bg-cinema-border/40 flex items-center justify-center text-slate-500 mb-3">
-                <i data-lucide="user-check" class="w-6 h-6"></i>
-              </div>
-              <h3 class="text-base font-medium text-slate-300">No Roster Generated Yet</h3>
-              <p class="text-xs text-slate-500 mt-1 max-w-sm">
-                Enter your student names on the left and click "Generate Class Assignments" to assign everyone their challenge element.
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- ========================================== -->
-    <!-- VIEW 3: PROMPT LIBRARY & CUSTOMIZER        -->
-    <!-- ========================================== -->
-    <section id="libraryView" class="hidden transition-opacity duration-300">
-      
-      <!-- Library Header and Controls -->
-      <div class="bg-cinema-card border border-cinema-border rounded-2xl p-6 shadow-xl mb-6">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div class="flex items-center gap-2 text-cinema-gold">
-              <i data-lucide="film" class="w-5 h-5"></i>
-              <h2 class="font-cinema text-2xl tracking-wider text-white">Creative Element Library</h2>
-            </div>
-            <p class="text-xs text-slate-400 mt-1">
-              Add your own custom prompts, modify categories, or toggle items on/off for your filmmaking curriculum.
-            </p>
-          </div>
-
-          <!-- Quick Action Buttons -->
-          <div class="flex flex-wrap items-center gap-2">
-            <button onclick="openAddPromptModal()" class="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-cinema-gold hover:bg-cinema-gold-hover text-black transition flex items-center gap-2 shadow-md shadow-cinema-gold/20 cursor-pointer">
-              <i data-lucide="plus-circle" class="w-4 h-4"></i>
-              <span>Add Custom Element</span>
-            </button>
-            <button onclick="resetLibraryToDefault()" class="px-3 py-2 text-xs font-semibold rounded-xl bg-cinema-darker hover:bg-red-950/40 border border-cinema-border text-slate-300 hover:text-red-400 transition flex items-center gap-1.5" title="Reset back to factory filmmaking prompts">
-              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-              <span>Reset Factory</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Filter and Search Row -->
-        <div class="mt-6 pt-5 border-t border-cinema-border flex flex-col sm:flex-row gap-3 items-center justify-between">
-          <!-- Search input -->
-          <div class="relative w-full sm:w-80">
-            <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute left-3 top-3"></i>
-            <input type="text" id="librarySearchInput" oninput="renderLibrary()" placeholder="Search elements..." class="w-full bg-cinema-darker border border-cinema-border rounded-xl pl-9 pr-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cinema-gold font-mono">
-          </div>
-
-          <!-- Category filter buttons -->
-          <div id="libraryCategoryFilterBar" class="flex flex-wrap gap-1.5 w-full sm:w-auto">
-            <!-- Buttons injected by JS -->
-          </div>
-        </div>
-      </div>
-
-      <!-- Elements Grid -->
-      <div id="libraryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        <!-- Injected via JavaScript -->
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- ADD ELEMENT MODAL -->
-  <div id="addModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-cinema-card border border-cinema-border rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
-      <div class="flex items-center justify-between mb-4 border-b border-cinema-border/60 pb-3">
-        <h3 class="font-cinema text-2xl tracking-wide text-white flex items-center gap-2">
-          <i data-lucide="sparkles" class="w-5 h-5 text-cinema-gold"></i>
-          Add New Prompt Element
-        </h3>
-        <button onclick="closeAddPromptModal()" class="text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <div class="space-y-4">
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-            Prompt Element Title
-          </label>
-          <input type="text" id="newPromptTitle" placeholder="e.g., A suspicious pizza delivery, Zero gravity" class="w-full bg-cinema-darker border border-cinema-border rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:border-cinema-gold focus:outline-none">
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-            Category
-          </label>
-          <select id="newPromptCategory" class="w-full bg-cinema-darker border border-cinema-border rounded-xl px-3 py-2.5 text-xs text-white focus:border-cinema-gold focus:outline-none">
-            <option value="Wild Character">Wild Character</option>
-            <option value="Mysterious Object">Mysterious Object</option>
-            <option value="Uncanny Setting">Uncanny Setting</option>
-            <option value="Plot Twist">Plot Twist</option>
-            <option value="Sci-Fi & Tech">Sci-Fi & Tech</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-            Filmmaking Cue / Direction Tip (Optional)
-          </label>
-          <input type="text" id="newPromptTip" placeholder="e.g., Must cause an argument between two leads." class="w-full bg-cinema-darker border border-cinema-border rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-cinema-gold focus:outline-none">
-        </div>
-      </div>
-
-      <div class="mt-6 flex items-center justify-end gap-2">
-        <button onclick="closeAddPromptModal()" class="px-4 py-2 rounded-xl bg-cinema-darker hover:bg-cinema-cardHover text-xs font-semibold text-slate-300">
-          Cancel
-        </button>
-        <button onclick="saveNewPromptElement()" class="px-5 py-2 rounded-xl bg-cinema-gold hover:bg-cinema-gold-hover text-xs font-bold text-black tracking-wider uppercase">
-          Save Element
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- HELP & ACTIVITY GUIDE MODAL -->
-  <div id="infoModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-cinema-card border border-cinema-border rounded-2xl w-full max-w-lg p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-      <button onclick="closeInfoModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <div class="flex items-center gap-3 text-cinema-gold mb-3">
-        <i data-lucide="clapperboard" class="w-7 h-7"></i>
-        <h3 class="font-cinema text-3xl tracking-wide text-white">How To Run This Activity</h3>
-      </div>
-
-      <div class="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
-        <p>
-          The <span class="text-cinema-gold font-semibold">Wildcard Filmmaking Challenge</span> forces students to think outside cliché narratives, practice inventive problem-solving, and adapt on their feet.
-        </p>
-        
-        <div class="bg-cinema-darker p-3.5 rounded-xl border border-cinema-border font-mono text-xs space-y-2">
-          <div class="text-cinema-gold font-bold flex items-center gap-1.5">
-            <i data-lucide="check" class="w-3.5 h-3.5"></i> Challenge Ground Rules:
-          </div>
-          <ol class="list-decimal list-inside space-y-1 text-slate-300 pl-1">
-            <li>Every group or student must feature their assigned element visibly in their story.</li>
-            <li>The element cannot simply be mentioned in passing—it must influence a character's decision or action.</li>
-            <li>Filmmakers have 3 minutes to plan their initial concept pitch.</li>
-          </ol>
-        </div>
-
-        <h4 class="text-sm font-bold text-white uppercase tracking-wider pt-2">Classroom Hosting Tips:</h4>
-        <ul class="list-disc list-inside space-y-1.5 text-xs text-slate-400">
-          <li><strong>GitHub Pages Ready:</strong> Host this single file directly in a GitHub repository as <code class="text-cinema-gold">index.html</code> with Pages enabled.</li>
-          <li><strong>Projector Mode:</strong> Project the Solo Draw tab onto your classroom whiteboard for dramatic individual student rolls.</li>
-          <li><strong>Quick Export:</strong> Use the Roster tab to instantly output a CSV or printable checklist for grading and crew check-ins.</li>
-        </ul>
-      </div>
-
-      <div class="mt-6 pt-4 border-t border-cinema-border flex justify-end">
-        <button onclick="closeInfoModal()" class="px-5 py-2 rounded-xl bg-cinema-gold text-black font-semibold text-xs tracking-wider uppercase">
-          Got It, Let's Film!
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- TOAST NOTIFICATION CONTAINER -->
-  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-cinema-card border border-cinema-gold text-white text-xs px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
-    <i data-lucide="check-circle" class="w-4 h-4 text-cinema-gold"></i>
-    <span id="toastMessage">Element copied!</span>
-  </div>
-
-  <footer class="border-t border-cinema-border/50 bg-cinema-darker/90 py-4 px-4 text-center text-xs text-slate-500 font-mono">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-      <div class="flex items-center gap-2">
-        <i data-lucide="film" class="w-3.5 h-3.5 text-cinema-gold"></i>
-        <span>CinePrompt Filmmaker Studio • Ready for GitHub Pages</span>
-      </div>
-      <div class="text-[11px] text-slate-500">
-        Includes custom story elements, audio synthesis & instant roster exports
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    /* ==========================================================================
-       1. CORE STATE & DEFAULT FILM ELEMENT REPOSITORY
-       Pre-seeded with all requested user items and creative film expansions.
-       ========================================================================== */
-    const DEFAULT_PROMPTS = [
-      // Core Prompts requested by user:
-      { id: 'p1', title: 'A talking penguin', category: 'Wild Character', tip: 'Does it speak normally or does it whisper ominous prophecies?' },
-      { id: 'p2', title: 'Time travel', category: 'Plot Twist', tip: 'Characters jump 15 minutes back or 100 years into the distant future.' },
-      { id: 'p3', title: 'A mysterious key', category: 'Mysterious Object', tip: 'It doesn’t fit any standard keyhole—until the final climax.' },
-      { id: 'p4', title: 'An AI assistant', category: 'Sci-Fi & Tech', tip: 'Polite, calm, and subtly disobeying human commands.' },
-      { id: 'p5', title: 'A haunted toaster', category: 'Mysterious Object', tip: 'Burns cryptic messages directly into slices of bread.' },
-      { id: 'p6', title: 'A secret underground city', category: 'Uncanny Setting', tip: 'Hidden right underneath a mundane school or convenience store.' },
-      { id: 'p7', title: 'A lost treasure map', category: 'Mysterious Object', tip: 'Drawn on the back of something completely ridiculous.' },
-      { id: 'p8', title: 'An alien invasion', category: 'Plot Twist', tip: 'The aliens arrive, but their motivations are bizarrely domestic.' },
-      { id: 'p9', title: 'A dragon accountant', category: 'Wild Character', tip: 'Hoards receipts instead of gold coins and audits the hero.' },
-      { id: 'p10', title: 'A robot teacher', category: 'Sci-Fi & Tech', tip: 'Possesses zero human empathy until a heartwarming moment.' },
-
-      // Additional cinematic expansions for large classrooms:
-      { id: 'p11', title: 'A briefcase handcuffed to a wrist', category: 'Mysterious Object', tip: 'Neither party knows the three-digit lock code.' },
-      { id: 'p12', title: 'A chef who cannot smell or taste', category: 'Wild Character', tip: 'Cooking the most high-stakes dinner of their life.' },
-      { id: 'p13', title: 'The lights go out every 60 seconds', category: 'Plot Twist', tip: 'Characters must freeze or advance in darkness.' },
-      { id: 'p14', title: 'A cursed vending machine', category: 'Mysterious Object', tip: 'Vends items you desperately need instead of snacks.' },
-      { id: 'p15', title: 'An abandoned bowling alley', category: 'Uncanny Setting', tip: 'One lane continues to reset pins on its own.' },
-      { id: 'p16', title: 'A mime who accidentally cursed someone', category: 'Wild Character', tip: 'Their invisible walls and gestures are becoming physically real.' },
-      { id: 'p17', title: 'A countdown clock painted on someone’s hand', category: 'Sci-Fi & Tech', tip: 'It reaches 00:00 right as the final credits roll.' },
-      { id: 'p18', title: 'A mirror that shows actions 5 seconds late', category: 'Plot Twist', tip: 'Allows characters to spot who is creeping up behind them.' },
-      { id: 'p19', title: 'A retired superhero working retail', category: 'Wild Character', tip: 'Desperately trying not to use laser vision on rude customers.' },
-      { id: 'p20', title: 'A forgotten submarine in a desert', category: 'Uncanny Setting', tip: 'How did it get there? And why is the radar still beeping?' },
-      { id: 'p21', title: 'A secret handshake gone wrong', category: 'Plot Twist', tip: 'Unlocks a vault, a duel, or an undercover mob syndicate.' },
-      { id: 'p22', title: 'A sentient GPS that refuses to make left turns', category: 'Sci-Fi & Tech', tip: 'Guides the getaway car toward a curious detour.' }
-    ];
-
-    let prompts = [];
-    let isSoundMuted = false;
-    let singleHistory = [];
-    let isRolling = false;
-    let selectedLibraryCategory = 'ALL';
-    let currentDrawnPrompt = null;
-
-    // Web Audio API synthesizers so no external audio files are required
-    let audioCtx = null;
-
-    function getAudioContext() {
-      if (!audioCtx) {
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        if (AudioContextClass) {
-          audioCtx = new AudioContextClass();
-        }
-      }
-      if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-      return audioCtx;
-    }
-
-    function playSound(type) {
-      if (isSoundMuted) return;
-      try {
-        const ctx = getAudioContext();
-        if (!ctx) return;
-
-        if (type === 'tick') {
-          // Rapid film reel mechanical tick
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(420 + Math.random() * 80, ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.04);
-          gain.gain.setValueAtTime(0.08, ctx.currentTime);
-          gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.04);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start();
-          osc.stop(ctx.currentTime + 0.04);
-        } else if (type === 'snap') {
-          // Clapperboard slap impact
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'square';
-          osc.frequency.setValueAtTime(260, ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.08);
-          gain.gain.setValueAtTime(0.25, ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start();
-          osc.stop(ctx.currentTime + 0.09);
-        } else if (type === 'fanfare') {
-          // Hollywood cinematic brass reveal chord
-          const notes = [261.63, 329.63, 392.0, 523.25]; // C major chord
-          notes.forEach((freq, index) => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(freq, ctx.currentTime + index * 0.06);
-            gain.gain.setValueAtTime(0.001, ctx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.07, ctx.currentTime + index * 0.06 + 0.05);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(ctx.currentTime + index * 0.06);
-            osc.stop(ctx.currentTime + 0.9);
-          });
-        }
-      } catch (err) {
-        console.warn('Audio synthesis issue:', err);
-      }
-    }
-
-    function toggleSound() {
-      isSoundMuted = !isSoundMuted;
-      const soundIcon = document.getElementById('soundIcon');
-      if (isSoundMuted) {
-        soundIcon.setAttribute('data-lucide', 'volume-x');
-        showToast('Sound muted');
-      } else {
-        soundIcon.setAttribute('data-lucide', 'volume-2');
-        showToast('Sound effects enabled');
-        playSound('snap');
-      }
-      lucide.createIcons();
-    }
-
-    function loadPromptsFromStorage() {
-      try {
-        const stored = localStorage.getItem('cineprompt_elements');
-        if (stored) {
-          prompts = JSON.parse(stored);
-        } else {
-          prompts = [...DEFAULT_PROMPTS];
-          savePromptsToStorage();
-        }
-      } catch (e) {
-        prompts = [...DEFAULT_PROMPTS];
-      }
-      updateUIElementCounts();
-      populateCategoryDropdowns();
-    }
-
-    function savePromptsToStorage() {
-      try {
-        localStorage.setItem('cineprompt_elements', JSON.stringify(prompts));
-      } catch (e) {
-        console.error('Failed to save to local storage', e);
-      }
-      updateUIElementCounts();
-      populateCategoryDropdowns();
-    }
-
-    function resetLibraryToDefault() {
-      prompts = [...DEFAULT_PROMPTS];
-      savePromptsToStorage();
-      renderLibrary();
-      showToast('Reset to original filmmaking prompts!');
-      playSound('snap');
-    }
-
-    function updateUIElementCounts() {
-      const headerCount = document.getElementById('headerElementCount');
-      if (headerCount) headerCount.textContent = prompts.length;
-      const availableBadge = document.getElementById('availableElementsBadge');
-      if (availableBadge) availableBadge.textContent = `Available elements: ${prompts.length}`;
-    }
-
-    function switchMode(mode) {
-      const singleView = document.getElementById('singleView');
-      const rosterView = document.getElementById('rosterView');
-      const libraryView = document.getElementById('libraryView');
-
-      const navSingleBtn = document.getElementById('navSingleBtn');
-      const navClassBtn = document.getElementById('navClassBtn');
-      const navLibBtn = document.getElementById('navLibBtn');
-
-      const buttons = [navSingleBtn, navClassBtn, navLibBtn];
-      buttons.forEach(btn => {
-        btn.className = "px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium text-slate-300 hover:text-white rounded-lg transition-all flex items-center gap-1.5";
-      });
-
-      singleView.classList.add('hidden');
-      rosterView.classList.add('hidden');
-      libraryView.classList.add('hidden');
-
-      if (mode === 'single') {
-        singleView.classList.remove('hidden');
-        navSingleBtn.className = "px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center gap-1.5 bg-cinema-gold text-black shadow-md shadow-cinema-gold/20";
-      } else if (mode === 'roster') {
-        rosterView.classList.remove('hidden');
-        navClassBtn.className = "px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center gap-1.5 bg-cinema-gold text-black shadow-md shadow-cinema-gold/20";
-      } else if (mode === 'library') {
-        libraryView.classList.remove('hidden');
-        navLibBtn.className = "px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center gap-1.5 bg-cinema-gold text-black shadow-md shadow-cinema-gold/20";
-        renderLibrary();
-      }
-      lucide.createIcons();
-    }
-
-    function getUniqueCategories() {
-      const cats = new Set();
-      prompts.forEach(p => {
-        if (p.category) cats.add(p.category);
-      });
-      return Array.from(cats);
-    }
-
-    function populateCategoryDropdowns() {
-      const categories = getUniqueCategories();
-
-      // Single mode dropdown
-      const singleSelect = document.getElementById('singleCategorySelect');
-      const rosterSelect = document.getElementById('rosterCategorySelect');
-
-      if (singleSelect) {
-        const curVal = singleSelect.value;
-        singleSelect.innerHTML = `<option value="ALL">All Categories Combined</option>`;
-        categories.forEach(cat => {
-          singleSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
-        });
-        if (categories.includes(curVal)) singleSelect.value = curVal;
-      }
-
-      if (rosterSelect) {
-        const curRosterVal = rosterSelect.value;
-        rosterSelect.innerHTML = `<option value="ALL">All Categories (Mix of characters, objects, twists)</option>`;
-        categories.forEach(cat => {
-          rosterSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
-        });
-        if (categories.includes(curRosterVal)) rosterSelect.value = curRosterVal;
-      }
-
-      renderLibraryCategoryFilters();
-    }
-
-    function triggerSingleDraw() {
-      if (isRolling) return;
-
-      const categoryFilter = document.getElementById('singleCategorySelect').value;
-      let eligiblePrompts = prompts;
-      if (categoryFilter !== 'ALL') {
-        eligiblePrompts = prompts.filter(p => p.category === categoryFilter);
-      }
-
-      if (eligiblePrompts.length === 0) {
-        showToast('No prompts found in this category!');
-        return;
-      }
-
-      isRolling = true;
-      const overlay = document.getElementById('rollingOverlay');
-      const tickerText = document.getElementById('tickerFastText');
-      const resultText = document.getElementById('resultElement');
-      const resultCategoryBadge = document.getElementById('resultCategoryBadge');
-      const resultHint = document.getElementById('resultHint');
-      const ideaSection = document.getElementById('filmIdeaSection');
-      const ideaText = document.getElementById('filmIdeaText');
-      const reelBadge = document.getElementById('reelStatusBadge');
-      const actionBtn = document.getElementById('drawActionBtn');
-
-      reelBadge.textContent = "ROLLING...";
-      reelBadge.className = "font-mono text-[10px] text-black bg-red-500 font-bold px-2 py-0.5 rounded animate-pulse";
-      actionBtn.classList.add('opacity-75', 'pointer-events-none');
-      overlay.classList.remove('hidden');
-
-      let rollCount = 0;
-      const totalSteps = 22;
-      const stepDuration = 70;
-
-      const interval = setInterval(() => {
-        rollCount++;
-        const randomItem = eligiblePrompts[Math.floor(Math.random() * eligiblePrompts.length)];
-        tickerText.textContent = randomItem.title.toUpperCase();
-        playSound('tick');
-
-        if (rollCount >= totalSteps) {
-          clearInterval(interval);
-          finalizeSingleDraw(randomItem);
-        }
-      }, stepDuration);
-    }
-
-    function finalizeSingleDraw(chosenItem) {
-      isRolling = false;
-      currentDrawnPrompt = chosenItem;
-
-      const overlay = document.getElementById('rollingOverlay');
-      const resultText = document.getElementById('resultElement');
-      const resultCategoryBadge = document.getElementById('resultCategoryBadge');
-      const resultHint = document.getElementById('resultHint');
-      const ideaSection = document.getElementById('filmIdeaSection');
-      const ideaText = document.getElementById('filmIdeaText');
-      const reelBadge = document.getElementById('reelStatusBadge');
-      const actionBtn = document.getElementById('drawActionBtn');
-
-      overlay.classList.add('hidden');
-      actionBtn.classList.remove('opacity-75', 'pointer-events-none');
-
-      reelBadge.textContent = "ASSIGNED";
-      reelBadge.className = "font-mono text-[10px] text-black bg-cinema-gold font-bold px-2 py-0.5 rounded";
-
-      resultText.textContent = chosenItem.title;
-      resultText.className = "text-3xl sm:text-5xl font-bold font-sans text-cinema-gold tracking-tight drop-shadow-md py-2 animate-bounce-short";
-
-      resultCategoryBadge.textContent = chosenItem.category || 'FILM WILDCARD';
-      resultCategoryBadge.classList.remove('hidden');
-
-      resultHint.textContent = "Mandatory constraint assigned. Film teams must incorporate this naturally or dramatically into their scene.";
-
-      if (chosenItem.tip) {
-        ideaSection.classList.remove('hidden');
-        ideaText.textContent = chosenItem.tip;
-      } else {
-        ideaSection.classList.remove('hidden');
-        ideaText.textContent = `How does "${chosenItem.title}" challenge your main character's objective in this film?`;
-      }
-
-      // Record to history
-      singleHistory.unshift(chosenItem.title);
-      if (singleHistory.length > 8) singleHistory.pop();
-      renderSingleHistory();
-
-      // Audio and Confetti blast
-      playSound('fanfare');
-      fireConfetti();
-    }
-
-    function fireConfetti() {
-      if (typeof confetti === 'function') {
-        confetti({
-          particleCount: 55,
-          spread: 60,
-          origin: { y: 0.65 },
-          colors: ['#F5C518', '#E50914', '#FFFFFF', '#D97706']
-        });
-      }
-    }
-
-    function renderSingleHistory() {
-      const container = document.getElementById('recentRollsList');
-      if (singleHistory.length === 0) {
-        container.innerHTML = `<span class="text-xs text-slate-500 italic">No rolls yet. Hit Action!</span>`;
-        return;
-      }
-      container.innerHTML = singleHistory.map(item => `
-        <span class="inline-flex items-center px-2 py-1 rounded-md text-[11px] bg-cinema-card border border-cinema-border text-slate-300">
-          ${item}
-        </span>
-      `).join('');
-    }
-
-    function clearSingleHistory() {
-      singleHistory = [];
-      renderSingleHistory();
-      showToast('Recent history cleared');
-    }
-
-    function loadSampleStudents() {
-      const sample = [
-        "Alex Rivera",
-        "Jordan Lee",
-        "Priya Sharma",
-        "Marcus Thorne",
-        "Elena Rostova",
-        "Dante Washington",
-        "Chloe Dubois",
-        "Hassan Al-Mansoor",
-        "Zoe Kravitz",
-        "Kai Takahashi"
-      ];
-      document.getElementById('rosterNamesInput').value = sample.join('\n');
-      updateRosterCounter();
-      showToast('Loaded 10 student names');
-    }
-
-    function updateRosterCounter() {
-      const input = document.getElementById('rosterNamesInput');
-      const lines = input.value.split('\n').map(s => s.trim()).filter(Boolean);
-      const badge = document.getElementById('studentCountBadge');
-      badge.textContent = `${lines.length} filmmakers entered`;
-    }
-
-    document.getElementById('rosterNamesInput').addEventListener('input', updateRosterCounter);
-
-    let currentRosterAssignments = [];
-
-    function generateRosterAssignments() {
-      const input = document.getElementById('rosterNamesInput');
-      const lines = input.value.split('\n').map(s => s.trim()).filter(Boolean);
-
-      if (lines.length === 0) {
-        showToast('Please enter at least one learner name!');
-        return;
-      }
-
-      const allowDuplicates = document.getElementById('rosterAllowDuplicates').checked;
-      const categoryFilter = document.getElementById('rosterCategorySelect').value;
-
-      let eligiblePool = prompts;
-      if (categoryFilter !== 'ALL') {
-        eligiblePool = prompts.filter(p => p.category === categoryFilter);
-      }
-
-      if (eligiblePool.length === 0) {
-        showToast('No prompts in selected category.');
-        return;
-      }
-
-      // Shuffle pool copy
-      let pool = [...eligiblePool].sort(() => 0.5 - Math.random());
-      const assignments = [];
-
-      lines.forEach((studentName, idx) => {
-        let assignedPrompt;
-
-        if (!allowDuplicates && pool.length > 0) {
-          assignedPrompt = pool.pop();
-        } else {
-          // If out of prompts or duplicates allowed, pick any random item
-          assignedPrompt = eligiblePool[Math.floor(Math.random() * eligiblePool.length)];
+            const duration = 4500; // Smooth 4.5 second timeline
+            const startTime = performance.now();
+            const startAngle = currentAngle;
+
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                if (elapsed >= duration) {
+                    currentAngle = (startAngle + targetRotation) % (2 * Math.PI);
+                    drawWheel();
+                    calculateWinner();
+                    spinBtn.disabled = false;
+                } else {
+                    // Cubic Ease-Out curve for an authentic mechanical deceleration feel
+                    const t = elapsed / duration;
+                    const easeOutCubic = 1 - Math.pow(1 - t, 3);
+                    currentAngle = startAngle + targetRotation * easeOutCubic;
+                    
+                    drawWheel();
+                    requestAnimationFrame(animate);
+                }
+            }
+            requestAnimationFrame(animate);
         }
 
-        assignments.push({
-          sceneTake: `SCENE ${String(idx + 1).padStart(2, '0')}`,
-          name: studentName,
-          prompt: assignedPrompt.title,
-          category: assignedPrompt.category || 'Wildcard',
-          tip: assignedPrompt.tip || 'Incorporate visibly into narrative.'
-        });
-      });
+        function calculateWinner() {
+            // Adjust calculation based on top fixed ticker placement (-90 degrees offset)
+            let trackingAngle = (currentAngle + Math.PI / 2) % (2 * Math.PI);
+            if (trackingAngle < 0) trackingAngle += 2 * Math.PI;
 
-      currentRosterAssignments = assignments;
-      renderRosterOutput();
-      playSound('fanfare');
-      fireConfetti();
-      showToast(`Assigned ${assignments.length} unique filmmaker challenges!`);
-    }
+            // Invert index conversion step due to standard canvas clockwise graphics layout
+            const winningIndex = numSegments - 1 - Math.floor(trackingAngle / segmentAngle);
+            const winner = elements[winningIndex % numSegments];
+            
+            resultDisplay.textContent = `🚨 Twist: ${winner}!`;
+        }
 
-    function renderRosterOutput() {
-      const container = document.getElementById('rosterCardsContainer');
-      const badge = document.getElementById('assignedCountBadge');
-      badge.textContent = `${currentRosterAssignments.length} Assigned`;
-
-      if (currentRosterAssignments.length === 0) {
-        container.innerHTML = `
-          <div class="bg-cinema-card/50 border-2 border-dashed border-cinema-border/70 rounded-2xl p-12 text-center flex flex-col items-center justify-center">
-            <i data-lucide="user-check" class="w-6 h-6 text-slate-500 mb-2"></i>
-            <p class="text-xs text-slate-500">No student roster generated yet.</p>
-          </div>
-        `;
-        lucide.createIcons();
-        return;
-      }
-
-      container.innerHTML = currentRosterAssignments.map((item, i) => `
-        <div class="roster-card bg-cinema-card hover:bg-cinema-cardHover border border-cinema-border/80 rounded-xl p-3.5 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
-          <div class="flex items-center gap-3">
-            <span class="font-mono text-xs font-bold text-black bg-cinema-gold px-2 py-1 rounded">
-              #${i + 1}
-            </span>
-            <div>
-              <div class="text-sm font-bold text-white">${escapeHtml(item.name)}</div>
-              <div class="text-xs text-slate-400 flex items-center gap-1.5 mt-0.5">
-                <span class="inline-block px-1.5 py-0.2 text-[10px] rounded bg-cinema-darker text-slate-300 font-mono border border-cinema-border">
-                  ${escapeHtml(item.category)}
-                </span>
-                <span class="text-[11px] text-slate-400 italic hidden md:inline truncate max-w-xs">
-                  Tip: ${escapeHtml(item.tip)}
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="bg-cinema-darker/90 px-3 py-1.5 rounded-lg border border-cinema-border/80 text-right sm:max-w-xs">
-            <span class="text-xs font-semibold text-cinema-gold font-sans block">
-              ${escapeHtml(item.prompt)}
-            </span>
-          </div>
-        </div>
-      `).join('');
-
-      lucide.createIcons();
-    }
-
-    function copyRosterClipboard() {
-      if (currentRosterAssignments.length === 0) {
-        showToast('Generate a roster first to copy!');
-        return;
-      }
-      const lines = currentRosterAssignments.map(a => `${a.name} -> Element: "${a.prompt}" [${a.category}]`);
-      const output = `--- CINEPROMPT FILMMAKING CHALLENGE ASSIGNMENTS ---\n` + lines.join('\n');
-      copyToClipboardFallback(output);
-      showToast('Roster copied to clipboard!');
-    }
-
-    function exportRosterCSV() {
-      if (currentRosterAssignments.length === 0) {
-        showToast('No roster data to export.');
-        return;
-      }
-      let csvContent = "data:text/csv;charset=utf-8,Order,Learner Name,Assigned Element,Category,Tip\n";
-      currentRosterAssignments.forEach((a, i) => {
-        csvContent += `"${i + 1}","${a.name.replace(/"/g, '""')}","${a.prompt.replace(/"/g, '""')}","${a.category.replace(/"/g, '""')}","${a.tip.replace(/"/g, '""')}"\n`;
-      });
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", `film_challenge_roster_${new Date().toISOString().slice(0,10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      showToast('CSV downloaded!');
-    }
-
-    function renderLibraryCategoryFilters() {
-      const bar = document.getElementById('libraryCategoryFilterBar');
-      if (!bar) return;
-      const categories = ['ALL', ...getUniqueCategories()];
-
-      bar.innerHTML = categories.map(cat => {
-        const isActive = cat === selectedLibraryCategory;
-        return `
-          <button onclick="setLibraryCategoryFilter('${cat}')" class="px-2.5 py-1 rounded-lg text-xs font-mono transition ${isActive ? 'bg-cinema-gold text-black font-bold' : 'bg-cinema-darker text-slate-400 hover:text-white border border-cinema-border'}">
-            ${cat}
-          </button>
-        `;
-      }).join('');
-    }
-
-    function setLibraryCategoryFilter(cat) {
-      selectedLibraryCategory = cat;
-      renderLibraryCategoryFilters();
-      renderLibrary();
-    }
-
-    function renderLibrary() {
-      const grid = document.getElementById('libraryGrid');
-      const search = (document.getElementById('librarySearchInput').value || '').toLowerCase();
-
-      let filtered = prompts.filter(p => {
-        const matchesCat = (selectedLibraryCategory === 'ALL') || (p.category === selectedLibraryCategory);
-        const matchesSearch = p.title.toLowerCase().includes(search) || (p.tip && p.tip.toLowerCase().includes(search));
-        return matchesCat && matchesSearch;
-      });
-
-      if (filtered.length === 0) {
-        grid.innerHTML = `
-          <div class="col-span-full py-12 text-center text-slate-500 bg-cinema-card/40 rounded-2xl border border-cinema-border/50">
-            <i data-lucide="layers" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
-            <p class="text-sm">No creative elements match your filter.</p>
-          </div>
-        `;
-        lucide.createIcons();
-        return;
-      }
-
-      grid.innerHTML = filtered.map(p => `
-        <div class="bg-cinema-card border border-cinema-border rounded-xl p-4 flex flex-col justify-between hover:border-cinema-gold/40 transition group">
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-2">
-              <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-cinema-darker text-cinema-gold border border-cinema-gold/30">
-                ${escapeHtml(p.category || 'Wildcard')}
-              </span>
-              <button onclick="deletePromptElement('${p.id}')" class="text-slate-500 hover:text-red-400 p-1 transition" title="Delete Element">
-                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-              </button>
-            </div>
-            <h4 class="text-base font-bold text-white group-hover:text-cinema-gold transition-colors">
-              ${escapeHtml(p.title)}
-            </h4>
-            <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-              ${escapeHtml(p.tip || 'A creative wild card for scene development.')}
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-cinema-border/50 flex items-center justify-between text-[11px] text-slate-500">
-            <span class="font-mono">ID: ${escapeHtml(p.id)}</span>
-            <button onclick="testSoloPrompt('${escapeHtml(p.id)}')" class="text-xs text-cinema-gold hover:underline flex items-center gap-1 font-medium">
-              <span>Test Roll</span>
-              <i data-lucide="arrow-right" class="w-3 h-3"></i>
-            </button>
-          </div>
-        </div>
-      `).join('');
-
-      lucide.createIcons();
-    }
-
-    function testSoloPrompt(id) {
-      const item = prompts.find(p => p.id === id);
-      if (item) {
-        switchMode('single');
-        finalizeSingleDraw(item);
-      }
-    }
-
-    function deletePromptElement(id) {
-      prompts = prompts.filter(p => p.id !== id);
-      savePromptsToStorage();
-      renderLibrary();
-      showToast('Element removed from bank');
-      playSound('snap');
-    }
-
-    function openAddPromptModal() {
-      document.getElementById('newPromptTitle').value = '';
-      document.getElementById('newPromptTip').value = '';
-      document.getElementById('addModal').classList.remove('hidden');
-    }
-
-    function closeAddPromptModal() {
-      document.getElementById('addModal').classList.add('hidden');
-    }
-
-    function saveNewPromptElement() {
-      const titleInput = document.getElementById('newPromptTitle');
-      const categoryInput = document.getElementById('newPromptCategory');
-      const tipInput = document.getElementById('newPromptTip');
-
-      const title = titleInput.value.trim();
-      if (!title) {
-        showToast('Please provide an element name!');
-        titleInput.focus();
-        return;
-      }
-
-      const newElement = {
-        id: 'p_custom_' + Date.now().toString(36),
-        title: title,
-        category: categoryInput.value,
-        tip: tipInput.value.trim() || 'Custom educator challenge element.'
-      };
-
-      prompts.unshift(newElement);
-      savePromptsToStorage();
-      closeAddPromptModal();
-      renderLibrary();
-      showToast(`Added "${title}" to your prompt bank!`);
-      playSound('snap');
-    }
-
-    function openInfoModal() {
-      document.getElementById('infoModal').classList.remove('hidden');
-    }
-
-    function closeInfoModal() {
-      document.getElementById('infoModal').classList.add('hidden');
-    }
-
-    function copyCurrentPrompt() {
-      if (!currentDrawnPrompt) {
-        showToast('Roll a prompt first!');
-        return;
-      }
-      const text = `Filmmaking Challenge Element: "${currentDrawnPrompt.title}" (${currentDrawnPrompt.category}) - ${currentDrawnPrompt.tip || ''}`;
-      copyToClipboardFallback(text);
-      showToast('Challenge copied to clipboard!');
-    }
-
-    function sharePrompt() {
-      if (!currentDrawnPrompt) {
-        showToast('Draw a prompt first to share!');
-        return;
-      }
-      if (navigator.share) {
-        navigator.share({
-          title: 'Filmmaking Challenge Prompt',
-          text: `My film must feature: "${currentDrawnPrompt.title}"! Generated with CinePrompt.`,
-          url: window.location.href
-        }).catch(() => copyCurrentPrompt());
-      } else {
-        copyCurrentPrompt();
-      }
-    }
-
-    // Reliable fallback copy method adhering to iframe restrictions
-    function copyToClipboardFallback(text) {
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      textArea.style.top = "0";
-      textArea.style.left = "0";
-      textArea.style.position = "fixed";
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      try {
-        document.execCommand('copy');
-      } catch (err) {
-        console.error('Copy fallback failed', err);
-      }
-      document.body.removeChild(textArea);
-    }
-
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      const text = document.getElementById('toastMessage');
-      text.textContent = msg;
-      toast.classList.remove('translate-y-20', 'opacity-0');
-      toast.classList.add('translate-y-0', 'opacity-100');
-      setTimeout(() => {
-        toast.classList.add('translate-y-20', 'opacity-0');
-        toast.classList.remove('translate-y-0', 'opacity-100');
-      }, 2600);
-    }
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    window.onload = function() {
-      loadPromptsFromStorage();
-      lucide.createIcons();
-      updateRosterCounter();
-    };
-  </script>
+        // Draw initial state on canvas load
+        drawWheel();
+    </script>
 </body>
 </html>

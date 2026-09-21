@@ -9,10 +9,11 @@
             --bg-color: #0d0e12;
             --card-bg: #161822;
             --accent-color: #ff3e6c;
-            --accent-glow: rgba(255, 62, 108, 0.4);
+            --accent-glow: rgba(255, 62, 108, 0.3);
             --success-color: #00f5d4;
             --text-color: #f1f3f9;
             --text-muted: #8f96a3;
+            --border-color: #222533;
         }
 
         * {
@@ -33,17 +34,17 @@
         }
 
         .container {
-            max-width: 550px;
+            max-width: 600px;
             width: 100%;
             text-align: center;
             background: var(--card-bg);
-            padding: 35px 25px;
+            padding: 40px 30px;
             border-radius: 24px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         h1 {
-            margin: 0 0 10px 0;
+            margin: 0 0 12px 0;
             font-size: 2.4rem;
             font-weight: 800;
             text-transform: uppercase;
@@ -53,50 +54,69 @@
             -webkit-text-fill-color: transparent;
         }
 
-        p {
+        .challenge-text {
             color: var(--text-muted);
             margin: 0 0 35px 0;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             line-height: 1.6;
+            padding: 0 10px;
         }
 
-        .wheel-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 420px;
-            aspect-ratio: 1 / 1;
-            margin: 0 auto 35px auto;
+        .display-box {
+            background-color: #090a0e;
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px 20px;
+            margin-bottom: 35px;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.3s ease;
         }
 
-        /* Top indicator arrow styling */
-        .ticker {
-            position: absolute;
-            top: -18px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 18px solid transparent;
-            border-right: 18px solid transparent;
-            border-top: 28px solid var(--accent-color);
-            z-index: 10;
-            filter: drop-shadow(0 6px 10px var(--accent-glow));
+        .display-box.active {
+            border-color: var(--accent-color);
         }
 
-        canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-            border-radius: 50%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 10px #222533;
+        .display-box.winner {
+            border-color: var(--success-color);
+        }
+
+        #element-text {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.2s ease;
+        }
+
+        .winner #element-text {
+            color: var(--success-color);
+            text-shadow: 0 0 15px rgba(0, 245, 212, 0.3);
+        }
+
+        #hint-text {
+            margin-top: 20px;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            max-width: 90%;
+            display: none;
+            text-align: left;
+            border-top: 1px solid #222533;
+            padding-top: 15px;
         }
 
         .spin-btn {
             background: linear-gradient(135deg, var(--accent-color), #ff6b6b);
             color: white;
             border: none;
-            padding: 16px 45px;
-            font-size: 1.25rem;
+            padding: 18px 50px;
+            font-size: 1.3rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -108,7 +128,7 @@
 
         .spin-btn:hover {
             opacity: 0.95;
-            box-shadow: 0 8px 25px rgba(255, 62, 108, 0.6);
+            box-shadow: 0 8px 25px rgba(255, 62, 108, 0.5);
         }
 
         .spin-btn:active {
@@ -122,166 +142,78 @@
             cursor: not-allowed;
             transform: none;
         }
-
-        #result-display {
-            margin-top: 30px;
-            font-size: 1.6rem;
-            font-weight: 800;
-            min-height: 38px;
-            color: var(--success-color);
-            text-shadow: 0 0 15px rgba(0, 245, 212, 0.3);
-            letter-spacing: 0.5px;
-        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Wheel of Doom</h1>
-        <p>Spin the wheel to lock in the mandatory creative twist element for your Gen AI film challenge!</p>
+        <h1>Wheel of Doom Challenge</h1>
+        <div class="challenge-text">
+            To make the challenge more interesting, use the Wheel of Doom to choose one element that must be included in your film idea.
+        </div>
         
-        <div class="wheel-wrapper">
-            <div class="ticker"></div>
-            <canvas id="wheel" width="600" height="600"></canvas>
+        <div class="display-box" id="card-display">
+            <p id="element-text">Ready On Set</p>
+            <div id="hint-text"></div>
         </div>
 
-        <button class="spin-btn" id="spin-button" onclick="spinWheel()">Spin Wheel</button>
-        <div id="result-display"></div>
+        <button class="spin-btn" id="roll-button" onclick="rollChallenge()">Action! Roll Prompt</button>
     </div>
 
     <script>
-        // Expanded to 20 unique prompt combinations
-        const elements = [
-            "Talking Penguin",
-            "Time Travel",
-            "Haunted Toaster",
-            "AI Assistant",
-            "Secret Underground City",
-            "Lost Treasure Map",
-            "Dragon Accountant",
-            "Robot Teacher",
-            "Alien Invasion",
-            "Mysterious Key",
-            "Invisible Sidekick",
-            "Cyberpunk Detective",
-            "Sentient Smartphone",
-            "Medieval Spaceship",
-            "Infinite Hallway",
-            "Gravity-Defying Boots",
-            "Telepathic Houseplant",
-            "Shape-Shifting Villain",
-            "Underwater Metropolis",
-            "Cursed Pocket Watch"
-        ];
-
-        // High-contrast alternating neon colors optimized for 20 segments
-        const colors = [
-            "#ff0055", "#00bbf9", "#ff9f1c", "#00f5d4", "#9b5de5",
-            "#f15bb5", "#3a86ff", "#ffbe0b", "#ff4d6d", "#00f5d4",
-            "#ff0055", "#00bbf9", "#ff9f1c", "#00f5d4", "#9b5de5",
-            "#f15bb5", "#3a86ff", "#ffbe0b", "#ff4d6d", "#00f5d4"
-        ];
-
-        const canvas = document.getElementById("wheel");
-        const ctx = canvas.getContext("2d");
-        const spinBtn = document.getElementById("spin-button");
-        const resultDisplay = document.getElementById("result-display");
-
-        const numSegments = elements.length;
-        const segmentAngle = (2 * Math.PI) / numSegments;
-        let currentAngle = 0;
-
-        function drawWheel() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const radius = canvas.width / 2;
-            
-            ctx.save();
-            ctx.translate(radius, radius);
-            ctx.rotate(currentAngle);
-
-            for (let i = 0; i < numSegments; i++) {
-                // Render pizza slice geometry
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.arc(0, 0, radius, i * segmentAngle, (i + 1) * segmentAngle);
-                ctx.fillStyle = colors[i % colors.length];
-                ctx.fill();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = "#161822";
-                ctx.stroke();
-
-                // Render integrated challenge label
-                ctx.save();
-                ctx.fillStyle = "#000000";
-                // Smaller bold font size to comfortably accommodate 20 text items on the canvas
-                ctx.font = "bold 12px sans-serif";
-                
-                // Align exactly within the center point of the slice segment arc
-                ctx.rotate((i + 0.5) * segmentAngle);
-                ctx.textAlign = "right";
-                ctx.textBaseline = "middle";
-                
-                ctx.fillText(elements[i], radius - 20, 0);
-                ctx.restore();
-            }
-
-            // Aesthetic center hub accent
-            ctx.restore();
-            ctx.beginPath();
-            ctx.arc(radius, radius, 15, 0, 2 * Math.PI);
-            ctx.fillStyle = "#ffffff";
-            ctx.fill();
-            ctx.lineWidth = 5;
-            ctx.strokeStyle = "#0d0e12";
-            ctx.stroke();
-        }
-
-        function spinWheel() {
-            spinBtn.disabled = true;
-            resultDisplay.textContent = "";
-
-            // Force multi-rotation spin calculations to make landing targets fully variable
-            const extraRotations = 6 + Math.floor(Math.random() * 5); // 6 to 10 full turns
-            const targetRotation = extraRotations * 2 * Math.PI + Math.random() * 2 * Math.PI;
-            
-            const duration = 4500; // Smooth 4.5 second timeline
-            const startTime = performance.now();
-            const startAngle = currentAngle;
-
-            function animate(currentTime) {
-                const elapsed = currentTime - startTime;
-                if (elapsed >= duration) {
-                    currentAngle = (startAngle + targetRotation) % (2 * Math.PI);
-                    drawWheel();
-                    calculateWinner();
-                    spinBtn.disabled = false;
-                } else {
-                    // Cubic Ease-Out curve for an authentic mechanical deceleration feel
-                    const t = elapsed / duration;
-                    const easeOutCubic = 1 - Math.pow(1 - t, 3);
-                    currentAngle = startAngle + targetRotation * easeOutCubic;
-                    
-                    drawWheel();
-                    requestAnimationFrame(animate);
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-
-        function calculateWinner() {
-            // Adjust calculation based on top fixed ticker placement (-90 degrees offset)
-            let trackingAngle = (currentAngle + Math.PI / 2) % (2 * Math.PI);
-            if (trackingAngle < 0) trackingAngle += 2 * Math.PI;
-
-            // Invert index conversion step due to standard canvas clockwise graphics layout
-            const winningIndex = numSegments - 1 - Math.floor(trackingAngle / segmentAngle);
-            const winner = elements[winningIndex % numSegments];
-            
-            resultDisplay.textContent = `🚨 Twist: ${winner}!`;
-        }
-
-        // Draw initial state on canvas load
-        drawWheel();
-    </script>
-</body>
-</html>
+        // Structured data featuring elements and creative hints for Gen AI constraints
+        const challengeBank = [
+            {
+                element: "Talking Penguin",
+                hint: "💡 <strong>Hint:</strong> Use text generation prompts to frame them as an sophisticated aristocrat or a gritty underworld detective. In image generators, add styles like 'wes anderson cinematography' or 'noir lighting, high-contrast hyper-detailed textures' to make the animal render cohesively inside human scenes."
+            },
+            {
+                element: "Time Travel",
+                hint: "💡 <strong>Hint:</strong> Show time shifts through rapid environmental grading changes. Prompt your AI tool to generate a single room changing architectural aesthetics across decades (e.g., '1920s art deco transitioning into 2099 cyberpunk neon neon grid furniture') while the character stands perfectly still."
+            },
+            {
+                element: "Haunted Toaster",
+                hint: "💡 <strong>Hint:</strong> Avoid making it silly by treating it as an eerie anomaly or cursed artifact. Prompt your video tool to show smoke rising from the appliance forming faint, ghastly faces, or use text models to write dialogue where the device communicates via cryptic patterns burned onto bread slices."
+            },
+            {
+                element: "AI Assistant",
+                hint: "💡 <strong>Hint:</strong> Make the AI an omnipresent voice or a physical, glitching holographic interface. Direct your character prompts to capture reactions of paranoia or deep dependency—such as a user staring longingly at an empty space where an avatar projects."
+            },
+            {
+                element: "Secret Underground City",
+                hint: "💡 <strong>Hint:</strong> Focus your environmental prompts on scale and light. Use keywords like 'subterranean cavernous industrial architecture, columns carved from bedrock, bioluminescent moss paths, sprawling copper piping networks, moody dark low-key cinematic shadows'."
+            },
+            {
+                element: "Lost Treasure Map",
+                hint: "💡 <strong>Hint:</strong> Instead of parchment paper, prompt your tools to generate a map hidden within code, etched dynamically onto a modern character's synthetic cybernetic eye, or revealing its paths only under specific infrared laser light illumination."
+            },
+            {
+                element: "Dragon Accountant",
+                hint: "💡 <strong>Hint:</strong> Subvert expectations by putting a colossal mythical beast in a mundane corporate office. Prompt your image assets for a 'massive crimson dragon wearing oversized reading glasses, carefully sorting miniature spreadsheets with claws, high-end office cubicle'."
+            },
+            {
+                element: "Robot Teacher",
+                hint: "💡 <strong>Hint:</strong> Explore the character dynamic. Is it a vintage mid-century model with copper wiring trying to teach modern emotional intelligence, or an aggressive, ultra-sleek monochrome android enforcing strictly logical math lessons on humans?"
+            },
+            {
+                element: "Alien Invasion",
+                hint: "💡 <strong>Hint:</strong> Frame the scale from the street level to save visual clutter. Prompt your video/image modules for 'reflections of gargantuan geometric motherships shifting behind thick city storm clouds, panic-stricken faces illuminated by alien search beams'."
+            },
+            {
+                element: "Mysterious Key",
+                hint: "💡 <strong>Hint:</strong> The key doesn't have to turn a lock. Prompt it as a floating obsidian shard that absorbs local ambient light, or a key that unlocks hidden genetic structural layers inside a character's digital memory storage cells."
+            },
+            {
+                element: "Invisible Sidekick",
+                hint: "💡 <strong>Hint:</strong> Convey presence using environmental reactions. Prompt your video generations for footprints pressing down on soft carpets, floating objects being carried across an empty kitchen, or a character conversing intensely with an empty chair."
+            },
+            {
+                element: "Cyberpunk Detective",
+                hint: "💡 <strong>Hint:</strong> Lean heavily into stylistic prompts: 'detective in a wet neon-lit alleyway, transparent yellow vinyl trenchcoat, smoke rising from a cybernetic cigarette, rain slicked asphalt, octane render, 8k resolution close-up portrait'."
+            },
+            {
+                element: "Sentient Smartphone",
+                hint: "💡 <strong>Hint:</strong> The phone is pulling the strings. Use your text generation engines to outline a short story where a smartphone deliberately orchestrates real-world minor accidents to keep its owner isolated from talking to other physical humans."
+            },
+            {
+                element: "Medieval Spaceship",

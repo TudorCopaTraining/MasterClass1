@@ -9,7 +9,6 @@
             --bg-color: #0d0e12;
             --card-bg: #161822;
             --accent-color: #ff3e6c;
-            --accent-glow: rgba(255, 62, 108, 0.3);
             --success-color: #00f5d4;
             --text-color: #f1f3f9;
             --text-muted: #8f96a3;
@@ -40,7 +39,7 @@
             background: var(--card-bg);
             padding: 40px 30px;
             border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
         }
 
         h1 {
@@ -73,15 +72,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: border-color 0.3s ease;
-        }
-
-        .display-box.active {
-            border-color: var(--accent-color);
-        }
-
-        .display-box.winner {
-            border-color: var(--success-color);
         }
 
         #element-text {
@@ -91,11 +81,10 @@
             margin: 0;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: color 0.2s ease;
         }
 
-        .winner #element-text {
-            color: var(--success-color);
+        .winner-text {
+            color: var(--success-color) !important;
             text-shadow: 0 0 15px rgba(0, 245, 212, 0.3);
         }
 
@@ -105,7 +94,6 @@
             color: var(--text-muted);
             line-height: 1.5;
             max-width: 90%;
-            display: none;
             text-align: left;
             border-top: 1px solid #222533;
             padding-top: 15px;
@@ -122,17 +110,12 @@
             letter-spacing: 1px;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 6px 20px var(--accent-glow);
-            transition: transform 0.1s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+            box-shadow: 0 6px 20px rgba(255, 62, 108, 0.3);
+            transition: background 0.2s ease;
         }
 
         .spin-btn:hover {
             opacity: 0.95;
-            box-shadow: 0 8px 25px rgba(255, 62, 108, 0.5);
-        }
-
-        .spin-btn:active {
-            transform: scale(0.97);
         }
 
         .spin-btn:disabled {
@@ -140,7 +123,6 @@
             color: #686f7d;
             box-shadow: none;
             cursor: not-allowed;
-            transform: none;
         }
     </style>
 </head>
@@ -154,10 +136,10 @@
         
         <div class="display-box" id="card-display">
             <p id="element-text">Ready On Set</p>
-            <div id="hint-text"></div>
+            <div id="hint-text" style="display: none;"></div>
         </div>
 
-        <button class="spin-btn" id="roll-button" onclick="rollChallenge()">Action! Roll Prompt</button>
+        <button class="spin-btn" id="roll-button">Action! Roll Prompt</button>
     </div>
 
     <script>
@@ -218,3 +200,9 @@
                 element: "Medieval Spaceship",
                 hint: "💡 <strong>Hint:</strong> Combine contrasting historical architectures inside your generators. Use descriptive framing like: 'gothic cathedral nave converted into a spacecraft cockpit, stained glass viewports looking out at deep purple cosmic nebulae, oak control levers'."
             },
+            {
+                element: "Infinite Hallway",
+                hint: "💡 <strong>Hint:</strong> Excellent for testing surreal loop generations. Prompt your tools for a 'brutalist concrete corridor where doors shrink continuously into the horizon, MC Escher geometric impossible architectural gravity patterns'."
+            },
+            {
+                element: "Gravity-Defying Boots",

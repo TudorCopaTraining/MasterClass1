@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Automation Hackathon</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Header / Banner -->
+    <header class="bg-indigo-900 text-white py-12 px-6 shadow-md">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="bg-indigo-700 text-indigo-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Apprentice Workshop</span>
+            <h1 class="text-4xl font-extrabold mt-3 tracking-tight">The "Broken Process" Hackathon</h1>
+            <p class="text-indigo-200 mt-2 text-lg">Analyze real-world inefficiencies and architect a modern Intelligent Automation (IA) solution.</p>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto my-10 px-4">
+        
+        <!-- Objective & Scenario Card -->
+        <section class="bg-white rounded-xl shadow-xs border border-slate-200 p-6 mb-8">
+            <h2 class="text-2xl font-bold text-slate-900 mb-3">🚨 The Challenge Scenario: The Expense Claims Mess</h2>
+            <p class="text-slate-600 leading-relaxed mb-4">
+                Right now, employees email PDF receipts to HR. A human worker manually reads each PDF, extracts the data into a spreadsheet, drafts an email to the line manager for approval, waits for a reply, and then manually re-types the approved data into the company payroll system. It takes weeks, errors are common, and workers hate it.
+            </p>
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
+                <p class="text-sm text-amber-900 font-semibold">Your Mission:</p>
+                <p class="text-sm text-amber-800">Work in teams of 3–4 to eliminate this manual grind by architecting an Intelligent Automation solution using <strong>AI/OCR</strong>, <strong>RPA</strong>, and <strong>Human-in-the-Loop</strong> safeguards.</p>
+            </div>
+        </section>
+
+        <!-- Dynamic Navigation Tabs -->
+        <div class="border-b border-slate-200 mb-6">
+            <nav class="flex space-x-4" aria-label="Tabs">
+                <button onclick="switchTab('setup')" id="tab-setup" class="tab-btn py-3 px-4 font-medium text-sm border-b-2 border-indigo-600 text-indigo-600 cursor-pointer">1. Setup & Roles</button>
+                <button onclick="switchTab('phase1')" id="tab-phase1" class="tab-btn py-3 px-4 font-medium text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-700 cursor-pointer">2. Phase 1: Mapping</button>
+                <button onclick="switchTab('phase2')" id="tab-phase2" class="tab-btn py-3 px-4 font-medium text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-700 cursor-pointer">3. Phase 2: Design</button>
+                <button onclick="switchTab('phase3')" id="tab-phase3" class="tab-btn py-3 px-4 font-medium text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-700 cursor-pointer">4. Phase 3: The Pitch</button>
+            </nav>
+        </div>
+
+        <!-- Tab 1: Setup -->
+        <div id="content-setup" class="tab-content active space-y-6">
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6">
+                <h3 class="text-xl font-bold text-slate-900 mb-4">⏱️ Step 1: Form Teams & Assign Roles (15 Mins)</h3>
+                <p class="text-slate-600 mb-4">Split into groups of 3 to 4. To simulate a real enterprise automation delivery team, assign one person to each of the following roles:</p>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                        <strong class="text-indigo-900 block text-base mb-1">💼 Business Analyst</strong>
+                        <span class="text-xs text-slate-500">Focuses on finding process bottlenecks, building the workflow steps, and mapping business value.</span>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                        <strong class="text-indigo-900 block text-base mb-1">🛠️ Automation Architect</strong>
+                        <span class="text-xs text-slate-500">Decides which tools (AI, RPA, or APIs) are right for each specific step of the process.</span>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                        <strong class="text-indigo-900 block text-base mb-1">🛡️ Risk & Governance Officer</strong>
+                        <span class="text-xs text-slate-500">Ensures compliance, data security, and designs the "Human-in-the-Loop" validation steps.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Phase 1 -->
+        <div id="content-phase1" class="tab-content space-y-6">
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6">
+                <h3 class="text-xl font-bold text-slate-900 mb-4">⏱️ Step 2: Bottleneck Hunting (30 Mins)</h3>
+                <p class="text-slate-600 mb-4">Sketch out the current manual workflow on paper, a physical whiteboard, or a digital canvas like Miro. Identify exactly where the process slows down or suffers from human error.</p>
+                
+                <h4 class="font-semibold text-slate-800 mb-2">💡 Quick Cheat Sheet for Apprentices:</h4>
+                <div class="space-y-2 text-sm text-slate-600">
+                    <p>• <strong>Rule-based & Repetitive:</strong> Perfect for standard <strong>RPA</strong> (e.g., copying data from a cell to an application form).</p>
+                    <p>• <strong>Unstructured Data & Cognitive judgment:</strong> Requires <strong>AI</strong> (e.g., extracting items from a poorly scanned image or photo of a receipt).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Phase 2 -->
+        <div id="content-phase2" class="tab-content space-y-6">
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6">
+                <h3 class="text-xl font-bold text-slate-900 mb-4">⏱️ Step 3: Design the Architecture (45 Mins)</h3>
+                <p class="text-slate-600 mb-6">Build your new automated ecosystem. Your final technical design blueprint must use all three fundamental layers of Intelligent Automation:</p>
+                
+                <div class="space-y-4">
+                    <div class="border-l-4 border-blue-600 pl-4 py-1">
+                        <h4 class="font-bold text-slate-900">1. Data Ingestion (AI / OCR Layer)</h4>
+                        <p class="text-sm text-slate-600">How will your system read the unstructured receipt? (e.g., An AI model that reads text from images and structures it into JSON formats).</p>
+                    </div>
+                    <div class="border-l-4 border-emerald-600 pl-4 py-1">
+                        <h4 class="font-bold text-slate-900">2. Process Execution (RPA / Integration Layer)</h4>
+                        <p class="text-sm text-slate-600">What software robots or API integrations will move the data to where it needs to live without human intervention?</p>
+                    </div>
+                    <div class="border-l-4 border-purple-600 pl-4 py-1">
+                        <h4 class="font-bold text-slate-900">3. Human-in-the-Loop (Governance Layer)</h4>
+                        <p class="text-sm text-slate-600">Where should the robot stop and ask a human manager for a manual review? Set a specific rule boundary (e.g., financial value limits or low confidence scores).</p>
+                    </div>
+                </div>
+
+                <!-- Live ROI Calculator Box -->
+                <div class="mt-8 bg-slate-50 rounded-xl p-5 border border-slate-200">
+                    <h4 class="font-bold text-slate-900 mb-2">🧮 Interactive ROI Tool: Test Your Design's Value</h4>
+                    <p class="text-xs text-slate-500 mb-4">Let apprentices tweak the numbers live to see how much manual time they're actually saving the business.</p>
+                    <div class="grid sm:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Claims Processed Per Month</label>
+                            <input type="number" id="roi-volume" value="500" oninput="calculateROI()" class="w-full bg-white border border-slate-300 rounded px-3 py-1.5 focus:outline-indigo-600">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Minutes Saved Per Claim</label>
+                            <input type="number" id="roi-time" value="20" oninput="calculateROI()" class="w-full bg-white border border-slate-300 rounded px-3 py-1.5 focus:outline-indigo-600">
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-200 text-center">
+                        <p class="text-sm text-slate-700">Total Hours Saved Per Month: <strong id="roi-result" class="text-indigo-600 text-lg">166.7 hrs</strong></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Tab 4: Phase 3 -->
+        <div id="content-phase3" class="tab-content space-y-6">
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-6">
+                <h3 class="text-xl font-bold text-slate-900 mb-4">⏱️ Step 4: Pitch the Automation Solution (30 Mins)</h3>
+Use code with caution.Your team doesn't need to build functional code. Instead, present your solution framework to the business stakeholders. Focus your presentation slides on the core template below:// PITCH SLIDE OUTLINE1. THE PAIN POINT: [What bottleneck costs the most time right now?]2. THE TECH STACK: [Where is AI used? Where is RPA used?]3. THE HUMAN GUARDRAIL: [When does a human intervene?]4. BUSINESS METRIC: [Total hours saved using the ROI calculator]function switchTab(tabId) {// Hide all tab panesdocument.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));// Remove active classes from all buttonsdocument.querySelectorAll('.tab-btn').forEach(el => {el.classList.remove('border-indigo-600', 'text-indigo-600');el.classList.add('border-transparent', 'text-slate-500');});// Activate selected tab panedocument.getElementById('content-' + tabId).classList.add('active');// Activate clicked button styleconst targetBtn = document.getElementById('tab-' + tabId);targetBtn.classList.remove('border-transparent', 'text-slate-500');targetBtn.classList.add('border-indigo-600', 'text-indigo-600');}function calculateROI() {const volume = parseFloat(document.getElementById('roi-volume').value) || 0;const timeSaved = parseFloat(document.getElementById('roi-time').value) || 0;const totalHours = (volume * timeSaved) / 60;document.getElementById('roi-result').innerText = totalHours.toFixed(1) + ' hrs';}

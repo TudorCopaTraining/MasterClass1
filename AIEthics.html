@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsible AI Drag & Drop Matrix</title>
-    <!-- LINKING TO EXTERNAL CSS COMPONENT -->
+    <title>Responsible AI in Catering Matrix</title>
+    <!-- LINK TO SPECIFIED EXTERNAL CSS COMPONENT -->
     <link rel="stylesheet" href="aiethics.css">
 </head>
 <body>
 <div class="container">
     <header>
-        <h1>Responsible AI Explorer</h1>
-        <p>Single-Screen Drag & Drop Assessment Framework</p>
+        <h1>Responsible AI in Catering & Hospitality</h1>
+        <p>Single-Screen Drag & Drop Industry Assessment Framework</p>
     </header>
+
     <div class="workspace-split">
+        <!-- Left Side Management Panel -->
         <div class="left-column">
             <div class="directions-box">
-                <h2>📖 Directions</h2>
+                <h2>📖 Workshop Directions</h2>
                 <ul>
+                    <li>Evaluate the catering technology deployment challenges on the right.</li>
                     <li>Drag elements from the <strong>Pillar Bank</strong>.</li>
-                    <li>Drop them into any target <strong>Drop Zone</strong> box.</li>
-                    <li>Cards will instantly evaluate your selection.</li>
-                    <li>Pillars can be reused as often as needed.</li>
+                    <li>Drop them into any target <strong>Drop Zone</strong> container.</li>
+                    <li>Cards evaluate your entry instantly. Pillars can be reused.</li>
                 </ul>
             </div>
+
             <div class="bank-container">
                 <span class="question-number">Active Pillar Bank</span>
                 <div class="pillar-bank">
@@ -35,66 +38,83 @@
                     <div class="draggable-pillar" draggable="true" id="p-inclusiveness">Inclusiveness</div>
                 </div>
             </div>
+
             <div class="summary-panel">
                 <h2>Progress Tracker</h2>
                 <p>Score: <span id="verified-score">0</span> / 6 Correct</p>
                 <button class="reset-btn" id="reset-button">Reset Exercise</button>
             </div>
         </div>
+
+        <!-- Right Side Catering Scenarios Grid -->
         <div class="right-column">
             <div class="assessment-grid">
-                <div class="matrix-card" id="mod-1" data-answer="Fairness" data-msg="Correct! Fairness targets mitigating group variance and model bias.">
+                
+                <!-- Module 1 -->
+                <div class="matrix-card" id="mod-1" data-answer="Fairness" data-msg="Correct! Fairness ensures dynamic pricing logic does not systemically target or penalize specific neighborhoods or demographic groups.">
                     <h3>
-                        <div class="badge-row"><span class="question-number">Module 1</span><span class="status-badge" id="badge-1"></span></div>
-                        <span style="margin-top:0.25rem;">Which principle demands ensuring training models do not present discrimination across varying ethnic demographics?</span>
+                        <div class="badge-row"><span class="question-number">Module 1: Smart Menu Pricing</span><span class="status-badge" id="badge-1"></span></div>
+                        <span style="margin-top:0.25rem;">An AI system updates food truck pricing based on demand, but developers must audit it to ensure it doesn't systemically spike rates higher for specific low-income neighborhoods. Which pillar is being prioritized?</span>
                     </h3>
                     <div class="drop-zone" id="drop-1">Drop Pillar Here</div>
                     <div class="inline-feedback" id="feed-1"></div>
                 </div>
-                <div class="matrix-card" id="mod-2" data-answer="Reliability & Safety" data-msg="Correct! Operating predictably under operational friction is governed by Reliability & Safety.">
+
+                <!-- Module 2 -->
+                <div class="matrix-card" id="mod-2" data-answer="Reliability & Safety" data-msg="Correct! Safety is paramount when computer vision handles life-threatening dietary constraints and food prep environments.">
                     <h3>
-                        <div class="badge-row"><span class="question-number">Module 2</span><span class="status-badge" id="badge-2"></span></div>
-                        <span style="margin-top:0.25rem;">Which principle states that software must execute predictably during anomalies like severe weather or system outages?</span>
+                        <div class="badge-row"><span class="question-number">Module 2: Automated Allergy Detection</span><span class="status-badge" id="badge-2"></span></div>
+                        <span style="margin-top:0.25rem;">A smart kitchen system uses cameras to identify cross-contamination risks (like peanuts on a gluten-free prep board). The model must perform flawlessly to prevent life-threatening medical emergencies. Which pillar governs this baseline?</span>
                     </h3>
                     <div class="drop-zone" id="drop-2">Drop Pillar Here</div>
                     <div class="inline-feedback" id="feed-2"></div>
                 </div>
-                <div class="matrix-card" id="mod-3" data-answer="Privacy & Security" data-msg="Correct! Cryptographic boundaries and protective layers map directly to Privacy & Security.">
+
+                <!-- Module 3 -->
+                <div class="matrix-card" id="mod-3" data-answer="Privacy & Security" data-msg="Correct! Securing facial metrics and point-of-sale customer logs is a core rule of Privacy & Security.">
                     <h3>
-                        <div class="badge-row"><span class="question-number">Module 3</span><span class="status-badge" id="badge-3"></span></div>
-                        <span style="margin-top:0.25rem;">Which principle requires encrypting databases containing personal data assets to protect against malicious data extraction?</span>
+                        <div class="badge-row"><span class="question-number">Module 3: Biometric Checkouts</span><span class="status-badge" id="badge-3"></span></div>
+                        <span style="margin-top:0.25rem;">A corporate cafeteria implements facial recognition for hands-free payment and personalized dietary profiles. The company encrypts the facial metric database against external hacking attempts. This action satisfies which principle?</span>
                     </h3>
                     <div class="drop-zone" id="drop-3">Drop Pillar Here</div>
                     <div class="inline-feedback" id="feed-3"></div>
                 </div>
-                <div class="matrix-card" id="mod-4" data-answer="Transparency" data-msg="Correct! Rendering algorithmic process paths open and explainable defines Transparency.">
+
+                <!-- Module 4 -->
+                <div class="matrix-card" id="mod-4" data-answer="Transparency" data-msg="Correct! Transparency requires making black-box culinary and recipe systems fully explainable to human users.">
                     <h3>
-                        <div class="badge-row"><span class="question-number">Module 4</span><span class="status-badge" id="badge-4"></span></div>
-                        <span style="margin-top:0.25rem;">Which principle dictates that stakeholders must be provided with explanations regarding how a system calculated its output?</span>
+                        <div class="badge-row"><span class="question-number">Module 4: Recipe Optimization AI</span><span class="status-badge" id="badge-4"></span></div>
+                        <span style="margin-top:0.25rem;">An executive chef uses an generative flavor-pairing model to invent new catering menus. When the AI recommends a bizarre ingredient substitute, it must explicitly output the data path and flavor profiles explaining why it fits. This adheres to:</span>
                     </h3>
                     <div class="drop-zone" id="drop-4">Drop Pillar Here</div>
                     <div class="inline-feedback" id="feed-4"></div>
                 </div>
-                <div class="matrix-card" id="mod-5" data-answer="Accountability" data-msg="Correct! Defining governance oversight, human answerability, and liability defines Accountability.">
+
+                <!-- Module 5 -->
+                <div class="matrix-card" id="mod-5" data-answer="Accountability" data-msg="Correct! Clear operational ownership ensures that corporate humans assume ultimate responsibility for automated supplier failures.">
                     <h3>
-                        <div class="badge-row"><span class="question-number">Module 5</span><span class="status-badge" id="badge-5"></span></div>
-                        <span style="margin-top:0.25rem;">Which principle establishes that engineers and leadership remain answerable and responsible for downstream system effects?</span>
+                        <div class="badge-row"><span class="question-number">Module 5: Automated Supply Chains</span><span class="status-badge" id="badge-5"></span></div>
+                        <span style="margin-top:0.25rem;">When an inventory purchasing bot miscalculates a massive surplus order, causing severe food waste and financial losses, management steps up to address the error instead of simply blaming the technology vendor. Which principle does this represent?</span>
                     </h3>
                     <div class="drop-zone" id="drop-5">Drop Pillar Here</div>
                     <div class="inline-feedback" id="feed-5"></div>
                 </div>
-                <div class="matrix-card" id="mod-6" data-answer="Inclusiveness" data-msg="Correct! Designing product access matching multi-generational physical capacities defines Inclusiveness.">
+
+                <!-- Module 6 -->
+                <div class="matrix-card" id="mod-6" data-answer="Inclusiveness" data-msg="Correct! Ensuring menu booking pipelines accommodate neurodivergent users or alternative physical controls fulfills Inclusiveness.">
                     <h3>
-                        <div class="badge-row"><span class="question-number">Module 6</span><span class="status-badge" id="badge-6"></span></div>
-                        <span style="margin-top:0.25rem;">Which principle states that user experiences must accommodate diverse human capabilities, including physical limitations?</span>
+                        <div class="badge-row"><span class="question-number">Module 6: Digital Ordering Kiosks</span><span class="status-badge" id="badge-6"></span></div>
+                        <span style="margin-top:0.25rem;">An AI voice-ordering terminal at a wedding venue is built to dynamically adjust for speech impairments, low-vision contrast preferences, and multiple global text languages. This proactive interface design targets:</span>
                     </h3>
                     <div class="drop-zone" id="drop-6">Drop Pillar Here</div>
                     <div class="inline-feedback" id="feed-6"></div>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         let trackedScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
@@ -118,19 +138,4 @@
                     feed.className = "inline-feedback show-feed good"; feed.innerText = msg; trackedScores[id] = 1;
                 } else {
                     card.className = "matrix-card failed"; badge.innerText = "✗ Incorrect"; badge.className = "status-badge wrong-badge";
-                    feed.className = "inline-feedback show-feed bad"; feed.innerText = "Incorrect. The correct principle is: " + ans + "."; trackedScores[id] = 0;
-                }
-                document.getElementById("verified-score").innerText = Object.values(trackedScores).reduce((a, b) => a + b, 0);
-            });
-        });
-        document.getElementById("reset-button").addEventListener("click", function() {
-            trackedScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }; document.getElementById("verified-score").innerText = 0;
-            document.querySelectorAll(".matrix-card").forEach(c => c.className = "matrix-card");
-            document.querySelectorAll(".status-badge").forEach(b => { b.innerText = ""; b.className = "status-badge"; });
-            document.querySelectorAll(".inline-feedback").forEach(f => { f.innerText = ""; f.className = "inline-feedback"; });
-            dropZones.forEach(z => { z.innerText = "Drop Pillar Here"; z.classList.remove("occupied"); });
-        });
-    });
-</script>
-</body>
-</html>
+feed.className = "inline-feedback show-feed bad"; feed.innerText = "Incorrect selection. The correct catering pillar is: " + ans + "."; trackedScores[id] = 0;}document.getElementById("verified-score").innerText = Object.values(trackedScores).reduce((a, b) => a + b, 0);});});document.getElementById("reset-button").addEventListener("click", function() {trackedScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }; document.getElementById("verified-score").innerText = 0;document.querySelectorAll(".matrix-card").forEach(c => c.className = "matrix-card");document.querySelectorAll(".status-badge").forEach(b => { b.innerText = ""; b.className = "status-badge"; });document.querySelectorAll(".inline-feedback").forEach(f => { f.innerText = ""; f.className = "inline-feedback"; });dropZones.forEach(z => { z.innerText = "Drop Pillar Here"; z.classList.remove("occupied"); });});});

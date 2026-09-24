@@ -90,9 +90,10 @@
             margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            width: 100%;
         }
 
-        /* Fixed Sticky Pillar Bank Layout */
+        /* Sticky Reusable Drag Source Container */
         .bank-container {
             position: sticky;
             top: 10px;
@@ -123,7 +124,7 @@
             text-align: center;
             font-size: 0.9rem;
             user-select: none;
-            transition: transform 0.2s, background-color 0.2s;
+            transition: transform 0.2s, background-color 0.2s, color 0.2s;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
@@ -134,7 +135,6 @@
 
         .draggable-pillar:hover {
             background: var(--primary);
-            color: #white;
             color: white;
         }
 
@@ -144,6 +144,7 @@
             grid-template-columns: 1fr;
             gap: 1.5rem;
             margin-bottom: 3rem;
+            width: 100%;
         }
 
         @media (min-width: 768px) {
@@ -162,12 +163,13 @@
             flex-direction: column;
             justify-content: space-between;
             transition: background-color 0.3s, border-color 0.3s;
+            min-height: 220px;
         }
 
         .matrix-card h3 {
             color: var(--text);
             font-size: 1.05rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
@@ -183,7 +185,7 @@
             font-weight: 800;
             text-transform: uppercase;
             font-size: 0.85rem;
-            color: var(--text-light);
+            color: var(--text);
         }
 
         /* Status Badges */
@@ -214,12 +216,12 @@
         .drop-zone {
             background: var(--info-bg);
             border: 2px dashed var(--border);
-            padding: 1rem;
+            padding: 1.2rem;
             border-radius: 8px;
             text-align: center;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-light);
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--primary);
             margin-top: auto;
             transition: all 0.2s ease;
         }
@@ -228,13 +230,6 @@
             background: #e2e8f0;
             border-color: var(--primary);
             color: var(--primary);
-        }
-
-        .drop-zone.occupied {
-            background: var(--primary);
-            color: white;
-            border-style: solid;
-            border-color: var(--primary);
         }
 
         /* Verification States */
@@ -252,12 +247,14 @@
             background: var(--success);
             border-color: var(--success);
             color: white;
+            border-style: solid;
         }
 
         .matrix-card.failed .drop-zone {
             background: var(--error);
             border-color: var(--error);
             color: white;
+            border-style: solid;
         }
 
         .inline-feedback {
@@ -292,6 +289,7 @@
             padding: 1.5rem;
             text-align: center;
             border: 2px dashed var(--primary);
+            width: 100%;
         }
 
         .summary-panel h2 {
@@ -336,7 +334,7 @@
 
     <!-- Sticky Reusable Drag Source Container -->
     <div class="bank-container">
-        <span class="question-number">Active Pillar Bank (Drag items from here)</span>
+        <span class="question-number" style="margin-bottom: 5px; display: inline-block;">Active Pillar Bank (Drag items from here)</span>
         <div class="pillar-bank">
             <div class="draggable-pillar" draggable="true" id="p-fairness">Fairness</div>
             <div class="draggable-pillar" draggable="true" id="p-reliability">Reliability & Safety</div>

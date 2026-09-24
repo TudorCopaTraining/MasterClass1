@@ -148,6 +148,10 @@
             background: #eff6ff;
         }
 
+        .option-btn:disabled {
+            cursor: default;
+        }
+
         .option-btn.correct {
             background: #dcfce7;
             border-color: var(--success);
@@ -270,38 +274,37 @@
             </div>
 
             <div class="feedback" id="feedback-box"></div>
-            <button class="next-btn" id="next-button" onclick="nextScenario()">Next Scenario</button>
+            <button class="next-btn" id="next-button">Next Scenario</button>
         </div>
 
         <div class="score-screen" id="score-screen">
             <h2>Activity Complete!</h2>
             <p id="final-score">You scored 0 out of 6.</p>
-            <button class="restart-btn" onclick="resetQuiz()">Try Again</button>
+            <button class="restart-btn" id="restart-button">Try Again</button>
         </div>
     </div>
 </div>
 
 <script>
-    const scenarios = [
-        {
-            text: "A medical AI diagnostic tool performs exceptionally well when reading scans from adult patients, but frequently generates false negatives when analysing scans of pediatric patients because children's data was left out of training.",
-            options: ["Fairness", "Reliability & Safety", "Privacy & Security", "Transparency", "Accountability", "Inclusiveness"],
-            answer: "Inclusiveness",
-            explanation: "This violates Inclusiveness. The tool failed to engage and address the needs of all user groups, specifically leaving out children during development."
-        },
-        {
-            text: "An automated hiring algorithm consistently scores resumes lower if they contain names traditionally associated with female candidates, despite identical qualifications.",
-            options: ["Fairness", "Privacy & Security", "Transparency", "Accountability"],
-            answer: "Fairness",
-            explanation: "This violates Fairness. The AI treats people unfairly by reinforcing historical gender biases."
-        },
-        {
-            text: "A banking app uses an AI model to approve loans, but the developers cannot explain why a specific applicant was denied, citing the algorithm's 'black box' nature.",
-            options: ["Reliability & Safety", "Privacy & Security", "Transparency", "Inclusiveness"],
-            answer: "Transparency",
-            explanation: "This violates Transparency. AI decisions should be interpretable and explainable to stakeholders and users."
-        },
-        {
-            text: "An autonomous delivery drone misinterprets heavy rainfall as a solid obstacle, causing it to halt unexpectedly in the middle of a busy public road.",
-            options: ["Fairness", "Reliability & Safety", "Privacy & Security", "Accountability"],
-            answer: "Reliability & Safety",
+    document.addEventListener("DOMContentLoaded", function() {
+        const scenarios = [
+            {
+                text: "A medical AI diagnostic tool performs exceptionally well when reading scans from adult patients, but frequently generates false negatives when analysing scans of pediatric patients because children's data was left out of training.",
+                options: ["Fairness", "Reliability & Safety", "Privacy & Security", "Transparency", "Accountability", "Inclusiveness"],
+                answer: "Inclusiveness",
+                explanation: "This violates Inclusiveness. The tool failed to engage and address the needs of all user groups, specifically leaving out children during development."
+            },
+            {
+                text: "An automated hiring algorithm consistently scores resumes lower if they contain names traditionally associated with female candidates, despite identical qualifications.",
+                options: ["Fairness", "Privacy & Security", "Transparency", "Accountability"],
+                answer: "Fairness",
+                explanation: "This violates Fairness. The AI treats people unfairly by reinforcing historical gender biases."
+            },
+            {
+                text: "A banking app uses an AI model to approve loans, but the developers cannot explain why a specific applicant was denied, citing the algorithm's black box nature.",
+                options: ["Reliability & Safety", "Privacy & Security", "Transparency", "Inclusiveness"],
+                answer: "Transparency",
+                explanation: "This violates Transparency. AI decisions should be interpretable and explainable to stakeholders and users."
+            },
+            {
+                text: "An autonomous delivery drone misinterprets heavy rainfall as a solid obstacle, causing it to halt unexpectedly in the middle of a busy public road.",

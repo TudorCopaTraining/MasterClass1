@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsible AI Interactive Workshop</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --success: #16a34a;
+            --error: #dc2626;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Principles Grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .principle-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .principle-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .principle-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .principle-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Interactive Activity Area */
+        .activity-box {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .scenario-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .scenario-text {
+            background: #f1f5f9;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .option-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .option-btn.correct {
+            background: #dcfce7;
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .option-btn.wrong {
+            background: #fee2e2;
+            border-color: var(--error);
+            color: var(--error);
+        }
+
+        .feedback {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct-feed {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .feedback.wrong-feed {
+            background: #fee2e2;
+            color: var(--error);
+        }
+
+        .next-btn {
+            margin-top: 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            display: none;
+        }
+
+        .next-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .score-screen {
+            text-align: center;
+            display: none;
+        }
+
+        .score-screen h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .restart-btn {
+            background: var(--text);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Responsible AI Explorer</h1>
+        <p>Test your understanding of the core pillars of ethical Artificial Intelligence.</p>
+    </header>
+
+    <!-- Reference Grid -->
+    <div class="principles-grid">
+        <div class="principle-card">
+            <h3>⚖️ Fairness</h3>
+            <p>AI systems should treat all people fairly and avoid bias across demographic groups.</p>
+        </div>
+        <div class="principle-card">
+            <h3>🛡️ Reliability & Safety</h3>
+            <p>AI systems should operate reliably, safely, and consistently under normal and unexpected conditions.</p>
+        </div>
+        <div class="principle-card">
+            <h3>🔒 Privacy & Security</h3>
+            <p>AI systems should be secure and respect user privacy by protecting personal data assets.</p>
+        </div>
+        <div class="principle-card">
+            <h3>🔍 Transparency</h3>
+            <p>AI systems should be understandable, allowing users to know how decisions are made.</p>
+        </div>
+        <div class="principle-card">
+            <h3>📋 Accountability</h3>
+            <p>People who design and deploy AI systems must be accountable for how their systems operate.</p>
+        </div>
+        <div class="principle-card">
+            <h3>🌍 Inclusiveness</h3>
+            <p>AI systems should empower everyone and engage people across all physical capabilities and backgrounds.</p>
+        </div>
+    </div>
+
+    <!-- Interactive Game Box -->
+    <div class="activity-box" id="game-box">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+        
+        <div id="quiz-content">
+            <h2 class="scenario-title" id="scenario-number">Scenario 1 of 6</h2>
+            <div class="scenario-text" id="scenario-text">Loading scenario...</div>
+            
+            <div class="options-grid" id="options-container">
+                <!-- Dynamic Buttons Go Here -->
+            </div>
+
+            <div class="feedback" id="feedback-box"></div>
+            <button class="next-btn" id="next-button" onclick="nextScenario()">Next Scenario</button>
+        </div>
+
+        <div class="score-screen" id="score-screen">
+            <h2>Activity Complete!</h2>
+            <p id="final-score">You scored 0 out of 6.</p>
+            <button class="restart-btn" onclick="resetQuiz()">Try Again</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const scenarios = [
+        {
+            text: "A medical AI diagnostic tool performs exceptionally well when reading scans from adult patients, but frequently generates false negatives when analysing scans of pediatric patients because children's data was left out of training.",
+            options: ["Fairness", "Reliability & Safety", "Privacy & Security", "Transparency", "Accountability", "Inclusiveness"],
+            answer: "Inclusiveness",
+            explanation: "This violates Inclusiveness. The tool failed to engage and address the needs of all user groups, specifically leaving out children during development."
+        },
+        {
+            text: "An automated hiring algorithm consistently scores resumes lower if they contain names traditionally associated with female candidates, despite identical qualifications.",
+            options: ["Fairness", "Privacy & Security", "Transparency", "Accountability"],
+            answer: "Fairness",
+            explanation: "This violates Fairness. The AI treats people unfairly by reinforcing historical gender biases."
+        },
+        {
+            text: "A banking app uses an AI model to approve loans, but the developers cannot explain why a specific applicant was denied, citing the algorithm's 'black box' nature.",
+            options: ["Reliability & Safety", "Privacy & Security", "Transparency", "Inclusiveness"],
+            answer: "Transparency",
+            explanation: "This violates Transparency. AI decisions should be interpretable and explainable to stakeholders and users."
+        },
+        {
+            text: "An autonomous delivery drone misinterprets heavy rainfall as a solid obstacle, causing it to halt unexpectedly in the middle of a busy public road.",
+            options: ["Fairness", "Reliability & Safety", "Privacy & Security", "Accountability"],
+            answer: "Reliability & Safety",

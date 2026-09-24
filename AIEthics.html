@@ -15,6 +15,8 @@
             --success: #16a34a;
             --error: #dc2626;
             --border: #e2e8f0;
+            --accent-bg: #f0fdf4;
+            --info-bg: #eff6ff;
         }
 
         * {
@@ -38,7 +40,7 @@
 
         header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
 
         header h1 {
@@ -52,17 +54,58 @@
             font-size: 1.1rem;
         }
 
+        /* Instructions & Directions Box */
+        .directions-box {
+            background: var(--info-bg);
+            border-left: 5px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .directions-box h2 {
+            color: var(--primary-dark);
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .directions-box ul {
+            margin-left: 1.25rem;
+            padding-left: 0.5rem;
+        }
+
+        .directions-box li {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .directions-box strong {
+            color: var(--primary-dark);
+        }
+
         /* Principles Grid */
+        .section-title {
+            font-size: 1.25rem;
+            color: var(--text);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
         .principles-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
             margin-bottom: 3rem;
         }
 
         .principle-card {
             background: var(--card-bg);
-            padding: 1.5rem;
+            padding: 1.25rem;
             border-radius: 12px;
             border: 1px solid var(--border);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -70,8 +113,8 @@
         }
 
         .principle-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
         }
 
         .principle-card h3 {
@@ -80,10 +123,11 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 1.1rem;
         }
 
         .principle-card p {
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             color: var(--text-light);
         }
 
@@ -94,6 +138,7 @@
             padding: 2.5rem;
             border: 1px solid var(--border);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            margin-top: 2rem;
         }
 
         .progress-bar {
@@ -124,11 +169,12 @@
             border-radius: 4px;
             margin-bottom: 2rem;
             font-style: italic;
+            font-size: 1.05rem;
         }
 
         .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1rem;
         }
 
@@ -141,6 +187,7 @@
             font-weight: 600;
             text-align: left;
             transition: all 0.2s;
+            font-size: 0.95rem;
         }
 
         .option-btn:hover:not(:disabled) {
@@ -166,10 +213,11 @@
 
         .feedback {
             margin-top: 1.5rem;
-            padding: 1rem;
+            padding: 1.25rem;
             border-radius: 8px;
             display: none;
             font-weight: 500;
+            line-height: 1.5;
         }
 
         .feedback.show {
@@ -179,11 +227,13 @@
         .feedback.correct-feed {
             background: #dcfce7;
             color: var(--success);
+            border: 1px solid var(--success);
         }
 
         .feedback.wrong-feed {
             background: #fee2e2;
             color: var(--error);
+            border: 1px solid var(--error);
         }
 
         .next-btn {
@@ -191,10 +241,11 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
+            padding: 0.75rem 1.75rem;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
+            font-size: 1rem;
             display: none;
         }
 
@@ -205,21 +256,34 @@
         .score-screen {
             text-align: center;
             display: none;
+            padding: 1.5rem 0;
         }
 
         .score-screen h2 {
-            font-size: 2rem;
+            font-size: 2.25rem;
             margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        .score-screen p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
         }
 
         .restart-btn {
             background: var(--text);
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
+            padding: 0.75rem 1.75rem;
             border-radius: 6px;
             cursor: pointer;
-            margin-top: 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .restart-btn:hover {
+            background: #0f172a;
         }
     </style>
 </head>
@@ -228,14 +292,30 @@
 <div class="container">
     <header>
         <h1>Responsible AI Explorer</h1>
-        <p>Test your understanding of the core pillars of ethical Artificial Intelligence.</p>
+        <p>An Interactive Case Study Guide on Ethics & Trust in Artificial Intelligence</p>
     </header>
 
+    <!-- Activity Directions Component -->
+    <div class="directions-box">
+        <h2>📖 Activity Directions & Objective</h2>
+        <p style="margin-bottom: 0.75rem; color: var(--text);">
+            <strong>Objective:</strong> Learn to identify ethical failures in modern technological deployments by diagnosing real-world simulation scenarios.
+        </p>
+        <ul>
+            <li><strong>Step 1:</strong> Read the brief definitions in the <em>Core Principles Reference Guide</em> below to familiarise yourself with the six pillars.</li>
+            <li><strong>Step 2:</strong> Scroll down to the <em>Interactive Case Simulator</em> and read the presented case scenario carefully.</li>
+            <li><strong>Step 3:</strong> Click on the AI principle that you think was <strong>neglected or violated</strong> in that scenario.</li>
+            <li><strong>Step 4:</strong> Review the immediate feedback and explanation to understand why that pillar applies.</li>
+            <li><strong>Step 5:</strong> Click <strong>"Next Scenario"</strong> to proceed through all 6 cases and review your final evaluation score.</li>
+        </ul>
+    </div>
+
     <!-- Reference Grid -->
+    <h2 class="section-title">Core Principles Reference Guide</h2>
     <div class="principles-grid">
         <div class="principle-card">
             <h3>⚖️ Fairness</h3>
-            <p>AI systems should treat all people fairly and avoid bias across demographic groups.</p>
+            <p>AI systems should treat all human populations equitably and avoid bias across demographic groups.</p>
         </div>
         <div class="principle-card">
             <h3>🛡️ Reliability & Safety</h3>
@@ -243,68 +323,15 @@
         </div>
         <div class="principle-card">
             <h3>🔒 Privacy & Security</h3>
-            <p>AI systems should be secure and respect user privacy by protecting personal data assets.</p>
+            <p>AI systems should respect user privacy laws and securely defend personal user data assets.</p>
         </div>
         <div class="principle-card">
             <h3>🔍 Transparency</h3>
-            <p>AI systems should be understandable, allowing users to know how decisions are made.</p>
+            <p>AI systems should be explainable, allowing humans to understand exactly how algorithmic options are decided.</p>
         </div>
         <div class="principle-card">
             <h3>📋 Accountability</h3>
-            <p>People who design and deploy AI systems must be accountable for how their systems operate.</p>
+            <p>The engineers and organizations deploying AI frameworks must remain answerable for their direct real-world impacts.</p>
         </div>
         <div class="principle-card">
             <h3>🌍 Inclusiveness</h3>
-            <p>AI systems should empower everyone and engage people across all physical capabilities and backgrounds.</p>
-        </div>
-    </div>
-
-    <!-- Interactive Game Box -->
-    <div class="activity-box" id="game-box">
-        <div class="progress-bar">
-            <div class="progress-fill" id="progress"></div>
-        </div>
-        
-        <div id="quiz-content">
-            <h2 class="scenario-title" id="scenario-number">Scenario 1 of 6</h2>
-            <div class="scenario-text" id="scenario-text">Loading scenario...</div>
-            
-            <div class="options-grid" id="options-container">
-                <!-- Dynamic Buttons Go Here -->
-            </div>
-
-            <div class="feedback" id="feedback-box"></div>
-            <button class="next-btn" id="next-button">Next Scenario</button>
-        </div>
-
-        <div class="score-screen" id="score-screen">
-            <h2>Activity Complete!</h2>
-            <p id="final-score">You scored 0 out of 6.</p>
-            <button class="restart-btn" id="restart-button">Try Again</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const scenarios = [
-            {
-                text: "A medical AI diagnostic tool performs exceptionally well when reading scans from adult patients, but frequently generates false negatives when analysing scans of pediatric patients because children's data was left out of training.",
-                options: ["Fairness", "Reliability & Safety", "Privacy & Security", "Transparency", "Accountability", "Inclusiveness"],
-                answer: "Inclusiveness",
-                explanation: "This violates Inclusiveness. The tool failed to engage and address the needs of all user groups, specifically leaving out children during development."
-            },
-            {
-                text: "An automated hiring algorithm consistently scores resumes lower if they contain names traditionally associated with female candidates, despite identical qualifications.",
-                options: ["Fairness", "Privacy & Security", "Transparency", "Accountability"],
-                answer: "Fairness",
-                explanation: "This violates Fairness. The AI treats people unfairly by reinforcing historical gender biases."
-            },
-            {
-                text: "A banking app uses an AI model to approve loans, but the developers cannot explain why a specific applicant was denied, citing the algorithm's black box nature.",
-                options: ["Reliability & Safety", "Privacy & Security", "Transparency", "Inclusiveness"],
-                answer: "Transparency",
-                explanation: "This violates Transparency. AI decisions should be interpretable and explainable to stakeholders and users."
-            },
-            {
-                text: "An autonomous delivery drone misinterprets heavy rainfall as a solid obstacle, causing it to halt unexpectedly in the middle of a busy public road.",

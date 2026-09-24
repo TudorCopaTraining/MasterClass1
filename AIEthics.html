@@ -3,91 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsible AI in Catering Matrix</title>
+    <title>Responsible AI Catering Matrix</title>
+    <!-- LINKS DIRECTLY TO YOUR SEPARATE STYLESHEET -->
     <link rel="stylesheet" href="aiethics.css">
 </head>
 <body>
 <div class="container">
     <header>
         <h1>Responsible AI in Catering & Hospitality</h1>
-        <p>Single-Screen Drag & Drop Industry Assessment Framework</p>
+        <p>Single-Screen Click-to-Assign Evaluation Matrix</p>
     </header>
     <div class="workspace-split">
         <div class="left-column">
             <div class="directions-box">
-                <h2>📖 Workshop Directions</h2>
-                <ul>
-                    <li>Evaluate the catering technology deployment challenges on the right.</li>
-                    <li>Drag elements from the <strong>Pillar Bank</strong>.</li>
-                    <li>Drop them into any target <strong>Drop Zone</strong> container.</li>
-                    <li>Cards evaluate your entry instantly. Pillars can be reused.</li>
-                </ul>
+                <h2>📖 Directions</h2>
+                <p>1. Click a pillar button below to select it.</p>
+                <p>2. Click any dashed "Assign" zone on a card to test your match.</p>
             </div>
             <div class="bank-container">
-                <span class="question-number">Active Pillar Bank</span>
-                <div class="pillar-bank">
-                    <div class="draggable-pillar" draggable="true" id="p-fairness">Fairness</div>
-                    <div class="draggable-pillar" draggable="true" id="p-reliability">Reliability & Safety</div>
-                    <div class="draggable-pillar" draggable="true" id="p-privacy">Privacy & Security</div>
-                    <div class="draggable-pillar" draggable="true" id="p-transparency">Transparency</div>
-                    <div class="draggable-pillar" draggable="true" id="p-accountability">Accountability</div>
-                    <div class="draggable-pillar" draggable="true" id="p-inclusiveness">Inclusiveness</div>
+                <div class="pillar-bank" id="pillar-bank">
+                    <button class="draggable-pillar">Fairness</button>
+                    <button class="draggable-pillar">Reliability & Safety</button>
+                    <button class="draggable-pillar">Privacy & Security</button>
+                    <button class="draggable-pillar">Transparency</button>
+                    <button class="draggable-pillar">Accountability</button>
+                    <button class="draggable-pillar">Inclusiveness</button>
                 </div>
             </div>
             <div class="summary-panel">
-                <h2>Progress Tracker</h2>
-                <p>Score: <span id="verified-score">0</span> / 6 Correct</p>
+                <h2>Score: <span id="verified-score">0</span> / 6</h2>
                 <button class="reset-btn" id="reset-button">Reset Exercise</button>
             </div>
         </div>
         <div class="right-column">
             <div class="assessment-grid">
-                <div class="matrix-card" id="mod-1" data-answer="Fairness" data-msg="Correct! Fairness ensures dynamic pricing logic does not systemically target or penalize specific neighborhoods or demographic groups.">
+                <div class="matrix-card" id="mod-1" data-answer="Fairness" data-msg="Correct! Fairness ensures pricing systems do not penalize specific demographics.">
                     <h3>
-                        <div class="badge-row"><span class="question-number">Module 1: Smart Menu Pricing</span><span class="status-badge" id="badge-1"></span></div>
-                        <span style="margin-top:0.25rem;">An AI system updates food truck pricing based on demand, but developers must audit it to ensure it doesn't systemically spike rates higher for specific low-income neighborhoods. Which pillar is being prioritized?</span>
+                        <div class="badge-row"><span>Module 1: Smart Menu Pricing</span><span class="status-badge" id="badge-1"></span></div>
+                        <span style="margin-top:0.25rem;">An AI system updates catering prices based on neighborhood demand. Developers audit it to make sure it doesn't inflate pricing for low-income areas. This prioritizes:</span>
                     </h3>
-                    <div class="drop-zone" id="drop-1">Drop Pillar Here</div>
+                    <button class="drop-zone" id="drop-1">Click to Assign Pillar</button>
                     <div class="inline-feedback" id="feed-1"></div>
                 </div>
-                <div class="matrix-card" id="mod-2" data-answer="Reliability & Safety" data-msg="Correct! Safety is paramount when computer vision handles life-threatening dietary constraints and food prep environments.">
+                <div class="matrix-card" id="mod-2" data-answer="Reliability & Safety" data-msg="Correct! Reliability ensures safety protocols flag hazards without error.">
                     <h3>
-                        <div class="badge-row"><span class="question-number">Module 2: Automated Allergy Detection</span><span class="status-badge" id="badge-2"></span></div>
-                        <span style="margin-top:0.25rem;">A smart kitchen system uses cameras to identify cross-contamination risks (like peanuts on a gluten-free prep board). The model must perform flawlessly to prevent life-threatening medical emergencies. Which pillar governs this baseline?</span>
+                        <div class="badge-row"><span>Module 2: Allergen Monitoring</span><span class="status-badge" id="badge-2"></span></div>
+                        <span style="margin-top:0.25rem;">A kitchen camera system monitors food assembly to prevent cross-contamination from allergens. The software must run perfectly to prevent medical emergencies. This follows:</span>
                     </h3>
-                    <div class="drop-zone" id="drop-2">Drop Pillar Here</div>
+                    <button class="drop-zone" id="drop-2">Click to Assign Pillar</button>
                     <div class="inline-feedback" id="feed-2"></div>
                 </div>
-                <div class="matrix-card" id="mod-3" data-answer="Privacy & Security" data-msg="Correct! Securing facial metrics and point-of-sale customer logs is a core rule of Privacy & Security.">
+                <div class="matrix-card" id="mod-3" data-answer="Privacy & Security" data-msg="Correct! Protecting personal customer biometric data falls under Privacy.">
                     <h3>
-                        <div class="badge-row"><span class="question-number">Module 3: Biometric Checkouts</span><span class="status-badge" id="badge-3"></span></div>
-                        <span style="margin-top:0.25rem;">A corporate cafeteria implements facial recognition for hands-free payment and personalized dietary profiles. The company encrypts the facial metric database against external hacking attempts. This action satisfies which principle?</span>
+                        <div class="badge-row"><span>Module 3: Face-Pay Registers</span><span class="status-badge" id="badge-3"></span></div>
+                        <span style="margin-top:0.25rem;">A restaurant cafeteria lets guests pay using facial recognition linked to private diet files. The database is securely encrypted against hacking. This protects:</span>
                     </h3>
-                    <div class="drop-zone" id="drop-3">Drop Pillar Here</div>
+                    <button class="drop-zone" id="drop-3">Click to Assign Pillar</button>
                     <div class="inline-feedback" id="feed-3"></div>
                 </div>
-                <div class="matrix-card" id="mod-4" data-answer="Transparency" data-msg="Correct! Transparency requires making black-box culinary and recipe systems fully explainable to human users.">
+                <div class="matrix-card" id="mod-4" data-answer="Transparency" data-msg="Correct! Explaining a system's recipe or menu logic is Transparency.">
                     <h3>
-                        <div class="badge-row"><span class="question-number">Module 4: Recipe Optimization AI</span><span class="status-badge" id="badge-4"></span></div>
-                        <span style="margin-top:0.25rem;">An executive chef uses an generative flavor-pairing model to invent new catering menus. When the AI recommends a bizarre ingredient substitute, it must explicitly output the data path and flavor profiles explaining why it fits. This adheres to:</span>
+                        <div class="badge-row"><span>Module 4: AI Recipe Creation</span><span class="status-badge" id="badge-4"></span></div>
+                        <span style="margin-top:0.25rem;">An AI system suggests unique ingredient swaps for a banquet menu. The software must display the data logic behind why these choices match flavors. This fulfills:</span>
                     </h3>
-                    <div class="drop-zone" id="drop-4">Drop Pillar Here</div>
+                    <button class="drop-zone" id="drop-4">Click to Assign Pillar</button>
                     <div class="inline-feedback" id="feed-4"></div>
                 </div>
-                <div class="matrix-card" id="mod-5" data-answer="Accountability" data-msg="Correct! Clear operational ownership ensures that corporate humans assume ultimate responsibility for automated supplier failures.">
+                <div class="matrix-card" id="mod-5" data-answer="Accountability" data-msg="Correct! Humans must stay answerable for downstream technology errors.">
                     <h3>
-                        <div class="badge-row"><span class="question-number">Module 5: Automated Supply Chains</span><span class="status-badge" id="badge-5"></span></div>
-                        <span style="margin-top:0.25rem;">When an inventory purchasing bot miscalculates a massive surplus order, causing severe food waste and financial losses, management steps up to address the error instead of simply blaming the technology vendor. Which principle does this represent?</span>
+                        <div class="badge-row"><span>Module 5: Inventory Errors</span><span class="status-badge" id="badge-5"></span></div>
+                        <span style="margin-top:0.25rem;">An automated supply bot over-orders fresh seafood, causing financial loss. Corporate managers take ownership of the glitch instead of blaming the system vendor. This shows:</span>
                     </h3>
-                    <div class="drop-zone" id="drop-5">Drop Pillar Here</div>
+                    <button class="drop-zone" id="drop-5">Click to Assign Pillar</button>
                     <div class="inline-feedback" id="feed-5"></div>
                 </div>
-                <div class="matrix-card" id="mod-6" data-answer="Inclusiveness" data-msg="Correct! Ensuring menu booking pipelines accommodate neurodivergent users or alternative physical controls fulfills Inclusiveness.">
+                <div class="matrix-card" id="mod-6" data-answer="Inclusiveness" data-msg="Correct! Designing interface accessibility for diverse human abilities is Inclusiveness.">
                     <h3>
-                        <div class="badge-row"><span class="question-number">Module 6: Digital Ordering Kiosks</span><span class="status-badge" id="badge-6"></span></div>
-                        <span style="margin-top:0.25rem;">An AI voice-ordering terminal at a wedding venue is built to dynamically adjust for speech impairments, low-vision contrast preferences, and multiple global text languages. This proactive interface design targets:</span>
+                        <div class="badge-row"><span>Module 6: Smart Ordering Kiosks</span><span class="status-badge" id="badge-6"></span></div>
+                        <span style="margin-top:0.25rem;">A digital catering kiosk features settings for dynamic audio commands, high-contrast layouts, and translation tools to assist all venue guests. This fulfills:</span>
                     </h3>
-                    <div class="drop-zone" id="drop-6">Drop Pillar Here</div>
+                    <button class="drop-zone" id="drop-6">Click to Assign Pillar</button>
                     <div class="inline-feedback" id="feed-6"></div>
                 </div>
             </div>
@@ -97,58 +92,55 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         let trackedScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
-        let activeTouchValue = null;
+        let currentSelection = null;
         const pillars = document.querySelectorAll(".draggable-pillar");
         const dropZones = document.querySelectorAll(".drop-zone");
 
-        // Standard Mouse Drag Event Handlers
+        function resetBankStyles() {
+            pillars.forEach(p => { p.style.background = "var(--card-bg)"; p.style.color = "var(--primary)"; });
+        }
+
         pillars.forEach(p => {
-            p.addEventListener("dragstart", e => {
-                e.dataTransfer.effectAllowed = "copy";
-                e.dataTransfer.setData("text/plain", e.target.innerText);
-            });
-
-            // Fallback touch listeners for mobile or touchscreens
-            p.addEventListener("touchstart", function(e) {
-                activeTouchValue = p.innerText;
-                p.style.opacity = "0.5";
-            }, { passive: true });
-
-            p.addEventListener("touchend", function() {
-                p.style.opacity = "1";
+            p.addEventListener("click", function() {
+                resetBankStyles();
+                currentSelection = p.innerText;
+                p.style.background = "var(--primary)";
+                p.style.color = "white";
             });
         });
 
-        // Drop Zone Mechanics
         dropZones.forEach(zone => {
-            zone.addEventListener("dragover", e => {
-                e.preventDefault();
-                if (!zone.classList.contains("occupied")) zone.classList.add("drag-over");
-            });
+            zone.addEventListener("click", function() {
+                if (!currentSelection || zone.classList.contains("occupied")) return;
+                const card = zone.closest(".matrix-card"), id = card.id.replace("mod-", "");
+                const ans = card.getAttribute("data-answer"), msg = card.getAttribute("data-msg");
+                const feed = document.getElementById("feed-" + id), b = document.getElementById("badge-" + id);
+                
+                zone.innerText = currentSelection;
+                zone.classList.add("occupied");
 
-            zone.addEventListener("dragleave", () => zone.classList.remove("drag-over"));
-
-            zone.addEventListener("drop", function(e) {
-                e.preventDefault();
-                zone.classList.remove("drag-over");
-                if (zone.classList.contains("occupied")) return;
-
-                const droppedValue = e.dataTransfer.getData("text/plain") || e.dataTransfer.getData("text");
-                if (droppedValue) handleEvaluation(zone, droppedValue);
-            });
-
-            // Touch Drop Fallback Trigger (Click zone after touching item)
-            zone.addEventListener("touchend", function() {
-                if (activeTouchValue && !zone.classList.contains("occupied")) {
-                    handleEvaluation(zone, activeTouchValue);
-                    activeTouchValue = null;
+                if (currentSelection === ans) {
+                    card.className = "matrix-card passed"; b.innerText = "✓ Correct"; b.className = "status-badge correct-badge";
+                    feed.className = "inline-feedback show-feed good"; feed.innerText = msg; trackedScores[id] = 1;
+                } else {
+                    card.className = "matrix-card failed"; b.innerText = "✗ Incorrect"; b.className = "status-badge wrong-badge";
+                    feed.className = "inline-feedback show-feed bad"; feed.innerText = "Incorrect. Answer: " + ans; trackedScores[id] = 0;
                 }
+                currentSelection = null; resetBankStyles();
+                document.getElementById("verified-score").innerText = Object.values(trackedScores).reduce((a, b) => a + b, 0);
             });
         });
 
-        function handleEvaluation(zone, value) {
-            const card = zone.closest(".matrix-card");
-            const id = card.id.replace("mod-", "");
-            const ans = card.getAttribute("data-answer");
-Use code with caution.const msg = card.getAttribute("data-msg");const feed = document.getElementById("feed-" + id);const badge = document.getElementById("badge-" + id);zone.innerText = value;zone.classList.add("occupied");if (value === ans) {card.className = "matrix-card passed";badge.innerText = "✓ Correct";badge.className = "status-badge correct-badge";feed.className = "inline-feedback show-feed good";feed.innerText = msg;trackedScores[id] = 1;} else {card.className = "matrix-card failed";badge.innerText = "✗ Incorrect";badge.className = "status-badge wrong-badge";feed.className = "inline-feedback show-feed bad";feed.innerText = "Incorrect. The correct principle is: " + ans + ".";trackedScores[id] = 0;}document.getElementById("verified-score").innerText = Object.values(trackedScores).reduce((a, b) => a + b, 0);}
-        // Reset Buttondocument.getElementById("reset-button").addEventListener("click", function() {trackedScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };activeTouchValue = null;document.getElementById("verified-score").innerText = 0;document.querySelectorAll(".matrix-card").forEach(c => c.className = "matrix-card");document.querySelectorAll(".status-badge").forEach(b => { b.innerText = ""; b.className = "status-badge"; });document.querySelectorAll(".inline-feedback").forEach(f => { f.innerText = ""; f.className = "inline-feedback"; });dropZones.forEach(z => { z.innerText = "Drop Pillar Here"; z.classList.remove("occupied"); });});});
+        document.getElementById("reset-button").addEventListener("click", function() {
+            trackedScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+            currentSelection = null; resetBankStyles();
+            document.getElementById("verified-score").innerText = 0;
+            document.querySelectorAll(".matrix-card").forEach(c => c.className = "matrix-card");
+            document.querySelectorAll(".status-badge").forEach(b => { b.innerText = ""; b.className = "status-badge"; });
+            document.querySelectorAll(".inline-feedback").forEach(f => { f.innerText = ""; f.className = "inline-feedback"; });
+            dropZones.forEach(z => { z.innerText = "Click to Assign Pillar"; z.classList.remove("occupied"); });
+        });
+    });
+</script>
+</body>
+</html>

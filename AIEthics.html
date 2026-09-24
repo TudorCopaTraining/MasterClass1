@@ -158,6 +158,7 @@
             text-align: left;
             font-size: 0.9rem;
             transition: all 0.2s ease;
+            color: var(--text);
         }
 
         .choice-btn:hover:not(:disabled) {
@@ -264,9 +265,9 @@
                 <span class="status-badge" id="badge-1"></span>
             </h3>
             <div class="options-layout">
-                <button class="choice-btn" onclick="verifyChoice(1, this, 'Fairness', true, 'Correct! Fairness directly targets mitigating demographic model bias.')">Fairness</button>
-                <button class="choice-btn" onclick="verifyChoice(1, this, 'Transparency', false, 'Incorrect. Transparency deals with openness, not demographic bias.')">Transparency</button>
-                <button class="choice-btn" onclick="verifyChoice(1, this, 'Accountability', false, 'Incorrect. Accountability deals with human ownership layers.')">Accountability</button>
+                <button class="choice-btn" data-correct="true" onclick="verifyChoice(1, this, true, 'Correct! Fairness directly targets mitigating demographic model bias.')">Fairness</button>
+                <button class="choice-btn" onclick="verifyChoice(1, this, false, 'Incorrect. Transparency deals with openness, not demographic bias.')">Transparency</button>
+                <button class="choice-btn" onclick="verifyChoice(1, this, false, 'Incorrect. Accountability deals with human ownership layers.')">Accountability</button>
             </div>
             <div class="inline-feedback" id="feed-1"></div>
         </div>
@@ -278,9 +279,9 @@
                 <span class="status-badge" id="badge-2"></span>
             </h3>
             <div class="options-layout">
-                <button class="choice-btn" onclick="verifyChoice(2, this, 'Inclusiveness', false, 'Incorrect. Inclusiveness targets user design accessibility.')">Inclusiveness</button>
-                <button class="choice-btn" onclick="verifyChoice(2, this, 'Reliability & Safety', true, 'Correct! System resilience under stress is governed by Reliability & Safety.')">Reliability & Safety</button>
-                <button class="choice-btn" onclick="verifyChoice(2, this, 'Privacy & Security', false, 'Incorrect. Privacy concerns individual user data assets.')">Privacy & Security</button>
+                <button class="choice-btn" onclick="verifyChoice(2, this, false, 'Incorrect. Inclusiveness targets user design accessibility.')">Inclusiveness</button>
+                <button class="choice-btn" data-correct="true" onclick="verifyChoice(2, this, true, 'Correct! System resilience under stress is governed by Reliability & Safety.')">Reliability & Safety</button>
+                <button class="choice-btn" onclick="verifyChoice(2, this, false, 'Incorrect. Privacy concerns individual user data assets.')">Privacy & Security</button>
             </div>
             <div class="inline-feedback" id="feed-2"></div>
         </div>
@@ -292,4 +293,4 @@
                 <span class="status-badge" id="badge-3"></span>
             </h3>
             <div class="options-layout">
-                <button class="choice-btn" onclick="verifyChoice(3, this, 'Fairness', false, 'Incorrect. Fairness manages demographic equity.')">Fairness</button>
+                <button class="choice-btn" onclick="verifyChoice(3, this, false, 'Incorrect. Fairness manages demographic equity.')">Fairness</button>

@@ -15,7 +15,6 @@
             --success: #16a34a;
             --error: #dc2626;
             --border: #e2e8f0;
-            --accent-bg: #f0fdf4;
             --info-bg: #eff6ff;
         }
 
@@ -54,7 +53,7 @@
             font-size: 1.1rem;
         }
 
-        /* Instructions & Directions Box */
+        /* Directions Box */
         .directions-box {
             background: var(--info-bg);
             border-left: 5px solid var(--primary);
@@ -68,9 +67,6 @@
             color: var(--primary-dark);
             font-size: 1.25rem;
             margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .directions-box ul {
@@ -83,11 +79,7 @@
             color: var(--text);
         }
 
-        .directions-box strong {
-            color: var(--primary-dark);
-        }
-
-        /* Principles Grid */
+        /* Principles Reference Grid */
         .section-title {
             font-size: 1.25rem;
             color: var(--text);
@@ -109,20 +101,11 @@
             border-radius: 12px;
             border: 1px solid var(--border);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .principle-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
         }
 
         .principle-card h3 {
             color: var(--primary);
             margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
             font-size: 1.1rem;
         }
 
@@ -131,14 +114,14 @@
             color: var(--text-light);
         }
 
-        /* Interactive Activity Area */
+        /* Interactive Simulator Box */
         .activity-box {
             background: var(--card-bg);
             border-radius: 16px;
             padding: 2.5rem;
             border: 1px solid var(--border);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-            margin-top: 2rem;
+            margin-top: 1rem;
         }
 
         .progress-bar {
@@ -172,10 +155,12 @@
             font-size: 1.05rem;
         }
 
+        /* Fixed Button Grid Layout */
         .options-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .option-btn {
@@ -279,11 +264,6 @@
             cursor: pointer;
             font-weight: 600;
             font-size: 1rem;
-            transition: background 0.2s;
-        }
-
-        .restart-btn:hover {
-            background: #0f172a;
         }
     </style>
 </head>
@@ -298,15 +278,15 @@
     <!-- Activity Directions Component -->
     <div class="directions-box">
         <h2>📖 Activity Directions & Objective</h2>
-        <p style="margin-bottom: 0.75rem; color: var(--text);">
+        <p style="margin-bottom: 0.75rem;">
             <strong>Objective:</strong> Learn to identify ethical failures in modern technological deployments by diagnosing real-world simulation scenarios.
         </p>
         <ul>
-            <li><strong>Step 1:</strong> Read the brief definitions in the <em>Core Principles Reference Guide</em> below to familiarise yourself with the six pillars.</li>
-            <li><strong>Step 2:</strong> Scroll down to the <em>Interactive Case Simulator</em> and read the presented case scenario carefully.</li>
+            <li><strong>Step 1:</strong> Read the brief definitions in the <em>Core Principles Reference Guide</em> below.</li>
+            <li><strong>Step 2:</strong> Scroll to the <em>Interactive Case Simulator</em> and read the active scenario carefully.</li>
             <li><strong>Step 3:</strong> Click on the AI principle that you think was <strong>neglected or violated</strong> in that scenario.</li>
-            <li><strong>Step 4:</strong> Review the immediate feedback and explanation to understand why that pillar applies.</li>
-            <li><strong>Step 5:</strong> Click <strong>"Next Scenario"</strong> to proceed through all 6 cases and review your final evaluation score.</li>
+            <li><strong>Step 4:</strong> Review the immediate feedback and explanation details.</li>
+            <li><strong>Step 5:</strong> Click <strong>"Next Scenario"</strong> to proceed through all 6 cases and view your final evaluation score.</li>
         </ul>
     </div>
 
@@ -335,3 +315,19 @@
         </div>
         <div class="principle-card">
             <h3>🌍 Inclusiveness</h3>
+            <p>AI design choices must proactively empower, engage, and remain accessible to people of all backgrounds and abilities.</p>
+        </div>
+    </div>
+
+    <!-- Interactive Case Simulator Box -->
+    <h2 class="section-title">Interactive Case Simulator</h2>
+    <div class="activity-box" id="game-box">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+        
+        <div id="quiz-content">
+            <h2 class="scenario-title" id="scenario-number">Scenario 1 of 6</h2>
+            <div class="scenario-text" id="scenario-text">Loading scenario...</div>
+            
+            <!-- RESTORED CONTAINER FOR INTERACTIVE BUTTONS -->

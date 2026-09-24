@@ -101,6 +101,7 @@
             border-radius: 12px;
             border: 1px solid var(--border);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            position: relative;
         }
 
         .matrix-card h3 {
@@ -110,6 +111,34 @@
             background: #f1f5f9;
             padding: 0.5rem 1rem;
             border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            font-size: 0.85rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: bold;
+            display: none;
+            white-space: nowrap;
+        }
+
+        .status-badge.correct-badge {
+            display: inline-block;
+            background: #dcfce7;
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .status-badge.wrong-badge {
+            display: inline-block;
+            background: #fee2e2;
+            color: var(--error);
+            border: 1px solid var(--error);
         }
 
         .options-layout {
@@ -219,7 +248,7 @@
         <ul>
             <li><strong>Step 1:</strong> Read the core technological challenge item specified in each block.</li>
             <li><strong>Step 2:</strong> Select the multiple-choice button that correctly names the principle governing that core requirement.</li>
-            <li><strong>Step 3:</strong> Review the contextual success/error verification updates directly inside that section.</li>
+            <li><strong>Step 3:</strong> Watch for the **✓ Correct** or **✗ Incorrect** highlight badge that loads dynamically inside the question text header.</li>
             <li><strong>Step 4:</strong> Work through all 6 matrix modules to track your operational verification rating.</li>
         </ul>
     </div>
@@ -230,7 +259,10 @@
 
         <!-- Module 1 -->
         <div class="matrix-card" id="mod-1">
-            <h3>1. Which principle demands ensuring that training models do not present systematic variance or discrimination across varying ethnic demographics?</h3>
+            <h3>
+                <span>1. Which principle demands ensuring that training models do not present systematic variance or discrimination across varying ethnic demographics?</span>
+                <span class="status-badge" id="badge-1"></span>
+            </h3>
             <div class="options-layout">
                 <button class="choice-btn" onclick="verifyChoice(1, this, 'Fairness', true, 'Correct! Fairness directly targets mitigating demographic model bias.')">Fairness</button>
                 <button class="choice-btn" onclick="verifyChoice(1, this, 'Transparency', false, 'Incorrect. Transparency deals with openness, not demographic bias.')">Transparency</button>
@@ -241,7 +273,10 @@
 
         <!-- Module 2 -->
         <div class="matrix-card" id="mod-2">
-            <h3>2. Which principle states that automated software must execute predictably during environmental anomalies like severe weather or system outages?</h3>
+            <h3>
+                <span>2. Which principle states that automated software must execute predictably during environmental anomalies like severe weather or system outages?</span>
+                <span class="status-badge" id="badge-2"></span>
+            </h3>
             <div class="options-layout">
                 <button class="choice-btn" onclick="verifyChoice(2, this, 'Inclusiveness', false, 'Incorrect. Inclusiveness targets user design accessibility.')">Inclusiveness</button>
                 <button class="choice-btn" onclick="verifyChoice(2, this, 'Reliability & Safety', true, 'Correct! System resilience under stress is governed by Reliability & Safety.')">Reliability & Safety</button>
@@ -252,18 +287,9 @@
 
         <!-- Module 3 -->
         <div class="matrix-card" id="mod-3">
-            <h3>3. Which principle requires encrypting databases containing personal data assets to protect against malicious data extraction?</h3>
+            <h3>
+                <span>3. Which principle requires encrypting databases containing personal data assets to protect against malicious data extraction?</span>
+                <span class="status-badge" id="badge-3"></span>
+            </h3>
             <div class="options-layout">
                 <button class="choice-btn" onclick="verifyChoice(3, this, 'Fairness', false, 'Incorrect. Fairness manages demographic equity.')">Fairness</button>
-                <button class="choice-btn" onclick="verifyChoice(3, this, 'Privacy & Security', true, 'Correct! Data encryption and asset containment belong to Privacy & Security.')">Privacy & Security</button>
-                <button class="choice-btn" onclick="verifyChoice(3, this, 'Transparency', false, 'Incorrect. Transparency involves algorithmic auditability.')">Transparency</button>
-            </div>
-            <div class="inline-feedback" id="feed-3"></div>
-        </div>
-
-        <!-- Module 4 -->
-        <div class="matrix-card" id="mod-4">
-            <h3>4. Which principle dictates that stakeholders must be provided with interpretable explanations regarding how a system calculated its final decision output?</h3>
-            <div class="options-layout">
-                <button class="choice-btn" onclick="verifyChoice(4, this, 'Transparency', true, 'Correct! Opening up the algorithmic decision framework is a core requirement of Transparency.')">Transparency</button>
-                <button class="choice-btn" onclick="verifyChoice(4, this, 'Accountability', false, 'Incorrect. Accountability relates to assigning institutional liability.')">Accountability</button>

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responsible AI in Catering Matrix</title>
-    <!-- LINK TO SPECIFIED EXTERNAL CSS COMPONENT -->
     <link rel="stylesheet" href="aiethics.css">
 </head>
 <body>
@@ -13,9 +12,7 @@
         <h1>Responsible AI in Catering & Hospitality</h1>
         <p>Single-Screen Drag & Drop Industry Assessment Framework</p>
     </header>
-
     <div class="workspace-split">
-        <!-- Left Side Management Panel -->
         <div class="left-column">
             <div class="directions-box">
                 <h2>📖 Workshop Directions</h2>
@@ -26,7 +23,6 @@
                     <li>Cards evaluate your entry instantly. Pillars can be reused.</li>
                 </ul>
             </div>
-
             <div class="bank-container">
                 <span class="question-number">Active Pillar Bank</span>
                 <div class="pillar-bank">
@@ -38,19 +34,14 @@
                     <div class="draggable-pillar" draggable="true" id="p-inclusiveness">Inclusiveness</div>
                 </div>
             </div>
-
             <div class="summary-panel">
                 <h2>Progress Tracker</h2>
                 <p>Score: <span id="verified-score">0</span> / 6 Correct</p>
                 <button class="reset-btn" id="reset-button">Reset Exercise</button>
             </div>
         </div>
-
-        <!-- Right Side Catering Scenarios Grid -->
         <div class="right-column">
             <div class="assessment-grid">
-                
-                <!-- Module 1 -->
                 <div class="matrix-card" id="mod-1" data-answer="Fairness" data-msg="Correct! Fairness ensures dynamic pricing logic does not systemically target or penalize specific neighborhoods or demographic groups.">
                     <h3>
                         <div class="badge-row"><span class="question-number">Module 1: Smart Menu Pricing</span><span class="status-badge" id="badge-1"></span></div>
@@ -59,8 +50,6 @@
                     <div class="drop-zone" id="drop-1">Drop Pillar Here</div>
                     <div class="inline-feedback" id="feed-1"></div>
                 </div>
-
-                <!-- Module 2 -->
                 <div class="matrix-card" id="mod-2" data-answer="Reliability & Safety" data-msg="Correct! Safety is paramount when computer vision handles life-threatening dietary constraints and food prep environments.">
                     <h3>
                         <div class="badge-row"><span class="question-number">Module 2: Automated Allergy Detection</span><span class="status-badge" id="badge-2"></span></div>
@@ -69,8 +58,6 @@
                     <div class="drop-zone" id="drop-2">Drop Pillar Here</div>
                     <div class="inline-feedback" id="feed-2"></div>
                 </div>
-
-                <!-- Module 3 -->
                 <div class="matrix-card" id="mod-3" data-answer="Privacy & Security" data-msg="Correct! Securing facial metrics and point-of-sale customer logs is a core rule of Privacy & Security.">
                     <h3>
                         <div class="badge-row"><span class="question-number">Module 3: Biometric Checkouts</span><span class="status-badge" id="badge-3"></span></div>
@@ -79,8 +66,6 @@
                     <div class="drop-zone" id="drop-3">Drop Pillar Here</div>
                     <div class="inline-feedback" id="feed-3"></div>
                 </div>
-
-                <!-- Module 4 -->
                 <div class="matrix-card" id="mod-4" data-answer="Transparency" data-msg="Correct! Transparency requires making black-box culinary and recipe systems fully explainable to human users.">
                     <h3>
                         <div class="badge-row"><span class="question-number">Module 4: Recipe Optimization AI</span><span class="status-badge" id="badge-4"></span></div>
@@ -89,8 +74,6 @@
                     <div class="drop-zone" id="drop-4">Drop Pillar Here</div>
                     <div class="inline-feedback" id="feed-4"></div>
                 </div>
-
-                <!-- Module 5 -->
                 <div class="matrix-card" id="mod-5" data-answer="Accountability" data-msg="Correct! Clear operational ownership ensures that corporate humans assume ultimate responsibility for automated supplier failures.">
                     <h3>
                         <div class="badge-row"><span class="question-number">Module 5: Automated Supply Chains</span><span class="status-badge" id="badge-5"></span></div>
@@ -99,8 +82,6 @@
                     <div class="drop-zone" id="drop-5">Drop Pillar Here</div>
                     <div class="inline-feedback" id="feed-5"></div>
                 </div>
-
-                <!-- Module 6 -->
                 <div class="matrix-card" id="mod-6" data-answer="Inclusiveness" data-msg="Correct! Ensuring menu booking pipelines accommodate neurodivergent users or alternative physical controls fulfills Inclusiveness.">
                     <h3>
                         <div class="badge-row"><span class="question-number">Module 6: Digital Ordering Kiosks</span><span class="status-badge" id="badge-6"></span></div>
@@ -109,33 +90,65 @@
                     <div class="drop-zone" id="drop-6">Drop Pillar Here</div>
                     <div class="inline-feedback" id="feed-6"></div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         let trackedScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+        let activeTouchValue = null;
         const pillars = document.querySelectorAll(".draggable-pillar");
         const dropZones = document.querySelectorAll(".drop-zone");
 
-        pillars.forEach(p => p.addEventListener("dragstart", e => e.dataTransfer.setData("text", e.target.innerText)));
+        // Standard Mouse Drag Event Handlers
+        pillars.forEach(p => {
+            p.addEventListener("dragstart", e => {
+                e.dataTransfer.effectAllowed = "copy";
+                e.dataTransfer.setData("text/plain", e.target.innerText);
+            });
+
+            // Fallback touch listeners for mobile or touchscreens
+            p.addEventListener("touchstart", function(e) {
+                activeTouchValue = p.innerText;
+                p.style.opacity = "0.5";
+            }, { passive: true });
+
+            p.addEventListener("touchend", function() {
+                p.style.opacity = "1";
+            });
+        });
+
+        // Drop Zone Mechanics
         dropZones.forEach(zone => {
-            zone.addEventListener("dragover", e => { e.preventDefault(); if (!zone.classList.contains("occupied")) zone.classList.add("drag-over"); });
+            zone.addEventListener("dragover", e => {
+                e.preventDefault();
+                if (!zone.classList.contains("occupied")) zone.classList.add("drag-over");
+            });
+
             zone.addEventListener("dragleave", () => zone.classList.remove("drag-over"));
-            zone.addEventListener("drop", e => {
-                e.preventDefault(); zone.classList.remove("drag-over");
+
+            zone.addEventListener("drop", function(e) {
+                e.preventDefault();
+                zone.classList.remove("drag-over");
                 if (zone.classList.contains("occupied")) return;
-                const val = e.dataTransfer.getData("text"); if(!val) return;
-                const card = zone.closest(".matrix-card"), id = card.id.replace("mod-", "");
-                const ans = card.getAttribute("data-answer"), msg = card.getAttribute("data-msg");
-                const feed = document.getElementById("feed-" + id), badge = document.getElementById("badge-" + id);
-                zone.innerText = val; zone.classList.add("occupied");
-                if (val === ans) {
-                    card.className = "matrix-card passed"; badge.innerText = "✓ Correct"; badge.className = "status-badge correct-badge";
-                    feed.className = "inline-feedback show-feed good"; feed.innerText = msg; trackedScores[id] = 1;
-                } else {
-                    card.className = "matrix-card failed"; badge.innerText = "✗ Incorrect"; badge.className = "status-badge wrong-badge";
-feed.className = "inline-feedback show-feed bad"; feed.innerText = "Incorrect selection. The correct catering pillar is: " + ans + "."; trackedScores[id] = 0;}document.getElementById("verified-score").innerText = Object.values(trackedScores).reduce((a, b) => a + b, 0);});});document.getElementById("reset-button").addEventListener("click", function() {trackedScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }; document.getElementById("verified-score").innerText = 0;document.querySelectorAll(".matrix-card").forEach(c => c.className = "matrix-card");document.querySelectorAll(".status-badge").forEach(b => { b.innerText = ""; b.className = "status-badge"; });document.querySelectorAll(".inline-feedback").forEach(f => { f.innerText = ""; f.className = "inline-feedback"; });dropZones.forEach(z => { z.innerText = "Drop Pillar Here"; z.classList.remove("occupied"); });});});
+
+                const droppedValue = e.dataTransfer.getData("text/plain") || e.dataTransfer.getData("text");
+                if (droppedValue) handleEvaluation(zone, droppedValue);
+            });
+
+            // Touch Drop Fallback Trigger (Click zone after touching item)
+            zone.addEventListener("touchend", function() {
+                if (activeTouchValue && !zone.classList.contains("occupied")) {
+                    handleEvaluation(zone, activeTouchValue);
+                    activeTouchValue = null;
+                }
+            });
+        });
+
+        function handleEvaluation(zone, value) {
+            const card = zone.closest(".matrix-card");
+            const id = card.id.replace("mod-", "");
+            const ans = card.getAttribute("data-answer");
+Use code with caution.const msg = card.getAttribute("data-msg");const feed = document.getElementById("feed-" + id);const badge = document.getElementById("badge-" + id);zone.innerText = value;zone.classList.add("occupied");if (value === ans) {card.className = "matrix-card passed";badge.innerText = "✓ Correct";badge.className = "status-badge correct-badge";feed.className = "inline-feedback show-feed good";feed.innerText = msg;trackedScores[id] = 1;} else {card.className = "matrix-card failed";badge.innerText = "✗ Incorrect";badge.className = "status-badge wrong-badge";feed.className = "inline-feedback show-feed bad";feed.innerText = "Incorrect. The correct principle is: " + ans + ".";trackedScores[id] = 0;}document.getElementById("verified-score").innerText = Object.values(trackedScores).reduce((a, b) => a + b, 0);}
+        // Reset Buttondocument.getElementById("reset-button").addEventListener("click", function() {trackedScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };activeTouchValue = null;document.getElementById("verified-score").innerText = 0;document.querySelectorAll(".matrix-card").forEach(c => c.className = "matrix-card");document.querySelectorAll(".status-badge").forEach(b => { b.innerText = ""; b.className = "status-badge"; });document.querySelectorAll(".inline-feedback").forEach(f => { f.innerText = ""; f.className = "inline-feedback"; });dropZones.forEach(z => { z.innerText = "Drop Pillar Here"; z.classList.remove("occupied"); });});});

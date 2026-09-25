@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDI in AI: The Restaurant Simulation</title>
+    <!-- Links to the external CSS stylesheet -->
+    <link rel="stylesheet" href="EDIinAI.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Interactive Tool: EDI in AI Restaurant Deployment</h1>
+    
+    <div class="scenario-box">
+        <strong>The Scenario:</strong> You are configuring the new AI-powered operating system for your restaurant chain. Your decisions will directly impact customers like <strong>Auntie Betty</strong> (who needs text-to-speech and smoothly textured meals) and <strong>little Alan</strong> (who is neurodivergent and cannot have his food touching).
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="pillar-nav">
+        <button class="pillar-btn active" onclick="showTab('disabilities', event)">1. Disabilities</button>
+        <button class="pillar-btn" onclick="showTab('digital', event)">2. Digital Exclusion</button>
+        <button class="pillar-btn" onclick="showTab('language', event)">3. Language Barriers</button>
+        <button class="pillar-btn" onclick="showTab('socioeconomic', event)">4. Socioeconomic</button>
+    </div>
+
+    <!-- PILLAR 1: DISABILITIES -->
+    <div id="disabilities" class="task-card active">
+        <h2>Pillar 1: Accommodating Disabilities & Neurodiversity</h2>
+        <p><strong>Challenge:</strong> How should the AI ordering app process custom meal configurations for guests with specific cognitive or sensory profiles like little Alan?</p>
+        
+        <div class="options-group">
+            <label class="option-label">
+                <input type="radio" name="p1" value="barrier" onclick="evaluateChoice('p1', 'barrier', 'b1')">
+                <span><strong>Option A:</strong> Hardcode a standard menu flow. If users want modifications, they must type them manually into a blank text box for the kitchen to read.</span>
+            </label>
+            <label class="option-label">
+                <input type="radio" name="p1" value="inclusive" onclick="evaluateChoice('p1', 'inclusive', 'i1')">
+                <span><strong>Option B:</strong> Implement visual AI modifiers (e.g., explicit toggle boxes for "Separate Ingredients") that sync directly to kitchen monitors and save to a private preference profile.</span>
+            </label>
+        </div>
+
+        <div id="b1" class="feedback barrier">
+            <strong>❌ Created a Barrier:</strong> Manual text fields create cognitive hurdles for neurodivergent individuals or parents in a rush. If the kitchen staff overlooks the text note, Alan gets his beans touching his chips, ruining his experience.
+        </div>
+        <div id="i1" class="feedback inclusive">
+            <strong>✅ Inclusive Design:</strong> This supports accessibility by providing clear visual structures. Next time Alan visits, the AI reservation engine flags his profile automatically, removing the friction entirely.
+        </div>
+    </div>
+
+    <!-- PILLAR 2: DIGITAL EXCLUSION -->
+    <div id="digital" class="task-card">
+        <h2>Pillar 2: Bridging Digital Exclusion</h2>
+        <p><strong>Challenge:</strong> You want to deploy an AI-driven telephone system to handle table bookings. How do you ensure tech-averse or older customers aren't left behind?</p>
+        
+        <div class="options-group">
+            <label class="option-label">
+                <input type="radio" name="p2" value="barrier" onclick="evaluateChoice('p2', 'barrier', 'b2')">
+                <span><strong>Option A:</strong> Make the restaurant completely automated. Turn off the regular phone lines and require everyone to book via the online AI chatbot or an app.</span>
+            </label>
+            <label class="option-label">
+                <input type="radio" name="p2" value="inclusive" onclick="evaluateChoice('p2', 'inclusive', 'i2')">
+                <span><strong>Option B:</strong> Use the voice AI system to filter and handle routine inquiries, but instantly route complex queries or requested human interventions straight to a front-of-house host.</span>
+            </label>
+        </div>
+
+        <div id="b2" class="feedback barrier">
+            <strong>❌ Created a Barrier:</strong> This forces complete digital reliance. Customers who do not own modern smartphones or struggle with UI interfaces are completely shut out from your business.
+        </div>
+        <div id="i2" class="feedback inclusive">
+            <strong>✅ Inclusive Design:</strong> A "hybrid AI" ecosystem leverages tech to free up human time. Your floor staff now have more physical bandwidth to greet and sit guests who prefer real-world assistance.
+        </div>
+    </div>
+
+    <!-- PILLAR 3: LANGUAGE BARRIERS -->
+    <div id="language" class="task-card">
+        <h2>Pillar 3: Navigating Language Nuances</h2>
+        <p><strong>Challenge:</strong> You are setting up an AI system to translate your menu and ingredient list into multiple languages for dynamic digital kiosks.</p>
+        
+        <div class="options-group">
+            <label class="option-label">
+                <input type="radio" name="p3" value="inclusive" onclick="evaluateChoice('p3', 'inclusive', 'i3')">
+                <span><strong>Option A:</strong> Use a context-aware Natural Language Processing (NLP) model trained on culinary databases that flags hidden ingredients (like animal fats or cross-contaminants).</span>
+            </label>
+            <label class="option-label">
+                <input type="radio" name="p3" value="barrier" onclick="evaluateChoice('p3', 'barrier', 'b3')">
+                <span><strong>Option B:</strong> Use a cheap, generic word-for-word algorithmic translator web plug-in to save on deployment capital.</span>
+            </label>
+        </div>
+
+        <div id="i3" class="feedback inclusive">
+            <strong>✅ Inclusive Design:</strong> True cultural and linguistic inclusion preserves safety context, ensuring that religious dietary requirements and allergen restrictions are accurately conveyed without dangerous translation errors.
+        </div>
+        <div id="b3" class="feedback barrier">
+            <strong>❌ Created a Barrier:</strong> Food contexts change wildly. A literal translator app may fail to understand complex dish dynamics, causing severe risk of serving allergens or violating religious diets.
+        </div>
+    </div>
+
+    <!-- PILLAR 4: SOCIOECONOMIC FACTORS -->
+    <div id="socioeconomic" class="task-card">
+        <h2>Pillar 4: Managing Socioeconomic Impacts</h2>
+        <p><strong>Challenge:</strong> Your executive suite wants to use dynamic pricing algorithms driven by local demand patterns to adjust prices automatically.</p>
+        
+        <div class="options-group">
+            <label class="option-label">
+                <input type="radio" name="p4" value="barrier" onclick="evaluateChoice('p4', 'barrier', 'b4')">
+                <span><strong>Option A:</strong> Allow the AI to aggressively increase prices during peak community dining hours to extract maximum profit margins from every table.</span>
+            </label>
+            <label class="option-label">
+                <input type="radio" name="p4" value="inclusive" onclick="evaluateChoice('p4', 'inclusive', 'i4')">
+                <span><strong>Option B:</strong> Cap the dynamic pricing model, ensuring a core tier of affordable options remains stable so lower-income local families have predictable food costs.</span>
+            </label>
+        </div>
+
+        <div id="b4" class="feedback barrier">
+            <strong>❌ Created a Barrier:</strong> Aggressive surge pricing penalises low-income families who can only visit during standard weekend/evening times, effectively turning public dining spaces into exclusionary class systems.
+        </div>
+        <div id="i4" class="feedback inclusive">
+            <strong>✅ Inclusive Design:</strong> Ethical safeguards on economic algorithms prevent AI systems from exacerbating local poverty or treating essential community access simply as an optimization data point.
+        </div>
+    </div>
+
+    <div class="score-banner">
+        <span>Inclusive Choices: <span id="inclusive-count">0</span>/4</span>
+        <span>Barriers Created: <span id="barrier-count">0</span>/4</span>
+    </div>
+</div>
+
+<script>
+    const choices = { p1: null, p2: null, p3: null, p4: null };
+
+    function showTab(tabId, event) {
+        document.querySelectorAll('.task-card').forEach(card => card.classList.remove('active'));
+        document.querySelectorAll('.pillar-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function evaluateChoice(pillar, type, feedbackId) {
+        const card = document.getElementById(feedbackId).parentElement;
+        card.querySelectorAll('.feedback').forEach(f => f.style.display = 'none');
+        
+        document.getElementById(feedbackId).style.display = 'block';
+        
+        choices[pillar] = type;
+        updateScores();
+    }
+
+    function updateScores() {
+        let inclusive = 0;
+        let barrier = 0;
+        for (let p in choices) {
+            if (choices[p] === 'inclusive') inclusive++;
+            if (choices[p] === 'barrier') barrier++;
+        }
+        document.getElementById('inclusive-count').innerText = inclusive;
+        document.getElementById('barrier-count').innerText = barrier;
+    }
+</script>
+
+</body>
+</html>

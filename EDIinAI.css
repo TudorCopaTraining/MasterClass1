@@ -62,7 +62,7 @@ h1 {
     color: var(--text-primary);
     border: 2px solid transparent;
     padding: 12px 20px;
-    border-radius: 30px; /* Rounded pill style */
+    border-radius: 30px; 
     cursor: pointer;
     font-weight: 700;
     font-size: 0.95rem;
@@ -70,7 +70,6 @@ h1 {
     box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
 
-/* Micro-interaction: Hover expands button slightly and gives it a neon edge */
 .pillar-btn:hover {
     transform: translateY(-2px);
     border-color: var(--pop-neon);
@@ -109,9 +108,9 @@ h1 {
     flex-direction: column;
     gap: 16px;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-/* INTERACTIVE COMPONENT: Option Selection Labels */
 .option-label {
     display: flex;
     align-items: flex-start;
@@ -125,7 +124,6 @@ h1 {
     position: relative;
 }
 
-/* Highlight the item to click unmistakably on hover */
 .option-label:hover {
     background-color: #24334d;
     border-color: var(--pop-pink);
@@ -133,14 +131,23 @@ h1 {
     box-shadow: 0 5px 15px rgba(255, 0, 127, 0.2);
 }
 
-/* Highlight style when radio button inside gets checked */
 .option-label:has(input:checked) {
     border-color: var(--pop-neon);
     background-color: #0f243a;
     box-shadow: 0 0 20px rgba(0, 240, 255, 0.25);
 }
 
-/* Styling the native radio bullet to look striking */
+/* Disabled input state styles */
+.option-label:has(input:disabled) {
+    cursor: not-allowed;
+    opacity: 0.85;
+}
+.option-label:has(input:disabled):hover {
+    transform: none;
+    border-color: var(--border-bright);
+    box-shadow: none;
+}
+
 .option-label input[type="radio"] {
     appearance: none;
     background-color: #475569;
@@ -173,9 +180,46 @@ h1 {
     transform: scale(1);
 }
 
-.option-label input[type="radio"]:checked {
-    border-color: var(--pop-neon);
-    background: #0f172a;
+/* Control Buttons Layout Styling */
+.action-bar {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.submit-btn {
+    background-color: var(--pop-mint);
+    color: #0f172a;
+}
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(0, 255, 170, 0.5);
+}
+
+.reset-btn {
+    background-color: #334155;
+    color: var(--text-primary);
+    border: 2px solid var(--pop-pink);
+}
+.reset-btn:hover {
+    background-color: var(--pop-pink);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
 }
 
 /* Pop-up Results / Feedbacks */
@@ -197,14 +241,12 @@ h1 {
     background-color: rgba(0, 255, 170, 0.15);
     color: var(--pop-mint);
     border: 2px solid var(--pop-mint);
-    box-shadow: 0 0 15px rgba(0, 255, 170, 0.2);
 }
 
 .feedback.barrier {
     background-color: rgba(255, 0, 127, 0.15);
     color: #ff66b2;
     border: 2px solid var(--pop-pink);
-    box-shadow: 0 0 15px rgba(255, 0, 127, 0.2);
 }
 
 /* Score display footer */

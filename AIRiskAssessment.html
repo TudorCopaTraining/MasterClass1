@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant AI Risk Assessment Tool</title>
+    <link rel="stylesheet" href="AIRiskAssessment.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Interactive Restaurant AI Risk Assessment</h1>
+            <p>Evaluate your restaurant's AI implementation across critical risk vectors to generate a custom mitigation strategy.</p>
+        </header>
+
+        <!-- Scenario Selection -->
+        <section class="section card">
+            <h2>1. Select Your Proposed AI Implementation</h2>
+            <div class="grid-3">
+                <button class="btn scenario-btn active" data-scenario="inventory">
+                    <h3>Predictive Inventory & Demand</h3>
+                    <p>Automated ordering based on foot traffic and historical data forecasting.</p>
+                </button>
+                <button class="btn scenario-btn" data-scenario="booking">
+                    <h3>Automated Reservation Chatbot</h3>
+                    <p>AI handling guest bookings, preferences, and automated text alerts.</p>
+                </button>
+                <button class="btn scenario-btn" data-scenario="pricing">
+                    <h3>Dynamic Menu Pricing</h3>
+                    <p>Algorithmic price shifts based on real-time demand, events, and ingredients.</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- Risk Vectors Assessment -->
+        <section class="section card">
+            <h2>2. Evaluate Risk Factors & Guardrails</h2>
+            <p class="subtitle">Adjust parameters to reflect your venue's current technical readiness and human control levels.</p>
+            
+            <div class="risk-sliders">
+                <div class="slider-group">
+                    <label for="humanControl"><strong>Human-in-the-Loop Oversight:</strong> <span id="humanControlVal">50%</span></label>
+                    <input type="range" id="humanControl" min="0" max="100" value="50">
+                    <span class="help-text">High = Immediate manager approval required before AI actions are locked in.</span>
+                </div>
+
+                <div class="slider-group">
+                    <label for="dataPrivacy"><strong>Data Security & Privacy Protocols:</strong> <span id="dataPrivacyVal">50%</span></label>
+                    <input type="range" id="dataPrivacy" min="0" max="100" value="50">
+                    <span class="help-text">High = Encrypted payment paths, anonymised guest profiles, clear opt-ins.</span>
+                </div>
+
+                <div class="slider-group">
+                    <label for="modelReliability"><strong>Model Safeguards & Logic Testing:</strong> <span id="modelReliabilityVal">50%</span></label>
+                    <input type="range" id="modelReliability" min="0" max="100" value="50">
+                    <span class="help-text">High = Built-in boundary caps to prevent technical hallucinations or extreme spikes.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Control Action Panel -->
+        <div class="action-panel">
+            <button id="calculateRiskBtn" class="btn btn-primary">Run Operational Risk Assessment</button>
+        </div>
+
+        <!-- Dynamic Output Dashboard -->
+        <section id="resultsDashboard" class="section card hidden">
+            <h2>3. Assessment Dashboard & Action Plan</h2>
+            <div class="grid-2">
+                <div class="score-card">
+                    <h3>Overall Risk Index</h3>
+                    <div id="riskGauge" class="gauge">
+                        <span id="riskScore">0%</span>
+                    </div>
+                    <p id="riskRating" class="rating-text">LOW</p>
+                </div>
+                <div class="vulnerabilities-card">
+                    <h3>Identified Vulnerabilities</h3>
+                    <ul id="vulnerabilityList" class="vulnerability-list">
+                        <!-- Dynamically populated -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mitigation-plan">
+                <h3>Tailored Mitigation Action Plan</h3>
+                <div id="mitigationSteps" class="steps-container">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const scenarioData = {
+            inventory: {
+                title: "Predictive Inventory & Demand",
+                threats: [
+                    { name: "Over-ordering Hallucination", baseRisk: 75, type: "reliability", desc: "System errors causing massive ingredient waste or critical stockouts during peak shifts." },
+                    { name: "Vendor Automation Friction", baseRisk: 55, type: "human", desc: "Locking in unverified automated purchases without direct manager approval." }
+                ],
+                mitigations: [
+                    "Establish strict hard boundary caps on order values to block anomalous spikes.",
+                    "Enforce a mandatory 'manager sign-off' window before any order transmits to suppliers."
+                ]
+            },
+            booking: {
+                title: "Automated Reservation Chatbot",
+                threats: [
+                    { name: "Allergen & Sensitivity Miscommunication", baseRisk: 85, type: "human", desc: "AI misinterpreting severe dietary restrictions, risking guest safety." },
+                    { name: "Guest Data Exposure", baseRisk: 70, type: "privacy", desc: "Leaking sensitive payment data or corporate client dining records." }
+                ],
+                mitigations: [
+                    "Hard-code immediate human hand-offs the moment a guest mentions 'allergy' or 'medical'.",
+                    "Isolate booking logs from external LLMs using fully tokenised, encrypted database fields."
+                ]
+            },
+            pricing: {
+                title: "Dynamic Menu Pricing",
+                threats: [
+                    { name: "Reputational & Regulatory Backlash", baseRisk: 80, type: "reliability", desc: "Pricing algorithm spiking rates during rush hours, breaking local fair pricing laws." },
+                    { name: "Loyalty Preferences Erasure", baseRisk: 60, type: "privacy", desc: "Over-tracking individual customer habits to adjust individual prices dynamically." }
+                ],
+                mitigations: [
+                    "Set localized upper price ceilings that prevent algorithms from going past standard maximum thresholds.",
+                    "Ensure transparent menu signage showing static base tiers to keep historical transparency."
+                ]
+            }
+        };
+
+        let currentScenario = 'inventory';
+
+        // Update Slider Label Displays
+        ['humanControl', 'dataPrivacy', 'modelReliability'].forEach(id => {
+            const input = document.getElementById(id);
+            const valSpan = document.getElementById(id + 'Val');
+            input.addEventListener('input', () => {
+                valSpan.textContent = input.value + '%';
+            });
+        });
+
+        // Scenario Button Selection Toggle
+        document.querySelectorAll('.scenario-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentScenario = this.getAttribute('data-scenario');
+                document.getElementById('resultsDashboard').classList.add('hidden');
+            });
+        });
+
+        // Calculate and Populate Risks
+        document.getElementById('calculateRiskBtn').addEventListener('click', function() {
+            const humanControl = parseInt(document.getElementById('humanControl').value);
+            const dataPrivacy = parseInt(document.getElementById('dataPrivacy').value);
+            const modelReliability = parseInt(document.getElementById('modelReliability').value);
+            
+            const scenario = scenarioData[currentScenario];
+            let rawTotalRisk = 0;
+            let listHtml = '';
+
+            scenario.threats.forEach(threat => {
+                let mitigationFactor = 0;
+                if(threat.type === 'human') mitigationFactor = humanControl;
+                if(threat.type === 'privacy') mitigationFactor = dataPrivacy;
+                if(threat.type === 'reliability') mitigationFactor = modelReliability;
+                
+                const calculatedThreat = Math.max(10, Math.round(threat.baseRisk * (1 - (mitigationFactor / 100))));
+                rawTotalRisk += calculatedThreat;
+
+                let severityClass = 'risk-low';
+                if(calculatedThreat > 35) severityClass = 'risk-med';
+                if(calculatedThreat > 65) severityClass = 'risk-high';
+
+                listHtml += `<li>
+                    <div class="threat-header">
+                        <span class="threat-name">${threat.name}</span>
+                        <span class="badge ${severityClass}">Score: ${calculatedThreat}</span>
+                    </div>
+                    <p class="threat-desc">${threat.desc}</p>
+                </li>`;
+            });
+
+            const finalRiskScore = Math.min(100, Math.max(5, Math.round(rawTotalRisk / scenario.threats.length)));
+            
+            // UI Target Adjustments
+            const scoreEl = document.getElementById('riskScore');
+            const ratingEl = document.getElementById('riskRating');
+            const gaugeEl = document.getElementById('riskGauge');
+            
+            scoreEl.textContent = finalRiskScore + '%';
+            
+            if(finalRiskScore <= 35) {
+                ratingEl.textContent = "LOW RISK";
+                ratingEl.className = "rating-text text-low";
+                gaugeEl.style.borderColor = "#10b981";
+            } else if(finalRiskScore <= 65) {
+                ratingEl.textContent = "MEDIUM RISK";
+                ratingEl.className = "rating-text text-med";
+                gaugeEl.style.borderColor = "#f59e0b";
+            } else {
+                ratingEl.textContent = "HIGH RISK";
+                ratingEl.className = "rating-text text-high";
+                gaugeEl.style.borderColor = "#ef4444";
+            }
+
+            document.getElementById('vulnerabilityList').innerHTML = listHtml;
+
+            // Generate Action Plan Steps
+            let stepsHtml = '';
+            scenario.mitigations.forEach(step => {
+                stepsHtml += `<div class="step-item"><p>${step}</p></div>`;
+            });
+
+            // Add dynamic steps based on vulnerabilities
+            if(humanControl < 50) {
+                stepsHtml += `<div class="step-item warning"><p><strong>Critical Human-in-the-Loop Deficit:</strong> Update your standard operating procedures (SOPs) to include mandatory chef or manager overrides.</p></div>`;
+            }
+            if(dataPrivacy < 50) {
+                stepsHtml += `<div class="step-item warning"><p><strong>Data Privacy Gap:</strong> Review point-of-sale (POS) integration logs and enforce rigid guest data isolation parameters.</p></div>`;
+            }
+
+            document.getElementById('mitigationSteps').innerHTML = stepsHtml;
+            document.getElementById('resultsDashboard').classList.remove('hidden');
+            document.getElementById('resultsDashboard').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

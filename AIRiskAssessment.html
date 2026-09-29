@@ -88,6 +88,11 @@
                     <!-- Dynamically populated -->
                 </div>
             </div>
+            
+            <!-- Reset Button Added at the Bottom -->
+            <div class="reset-panel">
+                <button id="resetBtn" class="btn btn-secondary">Reset Tool & Start Over</button>
+            </div>
         </section>
     </div>
 
@@ -131,7 +136,8 @@
         let currentScenario = 'inventory';
 
         // Update Slider Label Displays
-        ['humanControl', 'dataPrivacy', 'modelReliability'].forEach(id => {
+        const sliders = ['humanControl', 'dataPrivacy', 'modelReliability'];
+        sliders.forEach(id => {
             const input = document.getElementById(id);
             const valSpan = document.getElementById(id + 'Val');
             input.addEventListener('input', () => {
@@ -194,14 +200,17 @@
                 ratingEl.textContent = "LOW RISK";
                 ratingEl.className = "rating-text text-low";
                 gaugeEl.style.borderColor = "#10b981";
+                gaugeEl.style.boxShadow = "0 0 20px rgba(16, 185, 129, 0.4)";
             } else if(finalRiskScore <= 65) {
                 ratingEl.textContent = "MEDIUM RISK";
                 ratingEl.className = "rating-text text-med";
                 gaugeEl.style.borderColor = "#f59e0b";
+                gaugeEl.style.boxShadow = "0 0 20px rgba(245, 158, 11, 0.4)";
             } else {
                 ratingEl.textContent = "HIGH RISK";
                 ratingEl.className = "rating-text text-high";
                 gaugeEl.style.borderColor = "#ef4444";
+                gaugeEl.style.boxShadow = "0 0 20px rgba(239, 68, 68, 0.4)";
             }
 
             document.getElementById('vulnerabilityList').innerHTML = listHtml;
@@ -212,7 +221,6 @@
                 stepsHtml += `<div class="step-item"><p>${step}</p></div>`;
             });
 
-            // Add dynamic steps based on vulnerabilities
             if(humanControl < 50) {
                 stepsHtml += `<div class="step-item warning"><p><strong>Critical Human-in-the-Loop Deficit:</strong> Update your standard operating procedures (SOPs) to include mandatory chef or manager overrides.</p></div>`;
             }
@@ -223,6 +231,25 @@
             document.getElementById('mitigationSteps').innerHTML = stepsHtml;
             document.getElementById('resultsDashboard').classList.remove('hidden');
             document.getElementById('resultsDashboard').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Reset Logic
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            // Reset Sliders
+            sliders.forEach(id => {
+                document.getElementById(id).value = 50;
+                document.getElementById(id + 'Val').textContent = '50%';
+            });
+            
+            // Reset Scenario Selection
+            document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+            const defaultScenario = document.querySelector('[data-scenario="inventory"]');
+            defaultScenario.classList.add('active');
+            currentScenario = 'inventory';
+
+            // Hide Dashboard and scroll to top
+            document.getElementById('resultsDashboard').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     </script>
 </body>

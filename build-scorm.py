@@ -2,11 +2,12 @@ import os
 import shutil
 import zipfile
 
-print("Building single sequential SCORM package...")
+print("Building single sequential SCORM package (New Order)...")
 
+# Updated order: 1. Intelligent Automation, 2. AI Ethics, 3. EDI, 4. Risk Assessment
 files_to_bundle = [
-    {"html": "AIEthics.html", "css": "aiethics.css"},
     {"html": "IntelligentAutomation.html", "css": None},
+    {"html": "AIEthics.html", "css": "aiethics.css"},
     {"html": "EDIinAI.html", "css": "EDIinAI.css"},
     {"html": "AIRiskAssessment.html", "css": "AIRiskassessment.css"},
 ]
@@ -29,10 +30,10 @@ manifest_template = """<?xml version="1.0" encoding="UTF-8"?>
     <organization identifier="masterclass_org">
       <title>Complete AI Masterclass</title>
       <item identifier="item_1" identifierref="res_1">
-        <title>1. AI Ethics</title>
+        <title>1. Intelligent Automation</title>
       </item>
       <item identifier="item_2" identifierref="res_2">
-        <title>2. Intelligent Automation</title>
+        <title>2. AI Ethics</title>
       </item>
       <item identifier="item_3" identifierref="res_3">
         <title>3. EDI in AI</title>
@@ -43,12 +44,12 @@ manifest_template = """<?xml version="1.0" encoding="UTF-8"?>
     </organization>
   </organizations>
   <resources>
-    <resource identifier="res_1" type="webcontent" adlcp:scormtype="sco" href="AIEthics.html">
+    <resource identifier="res_1" type="webcontent" adlcp:scormtype="sco" href="IntelligentAutomation.html">
+      <file href="IntelligentAutomation.html"/>
+    </resource>
+    <resource identifier="res_2" type="webcontent" adlcp:scormtype="sco" href="AIEthics.html">
       <file href="AIEthics.html"/>
       <file href="aiethics.css"/>
-    </resource>
-    <resource identifier="res_2" type="webcontent" adlcp:scormtype="sco" href="IntelligentAutomation.html">
-      <file href="IntelligentAutomation.html"/>
     </resource>
     <resource identifier="res_3" type="webcontent" adlcp:scormtype="sco" href="EDIinAI.html">
       <file href="EDIinAI.html"/>
@@ -87,7 +88,6 @@ with zipfile.ZipFile(output_zip, "w", zipfile.ZIP_DEFLATED) as zipf:
   for filename in os.listdir(temp_dir):
     file_path = os.path.join(temp_dir, filename)
     if os.path.isfile(file_path):
-      # arcname=filename ensures files sit at the absolute root of the zip
       zipf.write(file_path, arcname=filename)
 
 shutil.rmtree(temp_dir)

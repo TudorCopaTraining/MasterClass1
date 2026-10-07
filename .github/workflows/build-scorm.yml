@@ -1,9 +1,9 @@
-name: Build SCORM Packages
+name: Build SCORM Package
 
 on:
   push:
     branches: [ main, master ]
-  workflow_dispatch: # Allows you to trigger it manually from the website
+  workflow_dispatch: # Allows manual trigger from the Actions tab
 
 jobs:
   build:
@@ -24,9 +24,5 @@ jobs:
     - name: Upload SCORM Zip Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: scorm-packages
-        path: |
-          AIEthics_SCORM.zip
-          AIRiskAssessment_SCORM.zip
-          EDIinAI_SCORM.zip
-          IntelligentAutomation_SCORM.zip
+        name: scorm-masterclass-package
+        path: Masterclass_Complete_SCORM.zip

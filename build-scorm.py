@@ -4,7 +4,6 @@ import zipfile
 
 print("Building single sequential SCORM package...")
 
-# Define the exact files for your combined masterclass in sequence order
 files_to_bundle = [
     {"html": "AIEthics.html", "css": "aiethics.css"},
     {"html": "IntelligentAutomation.html", "css": None},
@@ -15,12 +14,10 @@ files_to_bundle = [
 output_zip = "Masterclass_Complete_SCORM.zip"
 temp_dir = "temp_masterclass_build"
 
-# Create a clean temporary directory
 if os.path.exists(temp_dir):
   shutil.rmtree(temp_dir)
 os.makedirs(temp_dir)
 
-# Master SCORM Manifest with sequenced items pointing to each lesson
 manifest_template = """<?xml version="1.0" encoding="UTF-8"?>
 <manifest identifier="com.masterclass.complete" version="1.0"
           xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1"
@@ -65,7 +62,7 @@ manifest_template = """<?xml version="1.0" encoding="UTF-8"?>
 </manifest>
 """
 
-# Copy all required HTML and CSS files into the temporary build folder
+# Copy files into temp dir
 for item in files_to_bundle:
   html_file = item["html"]
   css_file = item["css"]
@@ -80,17 +77,18 @@ for item in files_to_bundle:
     shutil.copy(css_file, os.path.join(temp_dir, css_file))
     print(f"[OK] Added CSS: {css_file}")
 
-# Write the master manifest into the root of the temp build folder
+# Write manifest directly into temp dir root
 with open(os.path.join(temp_dir, "imsmanifest.xml"), "w") as f:
   f.write(manifest_template)
 print("[OK] Generated master imsmanifest.xml")
 
-# Zip everything up into a single scorm package file
-with zipfile.ZipFile(output_zip, "w") as zipf:
-  for root, dirs, filenames in os.walk(temp_dir):
-    for file in filenames:
-      zipf.write(os.path.join(root, file), arcname=file)
+# Zip contents directly so no outer folder is included
+with zipfile.ZipFile(output_zip, "w", zipfile.ZIP_DEFLATED) as zipf:
+  for filename in os.listdir(temp_dir):
+    file_path = os.path.join(temp_dir, filename)
+    if os.path.isfile(file_path):
+      # arcname=filename ensures files sit at the absolute root of the zip
+      zipf.write(file_path, arcname=filename)
 
-# Cleanup temporary folder
 shutil.rmtree(temp_dir)
-print(f"\nSuccessfully created single combined package: {output_zip}")
+print(f"\nSuccessfully created clean single package: {output_zip}")

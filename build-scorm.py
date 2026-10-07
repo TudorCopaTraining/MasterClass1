@@ -2,7 +2,10 @@ import os
 import shutil
 import zipfile
 
-# Map your exact files to their target SCORM zip names
+print(f"Current working directory: {os.getcwd()}")
+print("Files found in this directory:", os.listdir("."))
+print("-" * 40)
+
 packages = {
     "AIEthics_SCORM.zip": {"html": "AIEthics.html", "css": "aiethics.css"},
     "AIRiskAssessment_SCORM.zip": {
@@ -13,7 +16,7 @@ packages = {
     "IntelligentAutomation_SCORM.zip": {
         "html": "IntelligentAutomation.html",
         "css": None,
-    },  # Set to a CSS filename if you have one, or leave None
+    },
 }
 
 manifest_template = """<?xml version="1.0" encoding="UTF-8"?>
@@ -22,7 +25,7 @@ manifest_template = """<?xml version="1.0" encoding="UTF-8"?>
           xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1 imscp_rootv1p1.xsd
-                              http://www.adlnet.org/xsd/adlcp_rootv1p2 adlnet_rootv1p2.xsd">
+                              http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
   <organizations default="default_org">
     <organization identifier="default_org">
       <title>Masterclass SCORM Package</title>
@@ -44,35 +47,41 @@ for zip_name, files in packages.items():
   temp_dir = "temp_build"
   os.makedirs(temp_dir, exist_ok=True)
 
-  # Check and copy HTML file
-  if os.path.exists(files["html"]):
-    shutil.copy(files["html"], os.path.join(temp_dir, files["html"]))
-  else:
-    print(f"Warning: {files['html']} not found, skipping {zip_name}")
-    shutil.rmtree(temp_dir)
+  # Check HTML
+  html_file = files["html"]
+  if not os.path.exists(html_file):
+    print(f"[ERROR] HTML file missing: '{html_file}' -> Skipping {zip_name}")
+    shutil.rmtree(temp_dir, ignore_errors=True)
     continue
 
-  # Check and copy CSS file if specified and exists
-  css_tag = ""
-  if files["css"] and os.path.exists(files["css"]):
-    shutil.copy(files["css"], os.path.join(temp_dir, files["css"]))
-    css_tag = f'<file href="{files["css"]}"/>'
+  shutil.copy(html_file, os.path.join(temp_dir, html_file))
+  print(f"[OK] Copied HTML: {html_file}")
 
-  # Generate the matching imsmanifest.xml
+  # Check CSS (optional)
+  css_tag = ""
+  css_file = files["css"]
+  if css_file:
+    if os.path.exists(css_file):
+      shutil.copy(css_file, os.path.join(temp_dir, css_file))
+      css_tag = f'<file href="{css_file}"/>'
+      print(f"[OK] Copied CSS: {css_file}")
+    else:
+      print(f"[WARNING] CSS file '{css_file}' not found, proceeding without it.")
+
+  # Generate manifest
   manifest_content = manifest_template.format(
-      html_file=files["html"], css_tag=css_tag
+      html_file=html_file, css_tag=css_tag
   )
   with open(os.path.join(temp_dir, "imsmanifest.xml"), "w") as f:
     f.write(manifest_content)
 
-  # Zip everything up cleanly with the manifest at the root
+  # Zip archive
   with zipfile.ZipFile(zip_name, "w") as zipf:
     for root, dirs, filenames in os.walk(temp_dir):
       for file in filenames:
         zipf.write(os.path.join(root, file), arcname=file)
 
-  # Clean up temporary directory
-  shutil.rmtree(temp_dir)
-  print(f"Successfully created: {zip_name}")
+  shutil.rmtree(temp_dir, ignore_errors=True)
+  print(f"--> Successfully created: {zip_name}\n")
 
-print("\nAll SCORM packages generated successfully!")
+print("Build script finished execution.")

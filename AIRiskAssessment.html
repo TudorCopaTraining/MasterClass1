@@ -10,10 +10,9 @@
     <div class="container">
         <header>
             <h1>Interactive Restaurant AI Risk Assessment</h1>
-            <p>Evaluate your restaurant's AI implementation across critical risk vectors to generate a custom mitigation strategy.</p>
+            <p>Evaluate your restaurant's AI implementation across critical risk vectors to generate a customised mitigation strategy.</p>
         </header>
 
-        <!-- Scenario Selection -->
         <section class="section card">
             <h2>1. Select Your Proposed AI Implementation</h2>
             <div class="grid-3">
@@ -32,7 +31,6 @@
             </div>
         </section>
 
-        <!-- Risk Vectors Assessment -->
         <section class="section card">
             <h2>2. Evaluate Risk Factors & Guardrails</h2>
             <p class="subtitle">Adjust parameters to reflect your venue's current technical readiness and human control levels.</p>
@@ -58,12 +56,10 @@
             </div>
         </section>
 
-        <!-- Control Action Panel -->
         <div class="action-panel">
             <button id="calculateRiskBtn" class="btn btn-primary">Run Operational Risk Assessment</button>
         </div>
 
-        <!-- Dynamic Output Dashboard -->
         <section id="resultsDashboard" class="section card hidden">
             <h2>3. Assessment Dashboard & Action Plan</h2>
             <div class="grid-2">
@@ -76,24 +72,32 @@
                 </div>
                 <div class="vulnerabilities-card">
                     <h3>Identified Vulnerabilities</h3>
-                    <ul id="vulnerabilityList" class="vulnerability-list">
-                        <!-- Dynamically populated -->
-                    </ul>
+                    <ul id="vulnerabilityList" class="vulnerability-list"></ul>
                 </div>
             </div>
 
             <div class="mitigation-plan">
                 <h3>Tailored Mitigation Action Plan</h3>
-                <div id="mitigationSteps" class="steps-container">
-                    <!-- Dynamically populated -->
-                </div>
+                <div id="mitigationSteps" class="steps-container"></div>
             </div>
             
-            <!-- Reset Button Added at the Bottom -->
             <div class="reset-panel">
                 <button id="resetBtn" class="btn btn-secondary">Reset Tool & Start Over</button>
             </div>
         </section>
+    </div>
+
+    <!-- Final Course Completion Notice -->
+    <div style="max-width: 900px; margin: 20px auto; padding: 0 20px;">
+        <div style="background: white; border: 1px solid #10b981; padding: 16px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+            <div>
+                <span style="font-size: 10px; font-family: monospace; color: #10b981; font-weight: bold; text-transform: uppercase; display: block;">Masterclass Complete</span>
+                <span style="font-size: 12px; color: #475569;">You have finished all four modules in the sequence.</span>
+            </div>
+            <span style="padding: 10px 20px; background: #10b981; color: white; border-radius: 8px; font-size: 14px; font-weight: 600;">
+                Course Finished ✓
+            </span>
+        </div>
     </div>
 
     <script>
@@ -127,7 +131,7 @@
                     { name: "Loyalty Preferences Erasure", baseRisk: 60, type: "privacy", desc: "Over-tracking individual customer habits to adjust individual prices dynamically." }
                 ],
                 mitigations: [
-                    "Set localized upper price ceilings that prevent algorithms from going past standard maximum thresholds.",
+                    "Set localised upper price ceilings that prevent algorithms from going past standard maximum thresholds.",
                     "Ensure transparent menu signage showing static base tiers to keep historical transparency."
                 ]
             }
@@ -135,7 +139,6 @@
 
         let currentScenario = 'inventory';
 
-        // Update Slider Label Displays
         const sliders = ['humanControl', 'dataPrivacy', 'modelReliability'];
         sliders.forEach(id => {
             const input = document.getElementById(id);
@@ -145,7 +148,6 @@
             });
         });
 
-        // Scenario Button Selection Toggle
         document.querySelectorAll('.scenario-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
@@ -155,7 +157,6 @@
             });
         });
 
-        // Calculate and Populate Risks
         document.getElementById('calculateRiskBtn').addEventListener('click', function() {
             const humanControl = parseInt(document.getElementById('humanControl').value);
             const dataPrivacy = parseInt(document.getElementById('dataPrivacy').value);
@@ -189,7 +190,6 @@
 
             const finalRiskScore = Math.min(100, Math.max(5, Math.round(rawTotalRisk / scenario.threats.length)));
             
-            // UI Target Adjustments
             const scoreEl = document.getElementById('riskScore');
             const ratingEl = document.getElementById('riskRating');
             const gaugeEl = document.getElementById('riskGauge');
@@ -215,7 +215,6 @@
 
             document.getElementById('vulnerabilityList').innerHTML = listHtml;
 
-            // Generate Action Plan Steps
             let stepsHtml = '';
             scenario.mitigations.forEach(step => {
                 stepsHtml += `<div class="step-item"><p>${step}</p></div>`;
@@ -233,21 +232,17 @@
             document.getElementById('resultsDashboard').scrollIntoView({ behavior: 'smooth' });
         });
 
-        // Reset Logic
         document.getElementById('resetBtn').addEventListener('click', function() {
-            // Reset Sliders
             sliders.forEach(id => {
                 document.getElementById(id).value = 50;
                 document.getElementById(id + 'Val').textContent = '50%';
             });
             
-            // Reset Scenario Selection
             document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
             const defaultScenario = document.querySelector('[data-scenario="inventory"]');
             defaultScenario.classList.add('active');
             currentScenario = 'inventory';
 
-            // Hide Dashboard and scroll to top
             document.getElementById('resultsDashboard').classList.add('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDI in AI: The Restaurant Simulation</title>
-    <!-- Links to the external CSS stylesheet -->
     <link rel="stylesheet" href="EDIinAI.css">
 </head>
 <body>
@@ -12,11 +11,10 @@
 <div class="container">
     <h1>Interactive Tool: EDI in AI Restaurant Deployment</h1>
     
-    <!-- New Brief Introduction Component -->
     <div class="intro-section">
         <h2>What is EDI in AI?</h2>
         <p>
-            Artificial Intelligence models aren't inherently neutral. They scale human intent based on how they are designed, programmed, and deployed. In the hospitality sector, applying <strong>Equality, Diversity, and Inclusion (EDI)</strong> means using technology to uplift every single guest rather than prioritizing purely automated efficiency. 
+            Artificial Intelligence models aren't inherently neutral. They scale human intent based on how they are designed, programmed, and deployed. In the hospitality sector, applying <strong>Equality, Diversity, and Inclusion (EDI)</strong> means using technology to uplift every single guest rather than prioritising purely automated efficiency. 
         </p>
         <p>
             When AI systems are designed without ethical safeguards, they unintentionally construct digital barriers that exclude segments of the community. This activity explores how your technological architecture choices impact real people.
@@ -25,9 +23,8 @@
 
     <div class="scenario-box">
         <strong>The Scenario:</strong> You are configuring the new AI-powered operating system for your restaurant chain. Your decisions will directly impact customers like <strong>Auntie Betty</strong> (who needs text-to-speech and smoothly textured meals) and <strong>little Alan</strong> (who is neurodivergent and cannot have his food touching).
-    </div>>
+    </div>
 
-    <!-- Navigation Tabs -->
     <div class="pillar-nav">
         <button class="pillar-btn active" onclick="showTab('disabilities', event)">1. Disabilities</button>
         <button class="pillar-btn" onclick="showTab('digital', event)">2. Digital Exclusion</button>
@@ -35,7 +32,7 @@
         <button class="pillar-btn" onclick="showTab('socioeconomic', event)">4. Socioeconomic</button>
     </div>
 
-    <!-- PILLAR 1: DISABILITIES -->
+    <!-- PILLAR 1 -->
     <div id="disabilities" class="task-card active">
         <h2>Pillar 1: Accommodating Disabilities & Neurodiversity</h2>
         <p><strong>Challenge:</strong> How should the AI ordering app process custom meal configurations for guests with specific cognitive or sensory profiles like little Alan?</p>
@@ -59,7 +56,7 @@
         </div>
     </div>
 
-    <!-- PILLAR 2: DIGITAL EXCLUSION -->
+    <!-- PILLAR 2 -->
     <div id="digital" class="task-card">
         <h2>Pillar 2: Bridging Digital Exclusion</h2>
         <p><strong>Challenge:</strong> You want to deploy an AI-driven telephone system to handle table bookings. How do you ensure tech-averse or older customers aren't left behind?</p>
@@ -83,7 +80,7 @@
         </div>
     </div>
 
-    <!-- PILLAR 3: LANGUAGE BARRIERS -->
+    <!-- PILLAR 3 -->
     <div id="language" class="task-card">
         <h2>Pillar 3: Navigating Language Nuances</h2>
         <p><strong>Challenge:</strong> You are setting up an AI system to translate your menu and ingredient list into multiple languages for dynamic digital kiosks.</p>
@@ -107,7 +104,7 @@
         </div>
     </div>
 
-    <!-- PILLAR 4: SOCIOECONOMIC FACTORS -->
+    <!-- PILLAR 4 -->
     <div id="socioeconomic" class="task-card">
         <h2>Pillar 4: Managing Socioeconomic Impacts</h2>
         <p><strong>Challenge:</strong> Your executive suite wants to use dynamic pricing algorithms driven by local demand patterns to adjust prices automatically.</p>
@@ -127,13 +124,26 @@
             <strong>❌ Created a Barrier:</strong> Aggressive surge pricing penalises low-income families who can only visit during standard weekend/evening times, effectively turning public dining spaces into exclusionary class systems.
         </div>
         <div id="i4" class="feedback inclusive">
-            <strong>✅ Inclusive Design:</strong> Ethical safeguards on economic algorithms prevent AI systems from exacerbating local poverty or treating essential community access simply as an optimization data point.
+            <strong>✅ Inclusive Design:</strong> Ethical safeguards on economic algorithms prevent AI systems from exacerbating local poverty or treating essential community access simply as an optimisation data point.
         </div>
     </div>
 
     <div class="score-banner">
         <span>Inclusive Choices: <span id="inclusive-count" class="score-badge inclusive">0</span>/4</span>
         <span>Barriers Created: <span id="barrier-count" class="score-badge barrier">0</span>/4</span>
+    </div>
+</div>
+
+<!-- Navigation Button to Next Module (AI Risk Assessment) -->
+<div style="max-width: 900px; margin: 20px auto; padding: 0 20px;">
+    <div style="background: white; border: 1px solid #cbd5e1; padding: 16px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+        <div>
+            <span style="font-size: 10px; font-family: monospace; color: #0284c7; font-weight: bold; text-transform: uppercase; display: block;">Masterclass Sequence</span>
+            <span style="font-size: 12px; color: #475569;">Ready for the final topic?</span>
+        </div>
+        <a href="AIRiskAssessment.html" style="padding: 10px 20px; background: #0284c7; color: white; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+            <span>Proceed to AI Risk Assessment</span> &rarr;
+        </a>
     </div>
 </div>
 
@@ -151,9 +161,7 @@
     function evaluateChoice(pillar, type, feedbackId) {
         const card = document.getElementById(feedbackId).parentElement;
         card.querySelectorAll('.feedback').forEach(f => f.style.display = 'none');
-        
         document.getElementById(feedbackId).style.display = 'block';
-        
         choices[pillar] = type;
         updateScores();
     }

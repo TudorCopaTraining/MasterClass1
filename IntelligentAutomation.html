@@ -1,98 +1,214 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Intelligent Automation Lab: Hands & Brains in Action</title>
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons CDN -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Canvas Confetti CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  
-  <!-- Google Fonts: Inter & JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          },
-          colors: {
-            ia: {
-              hands: '#06b6d4',
-              brain: '#8b5cf6',
-              human: '#f59e0b',
-              dark: '#0b0f19',
-              card: '#131b2e'
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <style>
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #0b0f19; }
-    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #334155; }
-    
-    .glass-panel {
-      background: rgba(19, 27, 46, 0.75);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .dashed-grid {
-      background-size: 28px 28px;
-      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    }
-
-    @media print {
-      body * { visibility: hidden; }
-      #printableCert, #printableCert * { visibility: visible; }
-      #printableCert {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        margin: 0;
-        padding: 20px;
-        background: white !important;
-        color: black !important;
-        border: 2px solid #000;
-      }
-      .no-print { display: none !important; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic 2 Recap: The Automation Triage Challenge</title>
+    <link rel="stylesheet" href="automation.css">
 </head>
-
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen selection:bg-purple-500/30 selection:text-purple-200 dashed-grid antialiased flex flex-col justify-between">
-
-  <!-- Top Navigation & Timed Exercise Bar -->
-  <header class="sticky top-0 z-50 glass-panel border-b border-slate-800 px-4 sm:px-6 py-3">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-      
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-600 p-0.5 shadow-lg shadow-purple-500/20 flex items-center justify-center">
-          <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-            <i data-lucide="cpu" class="w-5 h-5 text-cyan-400"></i>
-          </div>
+<body>
+    <header>
+        <div class="container">
+            <span class="badge">Process Improvement Fundamentals • Topic 2</span>
+            <h1>The Automation Triage Challenge 🚦</h1>
+            <p class="subtitle">Decide What to Automate vs. What to Keep Human Across Real Restaurant Shifts</p>
         </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="font-bold text-base sm:text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-cyan-300 bg-clip-text text-transparent">
-              Intelligent Automation Lab
-            </span>
-            <span class="text-[10px] font-mono uppercase bg-purple-950/80 text-purple-300 border border-purple-800/60 px-2 py-0.5 rounded-full font-semibold">
+    </header>
+
+    <main class="container">
+        <!-- Scenario Briefing -->
+        <section class="card intro-card">
+            <h2>The Challenge: The Operational Decision Board</h2>
+            <p>
+                You are auditing operations across a high-volume restaurant and bar. Management wants to buy new automation tools, but applying tech to the wrong tasks will destroy guest hospitality and waste budget!
+            </p>
+            <p>
+                <strong>Your Mission:</strong> Evaluate each shift workflow. Classify whether it gets the 
+                <span class="tag-green">🟢 Green Light (Suitable to Automate)</span> or the 
+                <span class="tag-red">🔴 Red Light (Keep Human)</span> based on its process characteristics.
+            </p>
+            <div class="instructions-banner">
+                <strong>How to Play:</strong> Click a task card from the deck, select its correct destination bucket (or drag and drop it), and click <strong>Submit Triage Decision</strong>. Score 8 out of 8 to complete the audit!
+            </div>
+        </section>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-label">Progress</span>
+                <span class="stat-val" id="progress-val">0 / 8 Triaged</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Accuracy Score</span>
+                <span class="stat-val" id="score-val">100%</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Streak</span>
+                <span class="stat-val" id="streak-val">🔥 0</span>
+            </div>
+        </div>
+
+        <!-- Interactive Workbench -->
+        <div class="grid">
+            <!-- Left: Triage Drop Zones / Targets -->
+            <div class="buckets-container">
+                <!-- Drop Zone 1: Suitable (Green Light) -->
+                <div class="bucket green-bucket" id="bucket-suitable" data-target="suitable">
+                    <div class="bucket-header">
+                        <span class="bucket-icon">🟢</span>
+                        <div>
+                            <h3>AUTOMATE NOW (Suitable)</h3>
+                            <p>Repetitive • High-Volume • Rule-Based • Standardised • Data Handling</p>
+                        </div>
+                    </div>
+                    <div class="bucket-drop-area" id="drop-suitable">
+                        <p class="drop-hint">Drop or click here to route task to Automation</p>
+                        <div class="placed-items" id="placed-suitable"></div>
+                    </div>
+                </div>
+
+                <!-- Drop Zone 2: Unsuitable (Red Light) -->
+                <div class="bucket red-bucket" id="bucket-unsuitable" data-target="unsuitable">
+                    <div class="bucket-header">
+                        <span class="bucket-icon">🔴</span>
+                        <div>
+                            <h3>KEEP HUMAN (Unsuitable)</h3>
+                            <p>Subjective Judgment • Creative Artistry • Complex Negotiations</p>
+                        </div>
+                    </div>
+                    <div class="bucket-drop-area" id="drop-unsuitable">
+                        <p class="drop-hint">Drop or click here to protect Human Hospitality</p>
+                        <div class="placed-items" id="placed-unsuitable"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Available Tasks Queue -->
+            <div class="queue-card">
+                <div class="queue-header">
+                    <h3>📋 Incoming Shift Workflows</h3>
+                    <span class="queue-count" id="queue-count">8 tasks remaining</span>
+                </div>
+                <p class="queue-help">Select a task card below, choose a bucket, then hit Submit Decision:</p>
+
+                <div class="task-deck" id="task-deck">
+                    <!-- Cards are injected dynamically via JavaScript -->
+                </div>
+
+                <!-- Feedback Banner -->
+                <div class="feedback-banner" id="feedback-banner" aria-live="polite"></div>
+
+                <!-- Action Controls -->
+                <div class="action-bar">
+                    <button id="submit-btn" class="btn btn-primary" disabled>Submit Triage Decision</button>
+                    <button id="reset-btn" class="btn btn-secondary" onclick="resetActivity()">Restart & Shuffle</button>
+                </div>
+
+                <!-- Completion Summary Modal/Card -->
+                <div id="completion-card" class="completion-card hidden">
+                    <div class="trophy-icon">🏆</div>
+                    <h3>Audit Complete: Operational Balance Restored!</h3>
+                    <p id="completion-summary"></p>
+                    <div class="takeaways-box">
+                        <strong>Topic 2 Golden Takeaways:</strong>
+                        <ul>
+                            <li><strong>Automate the Robotic:</strong> If it's repetitive, predictable, and data-heavy, let scripts and APIs free up staff hours.</li>
+                            <li><strong>Protect the Human:</strong> Emotional connection, taste, bespoke menu creativity, and high-stakes conflict resolution are where your brand value lives.</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary" onclick="resetActivity()">Play Again with New Shuffle</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Process Improvement Fundamentals | Topic 2: Identifying Automation Opportunities. Built for GitHub Pages.</p>
+        </div>
+    </footer>
+
+    <script>
+        const taskDatabase = [
+            {
+                id: "task-1",
+                title: "86-ing Menu Items Across Delivery Apps",
+                desc: "Updating Deliveroo, UberEats, and in-house POS simultaneously when the pass runs out of sea bass.",
+                correctCategory: "suitable",
+                trait: "Standardised Workflow & Data Handling",
+                explanation: "Correct! This is pure data synchronization across APIs. A single trigger should auto-update all platforms instantly without manual multi-app typing."
+            },
+            {
+                id: "task-2",
+                title: "Chef Tasting & Seasoning Before Service",
+                desc: "Adjusting acidity, salt, and seasoning balance on the braised beef jus 15 minutes before doors open.",
+                correctCategory: "unsuitable",
+                trait: "Highly Subjective Decision",
+                explanation: "Correct! Taste, aroma, and palate balance require human sensory judgment and culinary experience that no algorithm or sensor can duplicate."
+            },
+            {
+                id: "task-3",
+                title: "Reservation Reminders & Confirmation Pings",
+                desc: "Sending SMS confirmations and 24-hour deposit check-in requests to 220 Friday night bookings.",
+                correctCategory: "suitable",
+                trait: "High-Volume Activity & Rule-Based",
+                explanation: "Correct! Calling or texting 200+ guests manually wastes hours. Automated two-way messaging handles confirmations and deposit releases seamlessly."
+            },
+            {
+                id: "task-4",
+                title: "Resolving a Furious VIP Anniversary Complaint",
+                desc: "A high-spending couple had their main courses delayed by 40 minutes on their 25th wedding anniversary.",
+                correctCategory: "unsuitable",
+                trait: "Complex Negotiation & High Emotion",
+                explanation: "Correct! Giving an angry guest an automated voucher or chatbot link destroys loyalty. Genuine empathy, listening, and bespoke resolution require a human manager."
+            },
+            {
+                id: "task-5",
+                title: "Authorising a £0.00 Drink Swap at the Till",
+                desc: "A customer switches diet cola for lemonade; system prompts for supervisory credential override.",
+                correctCategory: "suitable",
+                trait: "Rule-Based Decision (If-Then Logic)",
+                explanation: "Correct! This requires zero managerial judgment. A Policy-as-Code rule should auto-clear low-risk swaps, freeing managers from chasing card swipes."
+            },
+            {
+                id: "task-6",
+                title: "Crafting a Signature Autumn Cocktail Menu",
+                desc: "Inventing four seasonal drinks balancing spiced bitters, local orchard fruits, and venue identity.",
+                correctCategory: "unsuitable",
+                trait: "Creative Task & Brand Storytelling",
+                explanation: "Correct! While AI can generate recipe lists, designing a beverage concept with emotional resonance and local heritage is human culinary craft."
+            },
+            {
+                id: "task-7",
+                title: "Daily Fridge HACCP Temperature Logging",
+                desc: "Recording chillers 1 to 6 temperatures at 08:00, 14:00, and 22:00 onto compliance clipboards.",
+                correctCategory: "suitable",
+                trait: "Repetitive Task & Data Handling",
+                explanation: "Correct! Ambient IoT temperature probes capture telemetry every minute automatically, alerting staff only if a compressor breaches safe thresholds."
+            },
+            {
+                id: "task-8",
+                title: "Negotiating an Exclusive £18,000 Corporate Buyout",
+                desc: "Customizing bespoke bar packages, dietary concessions, and staged payment schedules for an agency event.",
+                correctCategory: "unsuitable",
+                trait: "Complex Commercial Negotiation",
+                explanation: "Correct! High-value event contracts require commercial trade-offs, relationship building, and nuanced compromise that bots cannot navigate."
+            }
+        ];
+
+        let availableTasks = [];
+        let selectedTask = null;
+        let selectedBucket = null;
+        let solvedCount = 0;
+        let totalAttempts = 0;
+        let correctAttempts = 0;
+        let streak = 0;
+
+        const taskDeck = document.getElementById("task-deck");
+        const submitBtn = document.getElementById("submit-btn");
+        const feedbackBanner = document.getElementById("feedback-banner");
+        const progressVal = document.getElementById("progress-val");
+        const scoreVal = document.getElementById("score-val");
+        const streakVal = document.getElementById("streak-val");
+        const queueCount = document.getElementById("queue-count");
+        const completionCard = document

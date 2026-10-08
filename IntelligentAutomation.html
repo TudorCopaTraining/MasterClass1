@@ -3,8 +3,505 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Topic 2 Recap: The Automation Triage Challenge</title>
-    <link rel="stylesheet" href="automation.css">
+    <title>Topic 2: The Automation Triage Challenge</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #0f172a;
+            --primary-blue: #2563eb;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            
+            --green-bg: #f0fdf4;
+            --green-border: #bbf7d0;
+            --green-text: #166534;
+            --green-accent: #059669;
+            
+            --red-bg: #fff1f2;
+            --red-border: #fecdd3;
+            --red-text: #9f1239;
+            --red-accent: #e11d48;
+            
+            --amber-bg: #fffbeb;
+            --amber-border: #fde68a;
+            --amber-text: #92400e;
+            
+            --radius: 10px;
+            --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 24px 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            padding: 28px 24px;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 24px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.3);
+            border: 1px solid rgba(96, 165, 250, 0.4);
+            color: #93c5fd;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 4px 10px;
+            border-radius: 999px;
+            margin-bottom: 8px;
+        }
+
+        header h1 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.02em;
+        }
+
+        header p {
+            color: #cbd5e1;
+            font-size: 1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin-bottom: 20px;
+        }
+
+        .intro-card {
+            border-left: 5px solid var(--primary-blue);
+        }
+
+        .intro-card h2 {
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .tag-green {
+            background: var(--green-bg);
+            color: var(--green-text);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            border: 1px solid var(--green-border);
+        }
+
+        .tag-red {
+            background: var(--red-bg);
+            color: var(--red-text);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            border: 1px solid var(--red-border);
+        }
+
+        .instructions-banner {
+            background: var(--amber-bg);
+            border: 1px solid var(--amber-border);
+            color: var(--amber-text);
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-top: 12px;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            flex: 1;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .stat-val {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+        }
+
+        .grid {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        .buckets-container {
+            flex: 1.1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .queue-card {
+            flex: 0.9;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+
+        .queue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 6px;
+        }
+
+        .queue-header h3 {
+            font-size: 1.15rem;
+        }
+
+        .queue-count {
+            font-size: 0.82rem;
+            font-weight: 700;
+            background: #e2e8f0;
+            padding: 3px 8px;
+            border-radius: 999px;
+            color: var(--text-muted);
+        }
+
+        .queue-help {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            font-style: italic;
+        }
+
+        .task-deck {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 480px;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 16px;
+        }
+
+        .task-card {
+            background: #ffffff;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 12px 14px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+
+        .task-card:hover {
+            border-color: #94a3b8;
+            background: #f8fafc;
+            transform: translateY(-1px);
+        }
+
+        .task-card.selected {
+            border: 2px solid var(--primary-blue) !important;
+            background: #eff6ff !important;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .task-title {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 3px;
+        }
+
+        .task-desc {
+            font-size: 0.83rem;
+            color: #475569;
+            line-height: 1.4;
+        }
+
+        .bucket {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 16px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .bucket.green-bucket {
+            background: var(--green-bg);
+            border-color: var(--green-border);
+        }
+
+        .bucket.red-bucket {
+            background: var(--red-bg);
+            border-color: var(--red-border);
+        }
+
+        .bucket.selected-bucket {
+            box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .bucket.drag-hover {
+            filter: brightness(0.96);
+            border-style: dashed;
+        }
+
+        .bucket-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .bucket-icon {
+            font-size: 1.6rem;
+        }
+
+        .bucket-header h3 {
+            font-size: 1.05rem;
+            margin: 0;
+        }
+
+        .green-bucket h3 { color: var(--green-text); }
+        .red-bucket h3 { color: var(--red-text); }
+
+        .bucket-header p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .bucket-drop-area {
+            min-height: 90px;
+            border-radius: 6px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px dashed rgba(0, 0, 0, 0.15);
+        }
+
+        .drop-hint {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 10px 0;
+            margin: 0;
+            font-style: italic;
+        }
+
+        .placed-items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .placed-badge {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .placed-badge.suitable {
+            border-left: 4px solid var(--green-accent);
+        }
+
+        .placed-badge.unsuitable {
+            border-left: 4px solid var(--red-accent);
+        }
+
+        .placed-badge span {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+
+        .bucket.shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        .feedback-banner {
+            display: none;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.86rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .feedback-banner.show {
+            display: block;
+        }
+
+        .feedback-banner.success {
+            background: var(--green-bg);
+            color: var(--green-text);
+            border: 1px solid var(--green-border);
+        }
+
+        .feedback-banner.error {
+            background: var(--red-bg);
+            color: var(--red-text);
+            border: 1px solid var(--red-border);
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 11px 16px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #1e293b;
+        }
+
+        .btn-primary:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            flex: 0 0 auto;
+            background: #e2e8f0;
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .completion-card {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 2px solid #86efac;
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .trophy-icon {
+            font-size: 2.4rem;
+            margin-bottom: 6px;
+        }
+
+        .completion-card h3 {
+            font-size: 1.35rem;
+            color: var(--green-text);
+            margin-bottom: 8px;
+        }
+
+        .completion-card p {
+            font-size: 0.92rem;
+            color: #14532d;
+            margin-bottom: 16px;
+        }
+
+        .takeaways-box {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 14px 18px;
+            text-align: left;
+            margin-bottom: 18px;
+            font-size: 0.88rem;
+            border: 1px solid #bbf7d0;
+        }
+
+        .takeaways-box ul {
+            margin-left: 18px;
+            margin-top: 6px;
+        }
+
+        .takeaways-box li {
+            margin-bottom: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #64748b;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 860px) {
+            .grid { flex-direction: column; }
+            .stats-bar { flex-direction: column; gap: 8px; }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -22,13 +519,13 @@
             <p>
                 You are auditing operations across a high-volume restaurant and bar. Management wants to buy new automation tools, but applying tech to the wrong tasks will destroy guest hospitality and waste budget!
             </p>
-            <p>
+            <p style="margin-top: 6px;">
                 <strong>Your Mission:</strong> Evaluate each shift workflow. Classify whether it gets the 
                 <span class="tag-green">🟢 Green Light (Suitable to Automate)</span> or the 
                 <span class="tag-red">🔴 Red Light (Keep Human)</span> based on its process characteristics.
             </p>
             <div class="instructions-banner">
-                <strong>How to Play:</strong> Click a task card from the deck, select its correct destination bucket (or drag and drop it), and click <strong>Submit Triage Decision</strong>. Score 8 out of 8 to complete the audit!
+                <strong>How to Play:</strong> Click a task card from the deck, select its destination bucket (or drag and drop it), and click <strong>Submit Triage Decision</strong>. Score 8 out of 8 to complete the audit!
             </div>
         </section>
 
@@ -92,7 +589,7 @@
                 <p class="queue-help">Select a task card below, choose a bucket, then hit Submit Decision:</p>
 
                 <div class="task-deck" id="task-deck">
-                    <!-- Cards are injected dynamically via JavaScript -->
+                    <!-- Cards populated via JavaScript -->
                 </div>
 
                 <!-- Feedback Banner -->
@@ -104,7 +601,7 @@
                     <button id="reset-btn" class="btn btn-secondary" onclick="resetActivity()">Restart & Shuffle</button>
                 </div>
 
-                <!-- Completion Summary Modal/Card -->
+                <!-- Completion Summary -->
                 <div id="completion-card" class="completion-card hidden">
                     <div class="trophy-icon">🏆</div>
                     <h3>Audit Complete: Operational Balance Restored!</h3>
@@ -136,7 +633,7 @@
                 desc: "Updating Deliveroo, UberEats, and in-house POS simultaneously when the pass runs out of sea bass.",
                 correctCategory: "suitable",
                 trait: "Standardised Workflow & Data Handling",
-                explanation: "Correct! This is pure data synchronization across APIs. A single trigger should auto-update all platforms instantly without manual multi-app typing."
+                explanation: "Correct! This is pure data synchronization across APIs. A single trigger updates all platforms instantly without manual multi-app typing."
             },
             {
                 id: "task-2",
@@ -144,7 +641,7 @@
                 desc: "Adjusting acidity, salt, and seasoning balance on the braised beef jus 15 minutes before doors open.",
                 correctCategory: "unsuitable",
                 trait: "Highly Subjective Decision",
-                explanation: "Correct! Taste, aroma, and palate balance require human sensory judgment and culinary experience that no algorithm or sensor can duplicate."
+                explanation: "Correct! Taste, aroma, and palate balance require human sensory judgment that no algorithm or sensor can duplicate."
             },
             {
                 id: "task-3",
@@ -152,7 +649,7 @@
                 desc: "Sending SMS confirmations and 24-hour deposit check-in requests to 220 Friday night bookings.",
                 correctCategory: "suitable",
                 trait: "High-Volume Activity & Rule-Based",
-                explanation: "Correct! Calling or texting 200+ guests manually wastes hours. Automated two-way messaging handles confirmations and deposit releases seamlessly."
+                explanation: "Correct! Calling or texting 200+ guests manually wastes hours. Automated two-way messaging handles confirmations and releases seamlessly."
             },
             {
                 id: "task-4",
@@ -160,7 +657,7 @@
                 desc: "A high-spending couple had their main courses delayed by 40 minutes on their 25th wedding anniversary.",
                 correctCategory: "unsuitable",
                 trait: "Complex Negotiation & High Emotion",
-                explanation: "Correct! Giving an angry guest an automated voucher or chatbot link destroys loyalty. Genuine empathy, listening, and bespoke resolution require a human manager."
+                explanation: "Correct! Giving an angry guest an automated voucher or chatbot link destroys loyalty. Genuine empathy and listening require a human manager."
             },
             {
                 id: "task-5",
@@ -168,7 +665,7 @@
                 desc: "A customer switches diet cola for lemonade; system prompts for supervisory credential override.",
                 correctCategory: "suitable",
                 trait: "Rule-Based Decision (If-Then Logic)",
-                explanation: "Correct! This requires zero managerial judgment. A Policy-as-Code rule should auto-clear low-risk swaps, freeing managers from chasing card swipes."
+                explanation: "Correct! This requires zero managerial judgment. A Policy-as-Code rule auto-clears low-risk swaps, freeing managers from chasing card swipes."
             },
             {
                 id: "task-6",
@@ -184,7 +681,7 @@
                 desc: "Recording chillers 1 to 6 temperatures at 08:00, 14:00, and 22:00 onto compliance clipboards.",
                 correctCategory: "suitable",
                 trait: "Repetitive Task & Data Handling",
-                explanation: "Correct! Ambient IoT temperature probes capture telemetry every minute automatically, alerting staff only if a compressor breaches safe thresholds."
+                explanation: "Correct! Ambient IoT temperature probes capture telemetry every minute automatically, alerting staff only if safe limits are breached."
             },
             {
                 id: "task-8",
@@ -211,4 +708,201 @@
         const scoreVal = document.getElementById("score-val");
         const streakVal = document.getElementById("streak-val");
         const queueCount = document.getElementById("queue-count");
-        const completionCard = document
+        const completionCard = document.getElementById("completion-card");
+        const completionSummary = document.getElementById("completion-summary");
+
+        const bucketSuitable = document.getElementById("bucket-suitable");
+        const bucketUnsuitable = document.getElementById("bucket-unsuitable");
+        const placedSuitable = document.getElementById("placed-suitable");
+        const placedUnsuitable = document.getElementById("placed-unsuitable");
+
+        function showFeedback(text, type = "success") {
+            feedbackBanner.textContent = text;
+            feedbackBanner.className = `feedback-banner show ${type}`;
+            clearTimeout(feedbackBanner.timer);
+            feedbackBanner.timer = setTimeout(() => {
+                feedbackBanner.className = "feedback-banner";
+            }, 4000);
+        }
+
+        function updateStats() {
+            progressVal.textContent = `${solvedCount} / ${taskDatabase.length} Triaged`;
+            queueCount.textContent = `${availableTasks.length} tasks remaining`;
+            const accuracy = totalAttempts > 0 ? Math.round((correctAttempts / totalAttempts) * 100) : 100;
+            scoreVal.textContent = `${accuracy}%`;
+            streakVal.textContent = `🔥 ${streak}`;
+        }
+
+        function updateSubmitButton() {
+            submitBtn.disabled = !(selectedTask && selectedBucket);
+        }
+
+        function renderDeck() {
+            taskDeck.innerHTML = "";
+            availableTasks.forEach(task => {
+                const card = document.createElement("div");
+                card.className = "task-card";
+                card.id = task.id;
+                card.draggable = true;
+
+                card.innerHTML = `
+                    <div class="task-title">${task.title}</div>
+                    <div class="task-desc">${task.desc}</div>
+                `;
+
+                card.addEventListener("click", () => {
+                    if (selectedTask === task) {
+                        card.classList.remove("selected");
+                        selectedTask = null;
+                    } else {
+                        document.querySelectorAll(".task-card").forEach(c => c.classList.remove("selected"));
+                        card.classList.add("selected");
+                        selectedTask = task;
+                    }
+                    updateSubmitButton();
+                });
+
+                card.addEventListener("dragstart", (e) => {
+                    e.dataTransfer.setData("text/plain", task.id);
+                    selectedTask = task;
+                    document.querySelectorAll(".task-card").forEach(c => c.classList.remove("selected"));
+                    card.classList.add("selected");
+                    updateSubmitButton();
+                });
+
+                taskDeck.appendChild(card);
+            });
+        }
+
+        function setupBuckets() {
+            [bucketSuitable, bucketUnsuitable].forEach(bucket => {
+                bucket.addEventListener("click", () => {
+                    const category = bucket.getAttribute("data-target");
+                    if (selectedBucket === category) {
+                        bucket.classList.remove("selected-bucket");
+                        selectedBucket = null;
+                    } else {
+                        [bucketSuitable, bucketUnsuitable].forEach(b => b.classList.remove("selected-bucket"));
+                        bucket.classList.add("selected-bucket");
+                        selectedBucket = category;
+                    }
+                    updateSubmitButton();
+                });
+
+                bucket.addEventListener("dragover", (e) => {
+                    e.preventDefault();
+                    bucket.classList.add("drag-hover");
+                });
+
+                bucket.addEventListener("dragleave", () => {
+                    bucket.classList.remove("drag-hover");
+                });
+
+                bucket.addEventListener("drop", (e) => {
+                    e.preventDefault();
+                    bucket.classList.remove("drag-hover");
+                    const taskId = e.dataTransfer.getData("text/plain");
+                    const task = taskDatabase.find(t => t.id === taskId);
+                    const category = bucket.getAttribute("data-target");
+
+                    if (task) {
+                        selectedTask = task;
+                        selectedBucket = category;
+                        evaluateDecision();
+                    }
+                });
+            });
+        }
+
+        function evaluateDecision() {
+            if (!selectedTask || !selectedBucket) return;
+
+            totalAttempts++;
+            const isMatch = selectedTask.correctCategory === selectedBucket;
+
+            if (isMatch) {
+                correctAttempts++;
+                streak++;
+                solvedCount++;
+
+                showFeedback(`✓ Perfect Triage! [${selectedTask.trait}]: ${selectedTask.explanation}`, "success");
+
+                const targetArea = selectedBucket === "suitable" ? placedSuitable : placedUnsuitable;
+                const placedItem = document.createElement("div");
+                placedItem.className = `placed-badge ${selectedBucket}`;
+                placedItem.innerHTML = `<strong>✔ ${selectedTask.title}</strong><span>${selectedTask.trait}</span>`;
+                targetArea.appendChild(placedItem);
+
+                availableTasks = availableTasks.filter(t => t.id !== selectedTask.id);
+                selectedTask = null;
+                selectedBucket = null;
+                [bucketSuitable, bucketUnsuitable].forEach(b => b.classList.remove("selected-bucket"));
+
+                renderDeck();
+                updateStats();
+                updateSubmitButton();
+
+                if (availableTasks.length === 0) {
+                    showCompletion();
+                }
+            } else {
+                streak = 0;
+                updateStats();
+                const activeBucket = selectedBucket === "suitable" ? bucketSuitable : bucketUnsuitable;
+                activeBucket.classList.add("shake");
+                setTimeout(() => activeBucket.classList.remove("shake"), 450);
+
+                const advice = selectedTask.correctCategory === "suitable" 
+                    ? `This task has fixed rules and high volume. It belongs in 'AUTOMATE NOW'!`
+                    : `This task requires human empathy, taste, or negotiation. Automating it creates customer friction!`;
+                showFeedback(`✗ Misallocated! ${advice}`, "error");
+            }
+        }
+
+        submitBtn.addEventListener("click", evaluateDecision);
+
+        function showCompletion() {
+            taskDeck.style.display = "none";
+            submitBtn.parentElement.style.display = "none";
+            completionCard.classList.remove("hidden");
+
+            const finalAcc = Math.round((correctAttempts / totalAttempts) * 100);
+            completionSummary.textContent = `You audited all 8 restaurant workflows with a final diagnostic accuracy of ${finalAcc}%. Your front-of-house team has more time for guests, and your automated systems handle the routine!`;
+        }
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function resetActivity() {
+            availableTasks = shuffle([...taskDatabase]);
+            selectedTask = null;
+            selectedBucket = null;
+            solvedCount = 0;
+            totalAttempts = 0;
+            correctAttempts = 0;
+            streak = 0;
+
+            placedSuitable.innerHTML = "";
+            placedUnsuitable.innerHTML = "";
+            [bucketSuitable, bucketUnsuitable].forEach(b => b.classList.remove("selected-bucket"));
+
+            taskDeck.style.display = "flex";
+            submitBtn.parentElement.style.display = "flex";
+            completionCard.classList.add("hidden");
+            feedbackBanner.className = "feedback-banner";
+
+            renderDeck();
+            updateStats();
+            updateSubmitButton();
+        }
+
+        setupBuckets();
+        resetActivity();
+    </script>
+</body>
+</html>

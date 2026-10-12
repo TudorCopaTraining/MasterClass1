@@ -5,6 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDI in AI: The Restaurant Simulation</title>
     <link rel="stylesheet" href="EDIinAI.css">
+    <style>
+        /* Locked button styling */
+        .next-nav-btn {
+            background-color: #0284c7 !important;
+            color: #ffffff !important;
+            padding: 12px 24px !important;
+            border-radius: 10px !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px;
+            white-space: nowrap !important;
+            transition: all 0.3s ease;
+        }
+        .next-nav-btn.locked {
+            background-color: #cbd5e1 !important;
+            color: #64748b !important;
+            pointer-events: none;
+            cursor: not-allowed;
+            box-shadow: none !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -14,15 +38,15 @@
     <div class="intro-section">
         <h2>What is EDI in AI?</h2>
         <p>
-            Artificial Intelligence models aren't inherently neutral. They scale human intent based on how they are designed, programmed, and deployed. In the hospitality sector, applying <strong>Equality, Diversity, and Inclusion (EDI)</strong> means using technology to uplift every single guest rather than prioritising purely automated efficiency. 
+            Artificial Intelligence models aren't inherently neutral. They scale human intent based on how they are designed, programmed, and deployed. In the hospitality sector, applying <strong>Equality, Diversity, and Inclusion (EDI)</strong> means using technology to uplift every single guest rather than prioritising purely automated efficiency.[cite: 2]
         </p>
         <p>
-            When AI systems are designed without ethical safeguards, they unintentionally construct digital barriers that exclude segments of the community. This activity explores how your technological architecture choices impact real people.
+            When AI systems are designed without ethical safeguards, they unintentionally construct digital barriers that exclude segments of the community. This activity explores how your technological architecture choices impact real people.[cite: 2]
         </p>
     </div>
 
     <div class="scenario-box">
-        <strong>The Scenario:</strong> You are configuring the new AI-powered operating system for your restaurant chain. Your decisions will directly impact customers like <strong>Auntie Betty</strong> (who needs text-to-speech and smoothly textured meals) and <strong>little Alan</strong> (who is neurodivergent and cannot have his food touching).
+        <strong>The Scenario:</strong> You are configuring the new AI-powered operating system for your restaurant chain. Your decisions will directly impact customers like <strong>Auntie Betty</strong> (who needs text-to-speech and smoothly textured meals) and <strong>little Alan</strong> (who is neurodivergent and cannot have his food touching).[cite: 2]
     </div>
 
     <div class="pillar-nav">
@@ -49,10 +73,10 @@
         </div>
 
         <div id="b1" class="feedback barrier">
-            <strong>❌ Created a Barrier:</strong> Manual text fields create cognitive hurdles for neurodivergent individuals or parents in a rush. If the kitchen staff overlooks the text note, Alan gets his beans touching his chips, ruining his experience.
+            <strong>❌ Created a Barrier:</strong> Manual text fields create cognitive hurdles for neurodivergent individuals or parents in a rush. If the kitchen staff overlooks the text note, Alan gets his beans touching his chips, ruining his experience.[cite: 2]
         </div>
         <div id="i1" class="feedback inclusive">
-            <strong>✅ Inclusive Design:</strong> This supports accessibility by providing clear visual structures. Next time Alan visits, the AI reservation engine flags his profile automatically, removing the friction entirely.
+            <strong>✅ Inclusive Design:</strong> This supports accessibility by providing clear visual structures. Next time Alan visits, the AI reservation engine flags his profile automatically, removing the friction entirely.[cite: 2]
         </div>
     </div>
 
@@ -73,10 +97,10 @@
         </div>
 
         <div id="b2" class="feedback barrier">
-            <strong>❌ Created a Barrier:</strong> This forces complete digital reliance. Customers who do not own modern smartphones or struggle with UI interfaces are completely shut out from your business.
+            <strong>❌ Created a Barrier:</strong> This forces complete digital reliance. Customers who do not own modern smartphones or struggle with UI interfaces are completely shut out from your business.[cite: 2]
         </div>
         <div id="i2" class="feedback inclusive">
-            <strong>✅ Inclusive Design:</strong> A "hybrid AI" ecosystem leverages tech to free up human time. Your floor staff now have more physical bandwidth to greet and sit guests who prefer real-world assistance.
+            <strong>✅ Inclusive Design:</strong> A "hybrid AI" ecosystem leverages tech to free up human time. Your floor staff now have more physical bandwidth to greet and sit guests who prefer real-world assistance.[cite: 2]
         </div>
     </div>
 
@@ -97,10 +121,10 @@
         </div>
 
         <div id="i3" class="feedback inclusive">
-            <strong>✅ Inclusive Design:</strong> True cultural and linguistic inclusion preserves safety context, ensuring that religious dietary requirements and allergen restrictions are accurately conveyed without dangerous translation errors.
+            <strong>✅ Inclusive Design:</strong> True cultural and linguistic inclusion preserves safety context, ensuring that religious dietary requirements and allergen restrictions are accurately conveyed without dangerous translation errors.[cite: 2]
         </div>
         <div id="b3" class="feedback barrier">
-            <strong>❌ Created a Barrier:</strong> Food contexts change wildly. A literal translator app may fail to understand complex dish dynamics, causing severe risk of serving allergens or violating religious diets.
+            <strong>❌ Created a Barrier:</strong> Food contexts change wildly. A literal translator app may fail to understand complex dish dynamics, causing severe risk of serving allergens or violating religious diets.[cite: 2]
         </div>
     </div>
 
@@ -121,10 +145,10 @@
         </div>
 
         <div id="b4" class="feedback barrier">
-            <strong>❌ Created a Barrier:</strong> Aggressive surge pricing penalises low-income families who can only visit during standard weekend/evening times, effectively turning public dining spaces into exclusionary class systems.
+            <strong>❌ Created a Barrier:</strong> Aggressive surge pricing penalises low-income families who can only visit during standard weekend/evening times, effectively turning public dining spaces into exclusionary class systems.[cite: 2]
         </div>
         <div id="i4" class="feedback inclusive">
-            <strong>✅ Inclusive Design:</strong> Ethical safeguards on economic algorithms prevent AI systems from exacerbating local poverty or treating essential community access simply as an optimisation data point.
+            <strong>✅ Inclusive Design:</strong> Ethical safeguards on economic algorithms prevent AI systems from exacerbating local poverty or treating essential community access simply as an optimisation data point.[cite: 2]
         </div>
     </div>
 
@@ -134,14 +158,14 @@
     </div>
 </div>
 
-<!-- Navigation Button to Next Module (AI Risk Assessment) -->
-<div style="max-width: 900px; margin: 20px auto; padding: 0 20px;">
+<!-- Navigation Button to Next Module (Locked by Default) -->
+<div style="max-width: 900px; margin: 30px auto; padding: 0 20px;">
     <div style="background: white; border: 1px solid #cbd5e1; padding: 16px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
         <div>
             <span style="font-size: 10px; font-family: monospace; color: #0284c7; font-weight: bold; text-transform: uppercase; display: block;">Masterclass Sequence</span>
-            <span style="font-size: 12px; color: #475569;">Ready for the final topic?</span>
+            <span id="nav-status-text" style="font-size: 12px; color: #d97706; font-weight: bold;">🔒 Complete all 4 pillars to unlock next topic</span>
         </div>
-        <a href="AIRiskAssessment.html" style="padding: 10px 20px; background: #0284c7; color: white; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+        <a id="next-activity-btn" href="AIRiskAssessment.html" class="next-nav-btn locked">
             <span>Proceed to AI Risk Assessment</span> &rarr;
         </a>
     </div>
@@ -169,12 +193,29 @@
     function updateScores() {
         let inclusive = 0;
         let barrier = 0;
+        let answeredCount = 0;
+
         for (let p in choices) {
+            if (choices[p] !== null) answeredCount++;
             if (choices[p] === 'inclusive') inclusive++;
             if (choices[p] === 'barrier') barrier++;
         }
         document.getElementById('inclusive-count').innerText = inclusive;
         document.getElementById('barrier-count').innerText = barrier;
+
+        const nextBtn = document.getElementById("next-activity-btn");
+        const navStatusText = document.getElementById("nav-status-text");
+
+        // Unlock when all 4 pillars have been evaluated
+        if (answeredCount === 4) {
+            nextBtn.classList.remove("locked");
+            navStatusText.style.color = "#059669";
+            navStatusText.innerText = "✨ Unlocked! Ready for the final topic.";
+        } else {
+            nextBtn.classList.add("locked");
+            navStatusText.style.color = "#d97706";
+            navStatusText.innerText = `🔒 Complete all 4 pillars (${answeredCount}/4 done)`;
+        }
     }
 </script>
 

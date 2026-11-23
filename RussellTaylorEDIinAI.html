@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDI in AI: Sales and Recruitment Simulation</title>
+    <link rel="stylesheet" href="EDIinAI.css">
+    <style>
+        .next-nav-btn {
+            background-color: #0284c7 !important;
+            color: #ffffff !important;
+            padding: 12px 24px !important;
+            border-radius: 10px !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px;
+            white-space: nowrap !important;
+            transition: all 0.3s ease;
+        }
+        .next-nav-btn.locked {
+            background-color: #cbd5e1 !important;
+            color: #64748b !important;
+            pointer-events: none;
+            cursor: not-allowed;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Interactive Tool: EDI in AI for Sales and Recruitment</h1>
+
+    <div class="intro-section">
+        <h2>What is EDI in AI?</h2>
+        <p>
+            Artificial intelligence can support faster sales and recruitment decisions, but it can also reproduce existing inequalities when training data, criteria or processes are poorly designed. Applying <strong>Equality, Diversity and Inclusion (EDI)</strong> means ensuring that AI-assisted decisions provide fair access, respect individual differences and do not disadvantage people because of protected characteristics or personal circumstances.
+        </p>
+        <p>
+            This activity explores how AI choices can either remove or create barriers for customers, candidates and employees. Review each workplace challenge and choose the response that best supports inclusive practice.
+        </p>
+    </div>
+
+    <div class="scenario-box">
+        <strong>The Scenario:</strong> You are advising Russell Taylor Group on the introduction of AI tools across sales and recruitment. The technology will support lead prioritisation, candidate screening, customer communication and interview processes. Your decisions must balance commercial efficiency with fair, accessible and human-centred practice.
+    </div>
+
+    <div class="pillar-nav">
+        <button class="pillar-btn active" onclick="showTab('disabilities', event)">1. Disability &amp; Neurodiversity</button>
+        <button class="pillar-btn" onclick="showTab('digital', event)">2. Digital Exclusion</button>
+        <button class="pillar-btn" onclick="showTab('language', event)">3. Language &amp; Communication</button>
+        <button class="pillar-btn" onclick="showTab('socioeconomic', event)">4. Socioeconomic Fairness</button>
+    </div>
+
+    <div id="disabilities" class="task-card active">
+        <h2>Pillar 1: Disability and Neurodiversity in Recruitment</h2>
+        <p><strong>Challenge:</strong> An AI video-interview platform analyses spoken answers, eye contact and response speed. How should the recruitment team support candidates with disabilities, anxiety or neurodivergent communication styles?</p>
+        <div class="options-group">
+            <label class="option-label">
+                <input type="radio" name="p1" value="barrier" onclick="evaluateChoice('p1', 'barrier', 'b1')">
+                <span><strong>Option A:</strong> Require every applicant to complete the same timed video interview because a standard process is easier for the AI to score.</span>
+            </label>
+            <label class="option-label">
+                <input type="radio" name="p1" value="inclusive" onclick="evaluateChoice('p1', 'inclusive', 'i1')">
+                <span><strong>Option B:</strong> Offer reasonable adjustments, including extra time, captions, written responses, an accessible interface or a human-led interview, and prevent eye contact or facial movement from determining suitability.</span>
+            </label>
+        </div>
+        <div id="b1" class="feedback barrier">
+            <strong>❌ Created a Barrier:</strong> A rigid video-only process may disadvantage autistic candidates, people with speech or hearing impairments, candidates with anxiety and those who use assistive technology. Standardisation is not the same as fairness.
+        </div>
+        <div id="i1" class="feedback inclusive">
+            <strong>✅ Inclusive Design:</strong> Providing accessible alternatives and reasonable adjustments allows candidates to demonstrate job-related competence without being penalised for disability or communication style.
+        </div>
+    </div>
+
+    <div id="digital" class="task-card">
+        <h2>Pillar 2: Bridging Digital Exclusion</h2>
+        <p><strong>Challenge:</strong> The business wants candidates and prospective customers to interact through an AI chatbot before speaking to a member of staff. How should people with limited digital access or confidence be supported?</p>
+        <div class="options-group">
+            <label class="option-label">
+                <input type="radio" name="p2" value="barrier" onclick="evaluateChoice('p2', 'barrier', 'b2')">
+                <span><strong>Option A:</strong> Make the chatbot and online portal the only contact routes so that sales consultants and recruiters can focus on higher-value activity.</span>
+            </label>
+            <label class="option-label">
+                <input type="radio" name="p2" value="inclusive" onclick="evaluateChoice('p2', 'inclusive', 'i2')">
+                <span><strong>Option B:</strong> Keep telephone and human-assisted routes available, make human escalation easy and allow applications or enquiries to be completed through accessible alternative channels.</span>
+            </label>
+        </div>
+        <div id="b2" class="feedback barrier">
+            <strong>❌ Created a Barrier:</strong> A digital-only service can exclude people without reliable internet, suitable devices, digital confidence or accessible technology. It may reduce the diversity of the candidate and customer pool.
+        </div>
+        <div id="i2" class="feedback inclusive">
+            <strong>✅ Inclusive Design:</strong> A hybrid service uses AI for routine support while preserving meaningful access to people. This improves efficiency without making digital confidence a condition of participation.
+        </div>
+    </div>
+
+    <div id="language" class="task-card">
+        <h2>Pillar 3: Language and Communication Inclusion</h2>
+        <p><strong>Challenge:</strong> AI is being introduced to write sales messages and screen CVs. How should the organisation treat candidates and customers who use English as an additional language or communicate differently?</p>
+        <div class="options-group">
+            <label class="option-label">
+                <input type="radio" name="p3" value="inclusive" onclick="evaluateChoice('p3', 'inclusive', 'i3')">
+                <span><strong>Option B:</strong> Use plain-language templates, test communication for cultural context, offer translation where appropriate and instruct screening tools to focus on role-relevant evidence rather than writing style alone.</span>
+            </label>
+            <label class="option-label">
+                <input type="radio" name="p3" value="barrier" onclick="evaluateChoice('p3', 'barrier', 'b3')">
+                <span><strong>Option A:</strong> Automatically lower the score of CVs containing grammar or spelling differences and use a generic translator for all customer messages without human review.</span>
+            </label>
+        </div>
+        <div id="i3" class="feedback inclusive">
+            <strong>✅ Inclusive Design:</strong> Focusing on job-related evidence and reviewing AI-generated communication for context prevents language differences from being mistaken for a lack of capability or customer value.
+        </div>
+        <div id="b3" class="feedback barrier">
+            <strong>❌ Created a Barrier:</strong> Grammar-based scoring can act as a proxy for nationality, education or socioeconomic background. Unreviewed translation can also create confusing or culturally inappropriate sales communication.
+        </div>
+    </div>
+
+    <div id="socioeconomic" class="task-card">
+        <h2>Pillar 4: Managing Socioeconomic Impacts</h2>
+        <p><strong>Challenge:</strong> AI tools use location, employment history and previous purchasing behaviour to rank sales leads and recruitment candidates. How should the organisation prevent socioeconomic disadvantage?</p>
+        <div class="options-group">
+            <label class="option-label">
+                <input type="radio" name="p4" value="barrier" onclick="evaluateChoice('p4', 'barrier', 'b4')">
+                <span><strong>Option A:</strong> Prioritise customers from affluent postcodes and candidates with uninterrupted employment histories because the model predicts they are more likely to generate immediate value.</span>
+            </label>
+            <label class="option-label">
+                <input type="radio" name="p4" value="inclusive" onclick="evaluateChoice('p4', 'inclusive', 'i4')">
+                <span><strong>Option B:</strong> Remove or tightly control proxy variables such as postcode, audit outcomes across demographic groups and require human review where career gaps or personal circumstances affect an AI score.</span>
+            </label>
+        </div>
+        <div id="b4" class="feedback barrier">
+            <strong>❌ Created a Barrier:</strong> Postcode and employment gaps can act as proxies for income, disability, caring responsibilities or local deprivation. Using them without safeguards can systematically deprioritise capable candidates and legitimate customers.
+        </div>
+        <div id="i4" class="feedback inclusive">
+            <strong>✅ Inclusive Design:</strong> Restricting proxy variables, auditing outcomes and keeping humans accountable helps ensure that AI supports relevant business decisions without reinforcing historic disadvantage.
+        </div>
+    </div>
+
+    <div class="score-banner">
+        <span>Inclusive Choices: <span id="inclusive-count" class="score-badge inclusive">0</span>/4</span>
+        <span>Barriers Created: <span id="barrier-count" class="score-badge barrier">0</span>/4</span>
+    </div>
+</div>
+
+<div style="max-width: 900px; margin: 30px auto; padding: 0 20px;">
+    <div style="background: white; border: 1px solid #cbd5e1; padding: 16px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+        <div>
+            <span style="font-size: 10px; font-family: monospace; color: #0284c7; font-weight: bold; text-transform: uppercase; display: block;">Masterclass Sequence</span>
+            <span id="nav-status-text" style="font-size: 12px; color: #d97706; font-weight: bold;">🔒 Complete all 4 pillars to unlock next topic</span>
+        </div>
+        <a id="next-activity-btn" href="AIRiskAssessment.html" class="next-nav-btn locked" aria-disabled="true" tabindex="-1">
+            <span>Proceed to AI Risk Assessment</span> &rarr;
+        </a>
+    </div>
+</div>
+
+<script>
+    const choices = { p1: null, p2: null, p3: null, p4: null };
+
+    function showTab(tabId, event) {
+        document.querySelectorAll('.task-card').forEach(card => card.classList.remove('active'));
+        document.querySelectorAll('.pillar-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function evaluateChoice(pillar, type, feedbackId) {
+        const card = document.getElementById(feedbackId).parentElement;
+        card.querySelectorAll('.feedback').forEach(feedback => feedback.style.display = 'none');
+        document.getElementById(feedbackId).style.display = 'block';
+        choices[pillar] = type;
+        updateScores();
+    }
+
+    function updateScores() {
+        let inclusive = 0;
+        let barrier = 0;
+        let answeredCount = 0;
+
+        for (const pillar in choices) {
+            if (choices[pillar] !== null) answeredCount++;
+            if (choices[pillar] === 'inclusive') inclusive++;
+            if (choices[pillar] === 'barrier') barrier++;
+        }
+
+        document.getElementById('inclusive-count').innerText = inclusive;
+        document.getElementById('barrier-count').innerText = barrier;
+
+        const nextBtn = document.getElementById('next-activity-btn');
+        const navStatusText = document.getElementById('nav-status-text');
+
+        if (answeredCount === 4) {
+            nextBtn.classList.remove('locked');
+            nextBtn.setAttribute('aria-disabled', 'false');
+            nextBtn.removeAttribute('tabindex');
+            navStatusText.style.color = '#059669';
+            navStatusText.innerText = '✨ Unlocked! Ready for the final topic.';
+        } else {
+            nextBtn.classList.add('locked');
+            nextBtn.setAttribute('aria-disabled', 'true');
+            nextBtn.setAttribute('tabindex', '-1');
+            navStatusText.style.color = '#d97706';
+            navStatusText.innerText = `🔒 Complete all 4 pillars (${answeredCount}/4 done)`;
+        }
+    }
+
+    document.getElementById('next-activity-btn').addEventListener('click', function(event) {
+        if (this.classList.contains('locked')) event.preventDefault();
+    });
+</script>
+</body>
+</html>

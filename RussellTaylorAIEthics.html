@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsible AI Sales & Recruitment Matrix</title>
+    <link rel="stylesheet" href="salesrecruitment.css">
+</head>
+<body>
+<main class="container">
+    <header>
+        <h1>Responsible AI in Sales &amp; Recruitment</h1>
+        <p>Single-Screen Click-to-Assign Evaluation Matrix</p>
+    </header>
+
+    <div class="workspace-split">
+        <aside class="left-column">
+            <section class="directions-box" aria-labelledby="directions-heading">
+                <h2 id="directions-heading">Directions</h2>
+                <p><strong>1.</strong> Select a responsible AI pillar.</p>
+                <p><strong>2.</strong> Choose a scenario's dashed assignment zone.</p>
+                <p><strong>3.</strong> Complete all six scenarios to unlock the next topic.</p>
+            </section>
+
+            <section class="bank-container" aria-labelledby="pillar-heading">
+                <h2 id="pillar-heading">Responsible AI Pillars</h2>
+                <div class="pillar-bank" id="pillar-bank">
+                    <button type="button" class="draggable-pillar">Fairness</button>
+                    <button type="button" class="draggable-pillar">Reliability &amp; Safety</button>
+                    <button type="button" class="draggable-pillar">Privacy &amp; Security</button>
+                    <button type="button" class="draggable-pillar">Transparency</button>
+                    <button type="button" class="draggable-pillar">Accountability</button>
+                    <button type="button" class="draggable-pillar">Inclusiveness</button>
+                </div>
+                <p class="selection-help" id="selection-help" aria-live="polite">No pillar selected.</p>
+            </section>
+
+            <section class="summary-panel" aria-live="polite">
+                <div>
+                    <span class="summary-label">Verified score</span>
+                    <h2><span id="verified-score">0</span> / 6</h2>
+                </div>
+                <button type="button" class="reset-btn" id="reset-button">Reset Exercise</button>
+            </section>
+        </aside>
+
+        <section class="right-column" aria-label="Responsible AI assessment scenarios">
+            <div class="assessment-grid">
+                <article class="matrix-card" id="mod-1" data-answer="Fairness" data-msg="Correct. Fairness requires lead-scoring systems to avoid disadvantaging people because of protected or demographic characteristics.">
+                    <div class="card-heading">
+                        <span class="sector sales">Sales</span>
+                        <span class="status-badge" id="badge-1"></span>
+                    </div>
+                    <h3>1. AI Lead Scoring</h3>
+                    <p>An AI tool ranks potential customers. The sales team tests the model to ensure postcodes associated with lower-income communities are not automatically given poorer scores. This prioritises:</p>
+                    <button type="button" class="drop-zone" id="drop-1">Click to Assign Pillar</button>
+                    <div class="inline-feedback" id="feed-1" role="status"></div>
+                </article>
+
+                <article class="matrix-card" id="mod-2" data-answer="Transparency" data-msg="Correct. Transparency means people can understand when AI is being used and how its recommendation was reached.">
+                    <div class="card-heading">
+                        <span class="sector recruitment">Recruitment</span>
+                        <span class="status-badge" id="badge-2"></span>
+                    </div>
+                    <h3>2. CV Screening</h3>
+                    <p>A recruitment platform shortlists applicants. Candidates are told that AI supports the screening process and receive a clear explanation of the job-related criteria used. This demonstrates:</p>
+                    <button type="button" class="drop-zone" id="drop-2">Click to Assign Pillar</button>
+                    <div class="inline-feedback" id="feed-2" role="status"></div>
+                </article>
+
+                <article class="matrix-card" id="mod-3" data-answer="Privacy &amp; Security" data-msg="Correct. Personal contact information and behavioural data must be collected lawfully and protected from unauthorised access.">
+                    <div class="card-heading">
+                        <span class="sector sales">Sales</span>
+                        <span class="status-badge" id="badge-3"></span>
+                    </div>
+                    <h3>3. Customer Personalisation</h3>
+                    <p>A sales assistant uses customer purchase history to personalise follow-up messages. Access is restricted, data is encrypted and customers can manage their consent. This protects:</p>
+                    <button type="button" class="drop-zone" id="drop-3">Click to Assign Pillar</button>
+                    <div class="inline-feedback" id="feed-3" role="status"></div>
+                </article>
+
+                <article class="matrix-card" id="mod-4" data-answer="Inclusiveness" data-msg="Correct. Inclusive recruitment gives candidates different accessible ways to participate and avoids designing for only one type of user.">
+                    <div class="card-heading">
+                        <span class="sector recruitment">Recruitment</span>
+                        <span class="status-badge" id="badge-4"></span>
+                    </div>
+                    <h3>4. AI Video Interviews</h3>
+                    <p>Candidates can request captions, extra response time, keyboard navigation or a non-video alternative. The process is designed to support different disabilities and communication needs. This fulfils:</p>
+                    <button type="button" class="drop-zone" id="drop-4">Click to Assign Pillar</button>
+                    <div class="inline-feedback" id="feed-4" role="status"></div>
+                </article>
+
+                <article class="matrix-card" id="mod-5" data-answer="Accountability" data-msg="Correct. Accountability keeps a named human owner responsible for reviewing AI-supported decisions and correcting mistakes.">
+                    <div class="card-heading">
+                        <span class="sector sales">Sales</span>
+                        <span class="status-badge" id="badge-5"></span>
+                    </div>
+                    <h3>5. Automated Sales Offers</h3>
+                    <p>An AI system recommends discounts to close deals. A sales manager remains responsible for approving unusual offers, recording overrides and resolving customer complaints. This shows:</p>
+                    <button type="button" class="drop-zone" id="drop-5">Click to Assign Pillar</button>
+                    <div class="inline-feedback" id="feed-5" role="status"></div>
+                </article>
+
+                <article class="matrix-card" id="mod-6" data-answer="Reliability &amp; Safety" data-msg="Correct. Reliable and safe systems are tested, monitored and able to fall back to human review when confidence is low.">
+                    <div class="card-heading">
+                        <span class="sector recruitment">Recruitment</span>
+                        <span class="status-badge" id="badge-6"></span>
+                    </div>
+                    <h3>6. Candidate Matching</h3>
+                    <p>A matching tool is tested before launch, monitored for errors and sends low-confidence recommendations to a recruiter instead of rejecting an applicant automatically. This follows:</p>
+                    <button type="button" class="drop-zone" id="drop-6">Click to Assign Pillar</button>
+                    <div class="inline-feedback" id="feed-6" role="status"></div>
+                </article>
+            </div>
+        </section>
+    </div>
+
+    <nav class="sequence-nav" aria-label="Masterclass sequence">
+        <div>
+            <span class="nav-label">Masterclass Sequence</span>
+            <span id="nav-status-text" class="nav-status">🔒 Complete all 6 scenarios to unlock the next topic</span>
+        </div>
+        <a id="next-activity-btn" href="EDIinAI.html" class="next-nav-btn locked" aria-disabled="true" tabindex="-1">
+            <span>Proceed to EDI in AI</span><span aria-hidden="true">→</span>
+        </a>
+    </nav>
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let trackedScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+    let currentSelection = null;
+
+    const pillars = document.querySelectorAll(".draggable-pillar");
+    const dropZones = document.querySelectorAll(".drop-zone");
+    const nextBtn = document.getElementById("next-activity-btn");
+    const navStatusText = document.getElementById("nav-status-text");
+    const selectionHelp = document.getElementById("selection-help");
+
+    function updateProgress() {
+        const totalScore = Object.values(trackedScores).reduce((a, b) => a + b, 0);
+        document.getElementById("verified-score").innerText = totalScore;
+
+        if (totalScore === 6) {
+            nextBtn.classList.remove("locked");
+            nextBtn.setAttribute("aria-disabled", "false");
+            nextBtn.removeAttribute("tabindex");
+            navStatusText.classList.add("unlocked");
+            navStatusText.innerText = "✨ Unlocked! Ready for the next topic.";
+        } else {
+            nextBtn.classList.add("locked");
+            nextBtn.setAttribute("aria-disabled", "true");
+            nextBtn.setAttribute("tabindex", "-1");
+            navStatusText.classList.remove("unlocked");
+            navStatusText.innerText = "🔒 Complete all 6 scenarios to unlock the next topic";
+        }
+    }
+
+    function resetBankStyles() {
+        pillars.forEach((pillar) => {
+            pillar.classList.remove("selected");
+            pillar.setAttribute("aria-pressed", "false");
+        });
+    }
+
+    pillars.forEach((pillar) => {
+        pillar.setAttribute("aria-pressed", "false");
+        pillar.addEventListener("click", function () {
+            resetBankStyles();
+            currentSelection = pillar.innerText;
+            pillar.classList.add("selected");
+            pillar.setAttribute("aria-pressed", "true");
+            selectionHelp.innerText = "Selected: " + currentSelection;
+        });
+    });
+
+    dropZones.forEach((zone) => {
+        zone.addEventListener("click", function () {
+            if (!currentSelection) {
+                selectionHelp.innerText = "Select a pillar before assigning it.";
+                return;
+            }
+            if (zone.classList.contains("occupied")) return;
+
+            const card = zone.closest(".matrix-card");
+            const id = card.id.replace("mod-", "");
+            const answer = card.getAttribute("data-answer");
+            const message = card.getAttribute("data-msg");
+            const feedback = document.getElementById("feed-" + id);
+            const badge = document.getElementById("badge-" + id);
+
+            zone.innerText = currentSelection;
+            zone.classList.add("occupied");
+
+            if (currentSelection === answer) {
+                card.classList.add("passed");
+                badge.innerText = "✓ Correct";
+                badge.className = "status-badge correct-badge";
+                feedback.className = "inline-feedback show-feed good";
+                feedback.innerText = message;
+                trackedScores[id] = 1;
+            } else {
+                card.classList.add("failed");
+                badge.innerText = "✗ Incorrect";
+                badge.className = "status-badge wrong-badge";
+                feedback.className = "inline-feedback show-feed bad";
+                feedback.innerText = "Incorrect. The best answer is: " + answer + ".";
+                trackedScores[id] = 0;
+            }
+
+            currentSelection = null;
+            resetBankStyles();
+            selectionHelp.innerText = "No pillar selected.";
+            updateProgress();
+        });
+    });
+
+    document.getElementById("reset-button").addEventListener("click", function () {
+        trackedScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+        currentSelection = null;
+        resetBankStyles();
+        selectionHelp.innerText = "No pillar selected.";
+
+        document.querySelectorAll(".matrix-card").forEach((card) => {
+            card.classList.remove("passed", "failed");
+        });
+        document.querySelectorAll(".status-badge").forEach((badge) => {
+            badge.innerText = "";
+            badge.className = "status-badge";
+        });
+        document.querySelectorAll(".inline-feedback").forEach((feedback) => {
+            feedback.innerText = "";
+            feedback.className = "inline-feedback";
+        });
+        dropZones.forEach((zone) => {
+            zone.innerText = "Click to Assign Pillar";
+            zone.classList.remove("occupied");
+        });
+        updateProgress();
+    });
+
+    nextBtn.addEventListener("click", function (event) {
+        if (nextBtn.classList.contains("locked")) event.preventDefault();
+    });
+
+    updateProgress();
+});
+</script>
+</body>
+</html>

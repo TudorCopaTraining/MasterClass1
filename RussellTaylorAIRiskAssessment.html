@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales and Recruitment AI Risk Assessment Tool</title>
+    <link rel="stylesheet" href="AIRiskAssessment.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Interactive Sales and Recruitment AI Risk Assessment</h1>
+            <p>Evaluate proposed AI uses across recruitment and sales, then generate a tailored risk score and practical mitigation plan.</p>
+        </header>
+
+        <section class="section card">
+            <h2>1. Select Your Proposed AI Implementation</h2>
+            <div class="grid-3">
+                <button class="btn scenario-btn active" data-scenario="screening">
+                    <h3>AI Candidate Screening</h3>
+                    <p>Automated CV ranking and candidate shortlisting against role requirements.</p>
+                </button>
+                <button class="btn scenario-btn" data-scenario="interview">
+                    <h3>AI Interview Assistant</h3>
+                    <p>AI-supported interview transcription, scoring and candidate assessment.</p>
+                </button>
+                <button class="btn scenario-btn" data-scenario="leadscoring">
+                    <h3>AI Sales Lead Scoring</h3>
+                    <p>Automated ranking of prospects using CRM, engagement and customer data.</p>
+                </button>
+            </div>
+        </section>
+
+        <section class="section card">
+            <h2>2. Evaluate Risk Factors and Guardrails</h2>
+            <p class="subtitle">Move the sliders to reflect the current level of governance, data protection and testing for the selected use case.</p>
+            <div class="risk-sliders">
+                <div class="slider-group">
+                    <label for="humanControl"><strong>Human-in-the-Loop Oversight:</strong> <span id="humanControlVal">50%</span></label>
+                    <input type="range" id="humanControl" min="0" max="100" value="50">
+                    <span class="help-text">High = A recruiter or sales manager reviews consequential recommendations before action is taken.</span>
+                </div>
+                <div class="slider-group">
+                    <label for="dataPrivacy"><strong>Data Protection and Access Controls:</strong> <span id="dataPrivacyVal">50%</span></label>
+                    <input type="range" id="dataPrivacy" min="0" max="100" value="50">
+                    <span class="help-text">High = Data minimisation, defined retention, role-based access and secure handling of candidate and customer records.</span>
+                </div>
+                <div class="slider-group">
+                    <label for="modelReliability"><strong>Fairness, Accuracy and Model Testing:</strong> <span id="modelReliabilityVal">50%</span></label>
+                    <input type="range" id="modelReliability" min="0" max="100" value="50">
+                    <span class="help-text">High = Regular validation, bias testing, error monitoring and clear limits on automated decision-making.</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="action-panel">
+            <button id="calculateRiskBtn" class="btn btn-primary">Run AI Risk Assessment</button>
+        </div>
+
+        <section id="resultsDashboard" class="section card hidden">
+            <h2>3. Assessment Dashboard and Action Plan</h2>
+            <div class="grid-2">
+                <div class="score-card">
+                    <h3>Overall Risk Index</h3>
+                    <div id="riskGauge" class="gauge"><span id="riskScore">0%</span></div>
+                    <p id="riskRating" class="rating-text">LOW</p>
+                </div>
+                <div class="vulnerabilities-card">
+                    <h3>Identified Vulnerabilities</h3>
+                    <ul id="vulnerabilityList" class="vulnerability-list"></ul>
+                </div>
+            </div>
+            <div class="mitigation-plan">
+                <h3>Tailored Mitigation Action Plan</h3>
+                <div id="mitigationSteps" class="steps-container"></div>
+            </div>
+            <div class="reset-panel">
+                <button id="resetBtn" class="btn btn-secondary">Reset Tool and Start Over</button>
+            </div>
+        </section>
+    </div>
+
+    <div style="max-width: 900px; margin: 20px auto; padding: 0 20px;">
+        <div style="background: white; border: 1px solid #10b981; padding: 16px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+            <div>
+                <span style="font-size: 10px; font-family: monospace; color: #10b981; font-weight: bold; text-transform: uppercase; display: block;">Masterclass Complete</span>
+                <span style="font-size: 12px; color: #475569;">Complete a risk assessment to finish the activity.</span>
+            </div>
+            <span id="completionBadge" style="padding: 10px 20px; background: #cbd5e1; color: #64748b; border-radius: 8px; font-size: 14px; font-weight: 600;">Assessment Pending</span>
+        </div>
+    </div>
+
+    <script>
+        const scenarioData = {
+            screening: {
+                title: "AI Candidate Screening",
+                threats: [
+                    { name: "Discriminatory Candidate Ranking", baseRisk: 90, type: "reliability", desc: "Historic recruitment data or proxy variables may disadvantage candidates because of sex, race, disability, age or socioeconomic background." },
+                    { name: "Unreviewed Automated Rejection", baseRisk: 80, type: "human", desc: "Suitable applicants may be rejected without a recruiter checking context, transferable skills, career gaps or reasonable adjustments." },
+                    { name: "Candidate Data Overcollection", baseRisk: 70, type: "privacy", desc: "The system may process unnecessary personal information or retain CV and profile data longer than required." }
+                ],
+                mitigations: [
+                    "Use job-related criteria only and remove protected characteristics and unreliable proxy variables from scoring.",
+                    "Test selection rates and error patterns across relevant demographic groups before launch and at regular intervals.",
+                    "Require recruiter review before rejection and provide a route for candidates to request human reconsideration."
+                ]
+            },
+            interview: {
+                title: "AI Interview Assistant",
+                threats: [
+                    { name: "Disability and Neurodiversity Bias", baseRisk: 90, type: "reliability", desc: "Scoring facial movement, eye contact, voice or response speed may disadvantage disabled and neurodivergent candidates." },
+                    { name: "Sensitive Interview Data Exposure", baseRisk: 80, type: "privacy", desc: "Recordings, transcripts and inferred characteristics may expose highly sensitive candidate information." },
+                    { name: "Automation Bias in Hiring Decisions", baseRisk: 75, type: "human", desc: "Interviewers may accept an AI score even when evidence from the interview or assessment contradicts it." }
+                ],
+                mitigations: [
+                    "Do not use emotion recognition, facial analysis or eye-contact scoring to determine candidate suitability.",
+                    "Offer reasonable adjustments and equivalent non-AI interview routes without disadvantaging the candidate.",
+                    "Define short retention periods for recordings and transcripts, limit access and document candidate consent."
+                ]
+            },
+            leadscoring: {
+                title: "AI Sales Lead Scoring",
+                threats: [
+                    { name: "Unfair Customer Prioritisation", baseRisk: 75, type: "reliability", desc: "Postcode, company size or historic spend may unfairly deprioritise viable prospects and reinforce existing market bias." },
+                    { name: "Customer Profiling and Privacy", baseRisk: 85, type: "privacy", desc: "Combining CRM, website and third-party data may create intrusive profiles without a clear lawful purpose or adequate transparency." },
+                    { name: "Overreliance on Predicted Conversion", baseRisk: 70, type: "human", desc: "Sales teams may ignore new markets or relationship context because the algorithm assigns a low probability score." }
+                ],
+                mitigations: [
+                    "Document which CRM fields influence lead scores and prohibit sensitive or unjustified proxy variables.",
+                    "Provide customers and prospects with clear privacy information and apply data minimisation and retention controls.",
+                    "Allow sales staff to challenge scores, record overrides and review whether low-scored leads produce successful outcomes."
+                ]
+            }
+        };
+
+        let currentScenario = 'screening';
+        const sliders = ['humanControl', 'dataPrivacy', 'modelReliability'];
+
+        sliders.forEach(id => {
+            const input = document.getElementById(id);
+            const valSpan = document.getElementById(id + 'Val');
+            input.addEventListener('input', () => valSpan.textContent = input.value + '%');
+        });
+
+        document.querySelectorAll('.scenario-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.scenario-btn').forEach(button => button.classList.remove('active'));
+                this.classList.add('active');
+                currentScenario = this.getAttribute('data-scenario');
+                document.getElementById('resultsDashboard').classList.add('hidden');
+            });
+        });
+
+        document.getElementById('calculateRiskBtn').addEventListener('click', function() {
+            const humanControl = parseInt(document.getElementById('humanControl').value);
+            const dataPrivacy = parseInt(document.getElementById('dataPrivacy').value);
+            const modelReliability = parseInt(document.getElementById('modelReliability').value);
+            const scenario = scenarioData[currentScenario];
+            let rawTotalRisk = 0;
+            let listHtml = '';
+
+            scenario.threats.forEach(threat => {
+                let mitigationFactor = 0;
+                if (threat.type === 'human') mitigationFactor = humanControl;
+                if (threat.type === 'privacy') mitigationFactor = dataPrivacy;
+                if (threat.type === 'reliability') mitigationFactor = modelReliability;
+                const calculatedThreat = Math.max(10, Math.round(threat.baseRisk * (1 - mitigationFactor / 100)));
+                rawTotalRisk += calculatedThreat;
+                let severityClass = 'risk-low';
+                if (calculatedThreat > 35) severityClass = 'risk-med';
+                if (calculatedThreat > 65) severityClass = 'risk-high';
+                listHtml += `<li><div class="threat-header"><span class="threat-name">${threat.name}</span><span class="badge ${severityClass}">Score: ${calculatedThreat}</span></div><p class="threat-desc">${threat.desc}</p></li>`;
+            });
+
+            const finalRiskScore = Math.min(100, Math.max(5, Math.round(rawTotalRisk / scenario.threats.length)));
+            const scoreEl = document.getElementById('riskScore');
+            const ratingEl = document.getElementById('riskRating');
+            const gaugeEl = document.getElementById('riskGauge');
+            scoreEl.textContent = finalRiskScore + '%';
+
+            if (finalRiskScore <= 35) {
+                ratingEl.textContent = 'LOW RISK'; ratingEl.className = 'rating-text text-low';
+                gaugeEl.style.borderColor = '#10b981'; gaugeEl.style.boxShadow = '0 0 20px rgba(16,185,129,0.4)';
+            } else if (finalRiskScore <= 65) {
+                ratingEl.textContent = 'MEDIUM RISK'; ratingEl.className = 'rating-text text-med';
+                gaugeEl.style.borderColor = '#f59e0b'; gaugeEl.style.boxShadow = '0 0 20px rgba(245,158,11,0.4)';
+            } else {
+                ratingEl.textContent = 'HIGH RISK'; ratingEl.className = 'rating-text text-high';
+                gaugeEl.style.borderColor = '#ef4444'; gaugeEl.style.boxShadow = '0 0 20px rgba(239,68,68,0.4)';
+            }
+
+            document.getElementById('vulnerabilityList').innerHTML = listHtml;
+            let stepsHtml = scenario.mitigations.map(step => `<div class="step-item"><p>${step}</p></div>`).join('');
+            if (humanControl < 50) stepsHtml += '<div class="step-item warning"><p><strong>Human oversight gap:</strong> Introduce mandatory recruiter or sales-manager review before consequential AI recommendations are acted upon.</p></div>';
+            if (dataPrivacy < 50) stepsHtml += '<div class="step-item warning"><p><strong>Data protection gap:</strong> Complete a data protection impact assessment, restrict access and define deletion periods for candidate and customer data.</p></div>';
+            if (modelReliability < 50) stepsHtml += '<div class="step-item warning"><p><strong>Testing gap:</strong> Establish pre-deployment validation, subgroup outcome checks and ongoing error monitoring.</p></div>';
+            document.getElementById('mitigationSteps').innerHTML = stepsHtml;
+            document.getElementById('resultsDashboard').classList.remove('hidden');
+
+            const completionBadge = document.getElementById('completionBadge');
+            completionBadge.textContent = 'Activity Complete ✓';
+            completionBadge.style.background = '#10b981';
+            completionBadge.style.color = '#ffffff';
+            document.getElementById('resultsDashboard').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            sliders.forEach(id => {
+                document.getElementById(id).value = 50;
+                document.getElementById(id + 'Val').textContent = '50%';
+            });
+            document.querySelectorAll('.scenario-btn').forEach(button => button.classList.remove('active'));
+            document.querySelector('[data-scenario="screening"]').classList.add('active');
+            currentScenario = 'screening';
+            document.getElementById('resultsDashboard').classList.add('hidden');
+            const completionBadge = document.getElementById('completionBadge');
+            completionBadge.textContent = 'Assessment Pending';
+            completionBadge.style.background = '#cbd5e1';
+            completionBadge.style.color = '#64748b';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
